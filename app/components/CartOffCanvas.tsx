@@ -2,7 +2,8 @@
 
 import React, { useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { formatEur } from '@/lib/format-price';
 import { Link } from '@/i18n/navigation';
 import { X, Minus, Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
@@ -10,6 +11,7 @@ import { useCart } from '../context/CartContext';
 const CartOffCanvas: React.FC = () => {
   const t = useTranslations('Cart');
   const tHeader = useTranslations('Header');
+  const locale = useLocale();
   const {
     lines,
     isOpen,
@@ -99,7 +101,7 @@ const CartOffCanvas: React.FC = () => {
                       {product.name}
                     </Link>
                     <p className="mt-1 text-sm text-green-600 font-semibold">
-                      ${product.price.toFixed(2)}
+                      {formatEur(product.price, locale)}
                     </p>
                     <div className="mt-2 flex items-center gap-2">
                       <div className="flex items-center rounded-lg border border-gray-200">
@@ -130,14 +132,14 @@ const CartOffCanvas: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => removeLine(product.id)}
-                        className="text-xs text-red-600 hover:text-red-700"
+                        className="text-xs text-red-600 hover:text-red-700 cursor-pointer"
                       >
                         {t('removeLine')}
                       </button>
                     </div>
                   </div>
                   <div className="shrink-0 text-right text-sm font-semibold text-gray-900">
-                    ${(product.price * quantity).toFixed(2)}
+                    {formatEur(product.price * quantity, locale)}
                   </div>
                 </li>
               ))}
@@ -149,7 +151,7 @@ const CartOffCanvas: React.FC = () => {
           <div className="border-t border-gray-100 bg-gray-50 px-4 py-4 space-y-4">
             <div className="flex justify-between text-base font-semibold text-gray-900">
               <span>{t('subtotal')}</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>{formatEur(subtotal, locale)}</span>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
               <Link

@@ -3,6 +3,7 @@
 import React from 'react';
 import { ShoppingBag } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
+import { formatEur } from '@/lib/format-price';
 import { useCart } from '../context/CartContext';
 
 const CartSideBlock: React.FC = () => {
@@ -13,15 +14,7 @@ const CartSideBlock: React.FC = () => {
   const itemsLabel =
     itemCount === 1 ? t('itemsOne') : t('itemsMany', { count: itemCount });
 
-  const formattedTotal = subtotal.toLocaleString(
-    locale === 'sk' ? 'sk-SK' : 'en-US',
-    {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }
-  );
+  const formattedTotal = formatEur(subtotal, locale);
 
   return (
     <button

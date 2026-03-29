@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
@@ -11,6 +11,9 @@ import ShoppingCartIcon from '@/app/components/icons/ShoppingCartIcon';
 import { useCart } from '@/app/context/CartContext';
 import { useWishlist } from '@/app/context/WishlistContext';
 import { useCompare } from '@/app/context/CompareContext';
+
+/** Show fixed search + cart bar after scrolling past this many pixels */
+const SCROLL_Y_SHOW_FIXED_BAR = 64;
 
 const Header = () => {
   const t = useTranslations('Header');
@@ -24,6 +27,16 @@ const Header = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showFixedSearchCart, setShowFixedSearchCart] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setShowFixedSearchCart(window.scrollY > SCROLL_Y_SHOW_FIXED_BAR);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const submitSearch = () => {
     const params = new URLSearchParams();
@@ -57,6 +70,60 @@ const Header = () => {
 
   return (
     <header className="header-area header-style-1 header-height-2">
+      {/* Fixed search + cart only after scrolling down (avoids duplicate controls when at top) */}
+      {showFixedSearchCart && (
+        <>
+          <div className="fixed inset-x-0 top-0 z-40 w-full overflow-visible border-b border-[#c9ccb8] bg-[#ecede2] pt-[max(0.5rem,env(safe-area-inset-top))] shadow-sm">
+            <div className="container mx-auto flex items-center gap-2 px-4 pb-2 sm:gap-3">
+              <div className="min-w-0 flex-1 overflow-visible">
+                <div className="hidden lg:block">
+                  <SearchBarWithSuggestions
+                    variant="desktop"
+                    searchQuery={searchQuery}
+                    onSearchQueryChange={setSearchQuery}
+                    selectedCategory={selectedCategory}
+                    onCategoryChange={setSelectedCategory}
+                    onSubmit={handleSearchSubmit}
+                  />
+                </div>
+                <div className="lg:hidden">
+                  <SearchBarWithSuggestions
+                    variant="mobile"
+                    searchQuery={searchQuery}
+                    onSearchQueryChange={setSearchQuery}
+                    selectedCategory={selectedCategory}
+                    onCategoryChange={setSelectedCategory}
+                    onSubmit={handleSearchSubmit}
+                  />
+                </div>
+              </div>
+              <div className="flex shrink-0 flex-col items-center pt-0.5 ml-4">
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={toggleCart}
+                    className="cursor-pointer text-gray-600 hover:text-green-500"
+                    aria-label={t('viewCart')}
+                  >
+                    <ShoppingCartIcon className="h-6 w-6" />
+                    {itemCount > 0 && (
+                      <span className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-blue-500 px-1 text-xs text-white">
+                        {itemCount > 99 ? '99+' : itemCount}
+                      </span>
+                    )}
+                  </button>
+                </div>
+                <span className="mt-0.5 hidden text-xs text-gray-500 sm:inline">{t('cart')}</span>
+              </div>
+            </div>
+          </div>
+          <div
+            className="h-[calc(env(safe-area-inset-top,0px)+4.75rem)] shrink-0 lg:h-[calc(env(safe-area-inset-top,0px)+5.75rem)]"
+            aria-hidden
+          />
+        </>
+      )}
+
       {/* Mobile Promotion */}
       <div className="bg-green-500 text-white text-center py-2 text-sm lg:hidden">
         <span>{t('promo')}</span>
@@ -67,15 +134,17 @@ const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <Link href="/">
                 {/* <Image src="/logo.svg" alt="Nest" width={120} height={40} className="h-10 w-auto" /> */}
                 <div>logo</div>
               </Link>
             </div>
 
-            {/* Search bar + live suggestions */}
-            <div className="flex-1 max-w-2xl mx-8 overflow-visible">
+            {/* Search bar + live suggestions (hidden while fixed bar is active) */}
+            <div
+              className={`mx-8 max-w-2xl flex-1 overflow-visible ${showFixedSearchCart ? 'hidden' : ''}`}
+            >
               <SearchBarWithSuggestions
                 variant="desktop"
                 searchQuery={searchQuery}
@@ -87,9 +156,7 @@ const Header = () => {
             </div>
 
             <div className="flex items-center">
-              {/* Header Actions */}
               <div className="flex items-center space-x-6">
-                {/* Location */}
                 <div className="hidden shrink-0 items-center lg:flex">
                   <LanguageSwitcher />
                 </div>
@@ -97,22 +164,29 @@ const Header = () => {
                   <Combobox
                     options={[
                       { value: "", label: t('locationPlaceholder') },
-                      { value: "alabama", label: "Alabama" },
-                      { value: "alaska", label: "Alaska" },
-                      { value: "arizona", label: "Arizona" },
-                      { value: "delaware", label: "Delaware" },
-                      { value: "florida", label: "Florida" },
+                      { value: "bratislava", label: "Bratislava" },
+                      { value: "kosice", label: "Košice" },
+                      { value: "presov", label: "Prešov" },
+                      { value: "zilina", label: "Žilina" },
+                      { value: "nitra", label: "Nitra" },
+                      { value: "trnava", label: "Trnava" },
+                      { value: "trencin", label: "Trenčín" },
+                      { value: "banska-bystrica", label: "Banská Bystrica" },
+                      { value: "poprad", label: "Poprad" },
+                      { value: "martin", label: "Martin" },
+                      { value: "zvolen", label: "Zvolen" },
+                      { value: "michalovce", label: "Michalovce" },
+                      { value: "prievidza", label: "Prievidza" },
+                      { value: "levoca", label: "Levoča" },
+                      { value: "ruzomberok", label: "Ružomberok" },
                     ]}
                     value={selectedLocation}
                     onValueChange={setSelectedLocation}
                     placeholder={t('locationPlaceholder')}
-                    className="bg-gray-100 hover:bg-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-44 rounded-sm cursor-pointer"
+                    className="bg-gray-100 hover:bg-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-44 rounded-md cursor-pointer"
                   />  
                 </div>
 
-           
-
-              {/* Compare */}
               <div className="flex flex-col items-center">
                 <div className="relative">
                   <Link
@@ -124,9 +198,7 @@ const Header = () => {
                         : t('compareProducts')
                     }
                   >
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                    <svg className="w-6 h-6" fill="currentColor" width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1,8A1,1,0,0,1,2,7H9.586L7.293,4.707A1,1,0,1,1,8.707,3.293l4,4a1,1,0,0,1,0,1.414l-4,4a1,1,0,1,1-1.414-1.414L9.586,9H2A1,1,0,0,1,1,8Zm21,7H14.414l2.293-2.293a1,1,0,0,0-1.414-1.414l-4,4a1,1,0,0,0,0,1.414l4,4a1,1,0,0,0,1.414-1.414L14.414,17H22a1,1,0,0,0,0-2Z" /></svg>
                     {compareCount > 0 && (
                       <span className="absolute -top-2 -right-2 flex min-h-[1.25rem] min-w-[1.25rem] items-center justify-center rounded-full border border-green-200 bg-green-100 px-1 text-[10px] font-bold text-green-800">
                         {compareCount}
@@ -176,12 +248,12 @@ const Header = () => {
                   <>
                     {/* Overlay to catch outside clicks */}
                     <div
-                      className="fixed inset-0 z-40"
+                      className="fixed inset-0 z-45"
                       onClick={() => setIsAccountOpen(false)}
                       aria-hidden="true"
                       tabIndex={-1}
                     />
-                    <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border z-50">
+                    <div className="absolute top-full right-0 z-55 mt-2 w-48 rounded-lg border bg-white shadow-xl">
                       <div className="py-2">
                         <Link href="/account" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                           <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
@@ -224,25 +296,28 @@ const Header = () => {
                     </div>
                   </>
                 )}
-                
               </div>
-               <div className="flex flex-col items-center relative mt-[4px]">
+
+              {/* Cart */}
+              <div
+                className={`relative mt-[4px] flex flex-col items-center ${showFixedSearchCart ? 'hidden' : ''}`}
+              >
                 <div className="relative">
                   <button
                     type="button"
                     onClick={toggleCart}
-                    className="text-gray-600 hover:text-green-500 cursor-pointer"
+                    className="cursor-pointer text-gray-600 hover:text-green-500"
                     aria-label={t('viewCart')}
                   >
-                    <ShoppingCartIcon className="w-6 h-6" />
+                    <ShoppingCartIcon className="h-6 w-6" />
                     {itemCount > 0 && (
-                      <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full min-w-[1.25rem] h-5 px-1 flex items-center justify-center">
+                      <span className="absolute -top-2 -right-2 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-blue-500 px-1 text-xs text-white">
                         {itemCount > 99 ? '99+' : itemCount}
                       </span>
                     )}
                   </button>
                 </div>
-                <span className="text-xs text-gray-500 mt-1 cursor-pointer">{t('cart')}</span>
+                <span className="mt-1 cursor-pointer text-xs text-gray-500">{t('cart')}</span>
               </div>
             </div>
             </div>
@@ -251,7 +326,7 @@ const Header = () => {
       </div>
 
       {/* Header Bottom - Navigation */}
-      <div className="bg-white border-t sticky top-0 z-40">
+      <div className="bg-white border-t">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Mobile Logo */}
@@ -377,7 +452,7 @@ const Header = () => {
             </button>
 
             {/* Mobile Actions */}
-            <div className="lg:hidden flex items-center space-x-3">
+            <div className="flex items-center space-x-3 lg:hidden">
               <LanguageSwitcher />
               <Link
                 href="/compare"
@@ -388,48 +463,50 @@ const Header = () => {
                     : t('compareProducts')
                 }
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 {compareCount > 0 && (
-                  <span className="absolute -top-2 -right-2 flex h-4 min-w-[1rem] items-center justify-center rounded-full border border-green-200 bg-green-100 px-0.5 text-[9px] font-bold text-green-800">
+                  <span className="absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full border border-green-200 bg-green-100 px-0.5 text-[9px] font-bold text-green-800">
                     {compareCount}
                   </span>
                 )}
               </Link>
               <Link href="/wishlist" className="relative text-gray-600">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-[10px] rounded-full min-w-[1rem] h-4 px-0.5 flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-blue-500 px-0.5 text-[10px] text-white">
                     {wishlistCount > 99 ? '99+' : wishlistCount}
                   </span>
                 )}
               </Link>
-              <button
-                type="button"
-                onClick={openCart}
-                className="relative text-gray-600"
-                aria-label={t('openCart')}
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
-                </svg>
-                {itemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-[10px] rounded-full min-w-[1rem] h-4 px-0.5 flex items-center justify-center">
-                    {itemCount > 99 ? '99+' : itemCount}
-                  </span>
-                )}
-              </button>
+              {!showFixedSearchCart && (
+                <button
+                  type="button"
+                  onClick={openCart}
+                  className="relative text-gray-600"
+                  aria-label={t('openCart')}
+                >
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+                  </svg>
+                  {itemCount > 0 && (
+                    <span className="absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-blue-500 px-0.5 text-[10px] text-white">
+                      {itemCount > 99 ? '99+' : itemCount}
+                    </span>
+                  )}
+                </button>
+              )}
             </div>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden overflow-visible bg-white border-t">
-            <div className="px-4 py-4 space-y-4">
+          <div className="overflow-visible border-t bg-white lg:hidden">
+            <div className="space-y-4 px-4 py-4">
               <SearchBarWithSuggestions
                 variant="mobile"
                 searchQuery={searchQuery}

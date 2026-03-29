@@ -2,7 +2,8 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { formatEur } from '@/lib/format-price';
 import { Link } from '@/i18n/navigation';
 import { Heart, Shuffle } from 'lucide-react';
 import { IoAdd } from 'react-icons/io5';
@@ -36,6 +37,7 @@ function getSimilarProducts(current: Product, all: Product[]): Product[] {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) => {
   const t = useTranslations('ProductCard');
+  const locale = useLocale();
   const { addItem, removeOne, getQuantity } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
   const { isInCompare, addToCompare, removeFromCompare, canAdd } = useCompare();
@@ -166,9 +168,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
             </button>
             {productCartCounter > 0 && (
               <div>
-                <div className="absolute top-0 right-[10px] h-[37px] w-[260px] bg-slate-200 rounded-full" />
                 <div
-                  className="absolute top-0 right-[10px] h-[37px] w-[238px] flex items-center space-x-1 text-white mr-4 mb-4 transition-colors text-sm z-[100] cursor-pointer rounded-full"
+                  className="absolute top-0 right-[10px] h-[37px] w-[95%] bg-slate-200 rounded-full blur-[1px] opacity-92"
+                />
+                <div
+                  className="absolute top-0 right-[10px] h-[37px] w-[85%] flex items-center space-x-1 text-white mr-4 mb-4 transition-colors text-sm z-[100] cursor-pointer rounded-full"
                   onClick={(e) => {
                     e.preventDefault();
                   }}
@@ -267,11 +271,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <span className="text-lg font-semibold text-green-500">
-                ${product.price.toFixed(2)}
+                {formatEur(product.price, locale)}
               </span>
               {product.oldPrice && (
                 <span className="text-sm text-gray-400 line-through">
-                  ${product.oldPrice.toFixed(2)}
+                  {formatEur(product.oldPrice, locale)}
                 </span>
               )}
             </div>
