@@ -185,7 +185,7 @@ const Header = () => {
                   />
                 </div>
               </div>
-              <div className="flex shrink-0 flex-col items-center pt-0.5 ml-4">
+              <div className="flex shrink-0 flex-col items-center pt-0.5 ml-1 lg:ml-4">
                 <div className="relative">
                   <button
                     type="button"
@@ -221,11 +221,9 @@ const Header = () => {
       <div className="hidden lg:block py-4 bg-[#ecede2]">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <div className="shrink-0">
               <Link href="/">
-                {/* <Image src="/logo.svg" alt="Nest" width={120} height={40} className="h-10 w-auto" /> */}
-                <div>logo</div>
+                <Image src="/logo.svg" alt="WebAriadne" width={120} height={40} className="h-10 w-auto" />
               </Link>
             </div>
 
@@ -271,7 +269,7 @@ const Header = () => {
                     value={selectedLocation}
                     onValueChange={setSelectedLocation}
                     placeholder={t('locationPlaceholder')}
-                    className="bg-gray-100 hover:bg-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-44 rounded-md cursor-pointer"
+                    className="bg-gray-50 hover:bg-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-44 rounded-md cursor-pointer"
                   />  
                 </div>
 
