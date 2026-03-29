@@ -2,12 +2,13 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { Trash2 } from 'lucide-react';
-import Header from '../components/Header';
-import { useWishlist } from '../context/WishlistContext';
-import { useCart } from '../context/CartContext';
-import type { Product } from '../types/product';
+import Header from '@/app/components/Header';
+import { useWishlist } from '@/app/context/WishlistContext';
+import { useCart } from '@/app/context/CartContext';
+import type { Product } from '@/app/types/product';
 
 function isInStock(product: Product) {
   return product.inStock !== false;
@@ -42,6 +43,8 @@ function StarRating({ rating, ratingCount }: { rating: number; ratingCount: numb
 }
 
 export default function WishlistView() {
+  const t = useTranslations('Wishlist');
+  const tHeader = useTranslations('Header');
   const { items, removeFromWishlist } = useWishlist();
   const { addItem, openCart } = useCart();
   const [selected, setSelected] = useState<Set<number>>(new Set());
@@ -77,10 +80,10 @@ export default function WishlistView() {
 
   const subtitle =
     items.length === 0
-      ? 'Your wishlist is empty.'
+      ? t('emptySubtitle')
       : items.length === 1
-        ? 'There is 1 product in this list.'
-        : `There are ${items.length} products in this list.`;
+        ? t('countOne')
+        : t('countMany', { count: items.length });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -91,7 +94,7 @@ export default function WishlistView() {
           <ol className="flex flex-wrap items-center gap-1">
             <li>
               <Link href="/" className="hover:text-green-700">
-                Home
+                {tHeader('home')}
               </Link>
             </li>
             <li className="text-gray-400" aria-hidden>
@@ -99,33 +102,31 @@ export default function WishlistView() {
             </li>
             <li>
               <Link href="/" className="hover:text-green-700">
-                Shop
+                {t('breadcrumbShop')}
               </Link>
             </li>
             <li className="text-gray-400" aria-hidden>
               /
             </li>
-            <li className="font-medium text-green-600">Wishlist</li>
+            <li className="font-medium text-green-600">{t('breadcrumbWishlist')}</li>
           </ol>
         </nav>
 
         <header className="mt-6">
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 lg:text-4xl">
-            Your Wishlist
+            {t('title')}
           </h1>
           <p className="mt-2 text-base text-gray-500">{subtitle}</p>
         </header>
 
         {items.length === 0 ? (
           <div className="mt-12 rounded-xl border border-gray-200 bg-white p-12 text-center shadow-sm">
-            <p className="text-gray-600">
-              Save items you love by clicking the heart on any product card.
-            </p>
+            <p className="text-gray-600">{t('emptyHint')}</p>
             <Link
               href="/"
               className="mt-6 inline-block rounded-lg bg-green-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-green-600"
             >
-              Continue shopping
+              {t('continue')}
             </Link>
           </div>
         ) : (
@@ -140,23 +141,23 @@ export default function WishlistView() {
                         className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
                         checked={allSelected}
                         onChange={toggleAll}
-                        aria-label="Select all products"
+                        aria-label={t('selectAll')}
                       />
                     </th>
                     <th className="px-4 py-4 text-sm font-semibold text-gray-700">
-                      Product
+                      {t('product')}
                     </th>
                     <th className="px-4 py-4 text-sm font-semibold text-gray-700">
-                      Price
+                      {t('price')}
                     </th>
                     <th className="px-4 py-4 text-sm font-semibold text-gray-700">
-                      Stock status
+                      {t('stockStatus')}
                     </th>
                     <th className="px-4 py-4 text-center text-sm font-semibold text-gray-700">
-                      Action
+                      {t('action')}
                     </th>
                     <th className="w-16 px-4 py-4 text-center text-sm font-semibold text-gray-700">
-                      Remove
+                      {t('removeCol')}
                     </th>
                   </tr>
                 </thead>
@@ -174,7 +175,7 @@ export default function WishlistView() {
                             className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
                             checked={selected.has(product.id)}
                             onChange={() => toggleRow(product.id)}
-                            aria-label={`Select ${product.name}`}
+                            aria-label={t('selectRow', { name: product.name })}
                           />
                         </td>
                         <td className="px-4 py-6 align-middle">
@@ -213,11 +214,11 @@ export default function WishlistView() {
                         <td className="px-4 py-6 align-middle">
                           {inStock ? (
                             <span className="inline-block rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
-                              In Stock
+                              {t('inStock')}
                             </span>
                           ) : (
                             <span className="inline-block rounded-full bg-pink-100 px-3 py-1 text-sm font-medium text-pink-800">
-                              Out Stock
+                              {t('outStock')}
                             </span>
                           )}
                         </td>
@@ -231,14 +232,14 @@ export default function WishlistView() {
                               }}
                               className="rounded-md bg-green-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-600"
                             >
-                              Add to cart
+                              {t('addToCart')}
                             </button>
                           ) : (
                             <Link
                               href="/contact"
                               className="inline-block rounded-md bg-slate-800 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-slate-900"
                             >
-                              Contact Us
+                              {t('contactUs')}
                             </Link>
                           )}
                         </td>
@@ -247,7 +248,7 @@ export default function WishlistView() {
                             type="button"
                             onClick={() => removeFromWishlist(product.id)}
                             className="inline-flex rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-red-600"
-                            aria-label={`Remove ${product.name} from wishlist`}
+                            aria-label={t('removeFromWishlist', { name: product.name })}
                           >
                             <Trash2 className="h-5 w-5" />
                           </button>

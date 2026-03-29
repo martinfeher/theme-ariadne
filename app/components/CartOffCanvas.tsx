@@ -2,11 +2,14 @@
 
 import React, { useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { X, Minus, Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 const CartOffCanvas: React.FC = () => {
+  const t = useTranslations('Cart');
+  const tHeader = useTranslations('Header');
   const {
     lines,
     isOpen,
@@ -50,15 +53,15 @@ const CartOffCanvas: React.FC = () => {
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-hidden={!isOpen}
-        aria-label="Shopping cart"
+        aria-label={tHeader('openCart')}
       >
         <div className="flex items-center justify-between border-b border-gray-100 px-4 py-4">
-          <h2 className="text-lg font-semibold text-gray-900">Your cart</h2>
+          <h2 className="text-lg font-semibold text-gray-900">{t('yourCart')}</h2>
           <button
             type="button"
             onClick={closeCart}
             className="rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800"
-            aria-label="Close cart"
+            aria-label={t('close')}
           >
             <X className="h-5 w-5" />
           </button>
@@ -66,9 +69,7 @@ const CartOffCanvas: React.FC = () => {
 
         <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
           {lines.length === 0 ? (
-            <p className="text-center text-sm text-gray-500 py-12">
-              Your cart is empty. Add items from the shop to see them here.
-            </p>
+            <p className="text-center text-sm text-gray-500 py-12">{t('empty')}</p>
           ) : (
             <ul className="space-y-4">
               {lines.map(({ product, quantity }) => (
@@ -105,7 +106,7 @@ const CartOffCanvas: React.FC = () => {
                         <button
                           type="button"
                           className="p-1.5 text-gray-600 hover:bg-gray-50"
-                          aria-label="Decrease quantity"
+                          aria-label={t('decreaseQty')}
                           onClick={() =>
                             quantity <= 1
                               ? removeLine(product.id)
@@ -120,7 +121,7 @@ const CartOffCanvas: React.FC = () => {
                         <button
                           type="button"
                           className="p-1.5 text-gray-600 hover:bg-gray-50"
-                          aria-label="Increase quantity"
+                          aria-label={t('increaseQty')}
                           onClick={() => addItem(product, 1)}
                         >
                           <Plus className="h-4 w-4" />
@@ -131,7 +132,7 @@ const CartOffCanvas: React.FC = () => {
                         onClick={() => removeLine(product.id)}
                         className="text-xs text-red-600 hover:text-red-700"
                       >
-                        Remove
+                        {t('removeLine')}
                       </button>
                     </div>
                   </div>
@@ -147,7 +148,7 @@ const CartOffCanvas: React.FC = () => {
         {lines.length > 0 && (
           <div className="border-t border-gray-100 bg-gray-50 px-4 py-4 space-y-4">
             <div className="flex justify-between text-base font-semibold text-gray-900">
-              <span>Subtotal</span>
+              <span>{t('subtotal')}</span>
               <span>${subtotal.toFixed(2)}</span>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
@@ -156,14 +157,14 @@ const CartOffCanvas: React.FC = () => {
                 onClick={closeCart}
                 className="flex-1 rounded-lg border border-gray-200 bg-white py-3 text-center text-sm font-medium text-gray-800 transition-colors hover:bg-gray-50"
               >
-                View cart
+                {t('viewCart')}
               </Link>
               <Link
                 href="/checkout"
                 onClick={closeCart}
                 className="flex-1 rounded-lg bg-green-500 py-3 text-center text-sm font-medium text-white transition-colors hover:bg-green-600"
               >
-                Checkout
+                {t('checkout')}
               </Link>
             </div>
           </div>

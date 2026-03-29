@@ -2,10 +2,11 @@
 
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import Header from '../components/Header';
-import { useCompare, MAX_COMPARE_PRODUCTS } from '../context/CompareContext';
-import type { Product } from '../types/product';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
+import Header from '@/app/components/Header';
+import { useCompare, MAX_COMPARE_PRODUCTS } from '@/app/context/CompareContext';
+import type { Product } from '@/app/types/product';
 
 function isInStock(product: Product) {
   return product.inStock !== false;
@@ -51,22 +52,17 @@ const dataCell =
   'min-w-[200px] border border-gray-200 px-4 py-6 text-center align-middle sm:min-w-[220px]';
 
 export default function CompareView() {
+  const t = useTranslations('Compare');
+  const tHeader = useTranslations('Header');
   const { items, removeFromCompare, clearCompare } = useCompare();
 
   const subtitle =
     items.length === 0 ? (
-      <>Add up to {MAX_COMPARE_PRODUCTS} products to compare side by side.</>
+      <>{t('maxHint', { max: MAX_COMPARE_PRODUCTS })}</>
     ) : items.length === 1 ? (
-      <>
-        There is <span className="font-semibold text-green-600">1</span> product
-        to compare.
-      </>
+      <>{t('countOne')}</>
     ) : (
-      <>
-        There are{' '}
-        <span className="font-semibold text-green-600">{items.length}</span>{' '}
-        products to compare.
-      </>
+      <>{t('countMany', { count: items.length })}</>
     );
 
   return (
@@ -78,7 +74,7 @@ export default function CompareView() {
           <ol className="flex flex-wrap items-center gap-1">
             <li>
               <Link href="/" className="hover:text-green-700">
-                Home
+                {tHeader('home')}
               </Link>
             </li>
             <li className="text-gray-400" aria-hidden>
@@ -86,20 +82,20 @@ export default function CompareView() {
             </li>
             <li>
               <Link href="/" className="hover:text-green-700">
-                Shop
+                {t('breadcrumbShop')}
               </Link>
             </li>
             <li className="text-gray-400" aria-hidden>
               /
             </li>
-            <li className="font-medium text-green-600">Compare</li>
+            <li className="font-medium text-green-600">{t('breadcrumbCompare')}</li>
           </ol>
         </nav>
 
         <header className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-slate-900 lg:text-4xl">
-              Products Compare
+              {t('title')}
             </h1>
             <p className="mt-2 text-base text-gray-500">{subtitle}</p>
           </div>
@@ -109,7 +105,7 @@ export default function CompareView() {
               onClick={clearCompare}
               className="self-start text-sm font-medium text-gray-600 underline-offset-2 hover:text-green-600 hover:underline sm:self-auto"
             >
-              Clear all
+              {t('clearAll')}
             </button>
           )}
         </header>
@@ -117,14 +113,13 @@ export default function CompareView() {
         {items.length === 0 ? (
           <div className="mt-12 rounded-xl border border-gray-200 bg-white p-12 text-center shadow-sm">
             <p className="text-gray-600">
-              Your compare list is empty. Use the compare icon on product cards to add
-              items (max {MAX_COMPARE_PRODUCTS}).
+              {t('emptyHint', { max: MAX_COMPARE_PRODUCTS })}
             </p>
             <Link
               href="/"
               className="mt-6 inline-block rounded-lg bg-green-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-green-600"
             >
-              Browse products
+              {t('browse')}
             </Link>
           </div>
         ) : (
@@ -133,7 +128,7 @@ export default function CompareView() {
               <tbody>
                 <tr>
                   <th scope="row" className={labelCell}>
-                    Preview
+                    {t('preview')}
                   </th>
                   {items.map((product) => (
                     <td key={product.id} className={dataCell}>
@@ -156,7 +151,7 @@ export default function CompareView() {
                 </tr>
                 <tr>
                   <th scope="row" className={labelCell}>
-                    Name
+                    {t('name')}
                   </th>
                   {items.map((product) => (
                     <td key={product.id} className={dataCell}>
@@ -171,7 +166,7 @@ export default function CompareView() {
                 </tr>
                 <tr>
                   <th scope="row" className={labelCell}>
-                    Price
+                    {t('price')}
                   </th>
                   {items.map((product) => (
                     <td key={product.id} className={dataCell}>
@@ -188,7 +183,7 @@ export default function CompareView() {
                 </tr>
                 <tr>
                   <th scope="row" className={labelCell}>
-                    Rating
+                    {t('rating')}
                   </th>
                   {items.map((product) => (
                     <td key={product.id} className={dataCell}>
@@ -201,7 +196,7 @@ export default function CompareView() {
                 </tr>
                 <tr>
                   <th scope="row" className={labelCell}>
-                    Description
+                    {t('description')}
                   </th>
                   {items.map((product) => (
                     <td key={product.id} className={dataCell}>
@@ -213,17 +208,17 @@ export default function CompareView() {
                 </tr>
                 <tr>
                   <th scope="row" className={labelCell}>
-                    Stock status
+                    {t('stockStatus')}
                   </th>
                   {items.map((product) => (
                     <td key={product.id} className={dataCell}>
                       {isInStock(product) ? (
                         <span className="inline-block rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
-                          In Stock
+                          {t('inStock')}
                         </span>
                       ) : (
                         <span className="inline-block rounded-full bg-pink-100 px-3 py-1 text-sm font-medium text-pink-800">
-                          Out of stock
+                          {t('outStock')}
                         </span>
                       )}
                     </td>
@@ -231,7 +226,7 @@ export default function CompareView() {
                 </tr>
                 <tr>
                   <th scope="row" className={labelCell}>
-                    Remove
+                    {t('remove')}
                   </th>
                   {items.map((product) => (
                     <td key={product.id} className={dataCell}>
@@ -240,7 +235,7 @@ export default function CompareView() {
                         onClick={() => removeFromCompare(product.id)}
                         className="text-sm font-medium text-red-600 hover:text-red-700 hover:underline"
                       >
-                        Remove
+                        {t('remove')}
                       </button>
                     </td>
                   ))}

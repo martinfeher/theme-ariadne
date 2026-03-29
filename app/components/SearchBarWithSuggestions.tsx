@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { Combobox } from '@/components/ui/combobox';
 import { fetchProducts } from '@/lib/fetch-products';
 import type { Product } from '@/app/types/product';
@@ -10,23 +11,23 @@ import type { Product } from '@/app/types/product';
 const DEBOUNCE_MS = 280;
 const MAX_SUGGESTIONS = 8;
 
-const CATEGORY_OPTIONS = [
-  { value: 'all', label: 'All Categories' },
-  { value: 'milks-dairies', label: 'Milks and Dairies' },
-  { value: 'wines-alcohol', label: 'Wines & Alcohol' },
-  { value: 'clothing-beauty', label: 'Clothing & Beauty' },
-  { value: 'pet-foods-toy', label: 'Pet Foods & Toy' },
-  { value: 'fast-food', label: 'Fast food' },
-  { value: 'baking-material', label: 'Baking material' },
-  { value: 'vegetables', label: 'Vegetables' },
-  { value: 'fresh-seafood', label: 'Fresh Seafood' },
-  { value: 'noodles-rice', label: 'Noodles & Rice' },
-  { value: 'ice-cream', label: 'Ice cream' },
-  { value: 'coffees-teas', label: 'Coffees & Teas' },
-  { value: 'pet-foods', label: 'Pet Foods' },
-  { value: 'meats', label: 'Meats' },
-  { value: 'fruits', label: 'Fruits' },
-];
+const CATEGORY_VALUE_KEYS = [
+  'all',
+  'milks-dairies',
+  'wines-alcohol',
+  'clothing-beauty',
+  'pet-foods-toy',
+  'fast-food',
+  'baking-material',
+  'vegetables',
+  'fresh-seafood',
+  'noodles-rice',
+  'ice-cream',
+  'coffees-teas',
+  'pet-foods',
+  'meats',
+  'fruits',
+] as const;
 
 export interface SearchBarWithSuggestionsProps {
   variant: 'desktop' | 'mobile';
@@ -35,7 +36,6 @@ export interface SearchBarWithSuggestionsProps {
   selectedCategory: string;
   onCategoryChange: (value: string) => void;
   onSubmit: (e: React.FormEvent) => void;
-  /** Called when user picks a suggestion (e.g. close mobile drawer). */
   onAfterSuggestionPick?: () => void;
 }
 
@@ -48,12 +48,23 @@ export default function SearchBarWithSuggestions({
   onSubmit,
   onAfterSuggestionPick,
 }: SearchBarWithSuggestionsProps) {
+  const t = useTranslations('SearchBar');
+  const tHeader = useTranslations('Header');
   const containerRef = useRef<HTMLDivElement>(null);
   const listId =
     variant === 'desktop' ? 'search-suggestions-desktop' : 'search-suggestions-mobile';
   const [suggestions, setSuggestions] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
+
+  const categoryOptions = useMemo(
+    () =>
+      CATEGORY_VALUE_KEYS.map((value) => ({
+        value,
+        label: t(`categories.${value}`),
+      })),
+    [t]
+  );
 
   const trimmed = searchQuery.trim();
   const showPanel = panelOpen && trimmed.length > 0;
@@ -84,7 +95,7 @@ export default function SearchBarWithSuggestions({
     }, DEBOUNCE_MS);
 
     return () => window.clearTimeout(handle);
-  }, [searchQuery, selectedCategory]);
+  }, [trimmed, selectedCategory]);
 
   useEffect(() => {
     const close = (e: MouseEvent) => {
@@ -126,10 +137,10 @@ export default function SearchBarWithSuggestions({
         {isDesktop && (
           <div className="relative border-r border-gray-200 cursor-pointer shrink-0">
             <Combobox
-              options={CATEGORY_OPTIONS}
+              options={categoryOptions}
               value={selectedCategory}
               onValueChange={onCategoryChange}
-              placeholder="All Categories"
+              placeholder={t('categories.all')}
               className="w-44 border-0 rounded-none bg-transparent cursor-pointer"
             />
           </div>
@@ -144,7 +155,7 @@ export default function SearchBarWithSuggestions({
             setPanelOpen(true);
           }}
           onFocus={() => setPanelOpen(true)}
-          placeholder="Search for items..."
+          placeholder={t('placeholder')}
           autoComplete="off"
           role="combobox"
           aria-expanded={showPanel}
@@ -155,7 +166,7 @@ export default function SearchBarWithSuggestions({
               ? 'flex-1 px-4 py-3 text-sm border-0 focus:outline-none focus:ring-0 bg-transparent placeholder-gray-400'
               : 'flex-1 px-4 py-2 text-sm border-0 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-inset bg-transparent'
           }
-          aria-label="Search products"
+          aria-label={tHeader('searchProducts')}
         />
 
         <button
@@ -165,7 +176,7 @@ export default function SearchBarWithSuggestions({
               ? 'bg-green-500 text-white px-6 py-3 hover:bg-green-600 transition-colors flex items-center justify-center shrink-0'
               : 'bg-green-500 text-white px-4 py-2 rounded-r-lg shrink-0'
           }
-          aria-label="Search products"
+          aria-label={tHeader('searchProducts')}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -189,14 +200,19 @@ export default function SearchBarWithSuggestions({
           }
         >
           {loading && (
-            <p className="px-4 py-3 text-sm text-gray-500">Searching…</p>
+            <p className="px-4 py-3 text-sm text-gray-500">{t('searching')}</p>
           )}
           {!loading && suggestions.length === 0 && (
-            <p className="px-4 py-3 text-sm text-gray-500">No matching products.</p>
+            <p className="px-4 py-3 text-sm text-gray-500">{t('noMatches')}</p>
           )}
           {!loading &&
             suggestions.map((product) => (
-              <div key={product.id} role="option" className="border-b border-gray-100 last:border-0">
+              <div
+                key={product.id}
+                role="option"
+                aria-selected={false}
+                className="border-b border-gray-100 last:border-0"
+              >
                 <Link
                   href={`/product/${product.id}`}
                   className="flex items-center gap-3 px-3 py-2.5 text-left hover:bg-green-50"
@@ -237,7 +253,7 @@ export default function SearchBarWithSuggestions({
                   onAfterSuggestionPick?.();
                 }}
               >
-                View all results
+                {t('viewAll')}
               </Link>
             </div>
           )}

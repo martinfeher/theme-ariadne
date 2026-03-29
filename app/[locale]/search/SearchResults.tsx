@@ -1,14 +1,40 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import Header from '../components/Header';
-import ProductCard from '../components/ProductCard';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
+import Header from '@/app/components/Header';
+import ProductCard from '@/app/components/ProductCard';
 import { fetchProducts } from '@/lib/fetch-products';
-import type { Product } from '../types/product';
+import type { Product } from '@/app/types/product';
+
+const FILTER_CATEGORY_SLUGS = [
+  'milks-dairies',
+  'wines-alcohol',
+  'clothing-beauty',
+  'pet-foods-toy',
+  'fast-food',
+  'baking-material',
+  'vegetables',
+  'fresh-seafood',
+  'noodles-rice',
+  'ice-cream',
+  'coffees-teas',
+  'pet-foods',
+  'meats',
+  'fruits',
+] as const;
+
+type FilterCategorySlug = (typeof FILTER_CATEGORY_SLUGS)[number];
+
+function isFilterCategorySlug(s: string): s is FilterCategorySlug {
+  return (FILTER_CATEGORY_SLUGS as readonly string[]).includes(s);
+}
 
 export default function SearchResults() {
+  const t = useTranslations('Search');
+  const tBar = useTranslations('SearchBar');
   const searchParams = useSearchParams();
   const q = searchParams.get('q') ?? '';
   const category = searchParams.get('category') ?? '';
@@ -41,6 +67,22 @@ export default function SearchResults() {
 
   const hasQuery = Boolean(q.trim() || (category && category !== 'all'));
 
+  const categoryDisplay =
+    category && category !== 'all'
+      ? isFilterCategorySlug(category)
+        ? tBar(`categories.${category}`)
+        : category
+      : null;
+
+  const foundLine =
+    products.length === 0
+      ? hasQuery
+        ? t('noneWithQuery')
+        : t('emptyHint')
+      : products.length === 1
+        ? t('foundOne')
+        : t('found', { count: products.length });
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -50,47 +92,40 @@ export default function SearchResults() {
           <ol className="flex flex-wrap items-center gap-1">
             <li>
               <Link href="/" className="hover:text-green-700">
-                Home
+                {t('breadcrumbHome')}
               </Link>
             </li>
             <li className="text-gray-400">/</li>
-            <li className="font-medium text-green-600">Search</li>
+            <li className="font-medium text-green-600">{t('breadcrumbSearch')}</li>
           </ol>
         </nav>
 
         <h1 className="mt-6 text-2xl font-bold text-slate-900 md:text-3xl">
           {q.trim() ? (
             <>
-              Search results for{' '}
+              {t('resultsFor')}{' '}
               <span className="text-green-600">&quot;{q.trim()}&quot;</span>
             </>
           ) : (
-            'Search results'
+            t('resultsTitle')
           )}
         </h1>
-        {category && category !== 'all' && (
+        {categoryDisplay && (
           <p className="mt-1 text-sm text-gray-500">
-            Category filter: <span className="font-medium">{category}</span>
+            {t('categoryFilter')}{' '}
+            <span className="font-medium">{categoryDisplay}</span>
           </p>
         )}
 
         {status === 'loading' && (
-          <p className="mt-10 text-gray-500">Loading products…</p>
+          <p className="mt-10 text-gray-500">{t('loading')}</p>
         )}
         {status === 'error' && (
-          <p className="mt-10 text-red-600">
-            Something went wrong. Please try again.
-          </p>
+          <p className="mt-10 text-red-600">{t('error')}</p>
         )}
         {status === 'ok' && (
           <>
-            <p className="mt-4 text-gray-600">
-              {products.length === 0
-                ? hasQuery
-                  ? 'No products matched your search.'
-                  : 'Enter a search term or choose a category in the header, then search.'
-                : `${products.length} product${products.length === 1 ? '' : 's'} found`}
-            </p>
+            <p className="mt-4 text-gray-600">{foundLine}</p>
             {products.length > 0 && (
               <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {products.map((product) => (
@@ -107,7 +142,7 @@ export default function SearchResults() {
                 href="/"
                 className="mt-8 inline-block rounded-lg bg-green-500 px-6 py-3 text-sm font-medium text-white hover:bg-green-600"
               >
-                Back to home
+                {t('backHome')}
               </Link>
             )}
           </>

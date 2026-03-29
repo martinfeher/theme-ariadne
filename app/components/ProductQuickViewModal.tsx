@@ -2,18 +2,33 @@
 
 import React, { useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { X } from 'lucide-react';
 import type { Product } from '../types/product';
 
-const FILTER_CATEGORY_LABELS: Record<string, string> = {
-  'milks-dairies': 'Milks & Dairies',
-  'coffees-teas': 'Coffees & Teas',
-  'pet-foods': 'Pet Foods',
-  meats: 'Meats',
-  vegetables: 'Vegetables',
-  fruits: 'Fruits',
-};
+const FILTER_CATEGORY_SLUGS = [
+  'milks-dairies',
+  'wines-alcohol',
+  'clothing-beauty',
+  'pet-foods-toy',
+  'fast-food',
+  'baking-material',
+  'vegetables',
+  'fresh-seafood',
+  'noodles-rice',
+  'ice-cream',
+  'coffees-teas',
+  'pet-foods',
+  'meats',
+  'fruits',
+] as const;
+
+type FilterCategorySlug = (typeof FILTER_CATEGORY_SLUGS)[number];
+
+function isFilterCategorySlug(s: string): s is FilterCategorySlug {
+  return (FILTER_CATEGORY_SLUGS as readonly string[]).includes(s);
+}
 
 function categoryHref(slug: string) {
   return `/category/${slug.toLowerCase().replace(/\s+/g, '-')}`;
@@ -40,6 +55,9 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
   onTabChange,
   onAddToCart,
 }) => {
+  const t = useTranslations('ProductQuickView');
+  const tBar = useTranslations('SearchBar');
+
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -63,12 +81,11 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
   const filterCategoryLinks =
     product.categories?.filter((c) => c !== 'all').map((id) => ({
       href: `/category/${id}`,
-      label: FILTER_CATEGORY_LABELS[id] ?? id,
+      label: isFilterCategorySlug(id) ? tBar(`categories.${id}`) : id,
     })) ?? [];
 
   const descriptionText =
-    product.description?.trim() ||
-    'No description is available for this product yet.';
+    product.description?.trim() || t('noDescription');
 
   return (
     <div
@@ -80,7 +97,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
       <button
         type="button"
         className="absolute inset-0 bg-black/50 backdrop-blur-[1px]"
-        aria-label="Close dialog"
+        aria-label={t('close')}
         onClick={onClose}
       />
       <div className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl bg-white shadow-2xl">
@@ -89,7 +106,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
             type="button"
             onClick={onClose}
             className="rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800"
-            aria-label="Close"
+            aria-label={t('close')}
           >
             <X className="h-5 w-5" />
           </button>
@@ -133,7 +150,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
               <div className="mt-4">
                 <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
-                  Categories
+                  {t('categories')}
                 </p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   <Link
@@ -162,14 +179,14 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                   onClick={onAddToCart}
                   className="rounded-lg bg-green-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-green-600"
                 >
-                  Add to cart
+                  {t('addToCart')}
                 </button>
                 <Link
                   href={`/product/${product.id}`}
                   onClick={onClose}
                   className="rounded-lg border border-gray-200 px-6 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
                 >
-                  Full product page
+                  {t('fullPage')}
                 </Link>
               </div>
             </div>
@@ -191,7 +208,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 }`}
                 onClick={() => onTabChange('description')}
               >
-                Description
+                {t('description')}
               </button>
               <button
                 type="button"
@@ -204,7 +221,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 }`}
                 onClick={() => onTabChange('similar')}
               >
-                Similar products
+                {t('similar')}
               </button>
             </div>
 
@@ -217,9 +234,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
               {activeTab === 'similar' && (
                 <div>
                   {similarProducts.length === 0 ? (
-                    <p className="text-sm text-gray-500">
-                      No similar products found in this collection.
-                    </p>
+                    <p className="text-sm text-gray-500">{t('noSimilar')}</p>
                   ) : (
                     <ul className="grid gap-4 sm:grid-cols-2">
                       {similarProducts.map((p) => (

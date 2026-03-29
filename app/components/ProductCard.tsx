@@ -2,7 +2,8 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { Heart, Shuffle } from 'lucide-react';
 import { IoAdd } from 'react-icons/io5';
 import { FaMinus } from "react-icons/fa6";
@@ -34,6 +35,7 @@ function getSimilarProducts(current: Product, all: Product[]): Product[] {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) => {
+  const t = useTranslations('ProductCard');
   const { addItem, removeOne, getQuantity } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
   const { isInCompare, addToCompare, removeFromCompare, canAdd } = useCompare();
@@ -170,11 +172,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
                   onClick={(e) => {
                     e.preventDefault();
                   }}
-                  aria-label="Remove from cart"
+                  aria-label={t('removeFromCart')}
                 >
                   <button
                     type="button"
-                    aria-label="Remove from cart"
+                    aria-label={t('removeFromCart')}
                     onClick={() => removeFromCart()}
                     className="bg-green-500 -ml-1 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer"
                   >
@@ -195,7 +197,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
                   ? 'text-red-500 hover:bg-red-50'
                   : 'hover:bg-red-50 hover:text-red-500'
               }`}
-              aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+              aria-label={wishlisted ? t('removeWishlist') : t('addWishlist')}
               aria-pressed={wishlisted}
               onClick={() => toggleWishlist(product)}
             >
@@ -206,10 +208,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
               disabled={compareDisabled}
               title={
                 compareDisabled
-                  ? `Compare list is full (${MAX_COMPARE_PRODUCTS} products)`
+                  ? t('compareFull', { max: MAX_COMPARE_PRODUCTS })
                   : compared
-                    ? 'Remove from compare'
-                    : 'Add to compare'
+                    ? t('removeCompare')
+                    : t('addCompare')
               }
               className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-colors cursor-pointer ${
                 compared
@@ -218,7 +220,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
                     ? 'cursor-not-allowed bg-gray-100 text-gray-300'
                     : 'bg-white hover:bg-blue-50 hover:text-blue-500 text-gray-700'
               }`}
-              aria-label={compared ? 'Remove from compare' : 'Add to compare'}
+              aria-label={compared ? t('removeCompare') : t('addCompare')}
               aria-pressed={compared}
               onClick={handleCompareIconClick}
             >
@@ -252,7 +254,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
 
           <div className="mb-3" onClick={(e) => e.stopPropagation()}>
             <span className="text-sm text-gray-500">
-              By{' '}
+              {t('by')}{' '}
               <Link
                 href={`/vendor/${product.vendor.toLowerCase().replace(/\s+/g, '-')}`}
                 className="text-green-500 hover:text-green-600"

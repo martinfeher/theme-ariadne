@@ -1,24 +1,28 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import ProductCard from './ProductCard';
 import type { Product } from '../types/product';
 import { fetchProducts } from '@/lib/fetch-products';
 
+const TAB_IDS = [
+  'all',
+  'milks-dairies',
+  'coffees-teas',
+  'pet-foods',
+  'meats',
+  'vegetables',
+  'fruits',
+] as const;
+
+type TabId = (typeof TAB_IDS)[number];
+
 const PopularProducts: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('all');
+  const t = useTranslations('PopularProducts');
+  const [activeTab, setActiveTab] = useState<TabId>('all');
   const [products, setProducts] = useState<Product[]>([]);
   const [loadState, setLoadState] = useState<'loading' | 'ok' | 'error'>('loading');
-
-  const categories = [
-    { id: 'all', name: 'All' },
-    { id: 'milks-dairies', name: 'Milks & Dairies' },
-    { id: 'coffees-teas', name: 'Coffees & Teas' },
-    { id: 'pet-foods', name: 'Pet Foods' },
-    { id: 'meats', name: 'Meats' },
-    { id: 'vegetables', name: 'Vegetables' },
-    { id: 'fruits', name: 'Fruits' },
-  ];
 
   useEffect(() => {
     let cancelled = false;
@@ -47,33 +51,31 @@ const PopularProducts: React.FC = () => {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">Popular Products</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-8">{t('title')}</h2>
 
           <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {categories.map((category) => (
+            {TAB_IDS.map((id) => (
               <button
-                key={category.id}
+                key={id}
                 type="button"
-                onClick={() => setActiveTab(category.id)}
+                onClick={() => setActiveTab(id)}
                 className={`px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                  activeTab === category.id
+                  activeTab === id
                     ? 'bg-green-500 text-white'
                     : 'bg-white text-gray-600 hover:bg-green-50 hover:text-green-500'
                 }`}
               >
-                {category.name}
+                {t(`tabs.${id}`)}
               </button>
             ))}
           </div>
         </div>
 
         {loadState === 'loading' && (
-          <p className="text-center text-gray-500 py-12">Loading products…</p>
+          <p className="text-center text-gray-500 py-12">{t('loading')}</p>
         )}
         {loadState === 'error' && (
-          <p className="text-center text-red-600 py-12">
-            Could not load products. Please refresh the page.
-          </p>
+          <p className="text-center text-red-600 py-12">{t('error')}</p>
         )}
         {loadState === 'ok' && (
           <>
@@ -88,9 +90,7 @@ const PopularProducts: React.FC = () => {
             </div>
 
             {filteredProducts.length === 0 && (
-              <p className="text-center text-gray-500 py-12">
-                No products in this category yet.
-              </p>
+              <p className="text-center text-gray-500 py-12">{t('noProducts')}</p>
             )}
 
             {filteredProducts.length < products.length && activeTab !== 'all' && (
@@ -100,7 +100,7 @@ const PopularProducts: React.FC = () => {
                   onClick={() => setActiveTab('all')}
                   className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors"
                 >
-                  View All Products
+                  {t('viewAll')}
                 </button>
               </div>
             )}

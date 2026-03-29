@@ -85,14 +85,16 @@ const Header = () => {
                 onSubmit={handleSearchSubmit}
               />
             </div>
+            
 
             <div className="flex items-center">
+                 <div className="hidden shrink-0 items-center lg:flex">
+                  <LanguageSwitcher />
+                </div>
               {/* Header Actions */}
               <div className="flex items-center space-x-6">
                 {/* Location */}
-                <div className="hidden shrink-0 items-center lg:flex">
-                  <LanguageSwitcher />
-                </div>
+             
                 <div className="relative">
                   <Combobox
                     options={[
