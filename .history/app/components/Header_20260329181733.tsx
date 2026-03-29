@@ -6,13 +6,9 @@ import Image from 'next/image';
 import { Combobox } from "@/components/ui/combobox"
 import ShoppingCartIcon from '@/app/components/icons/ShoppingCartIcon';
 import { useCart } from '@/app/context/CartContext';
-import { useWishlist } from '@/app/context/WishlistContext';
-import { useCompare } from '@/app/context/CompareContext';
 
 const Header = () => {
   const { itemCount, openCart, toggleCart } = useCart();
-  const { count: wishlistCount } = useWishlist();
-  const { count: compareCount } = useCompare();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
@@ -55,7 +51,7 @@ const Header = () => {
             <div className="flex-1 max-w-2xl mx-8">
               <div className="flex items-center bg-white border border-[#89b178]  rounded-lg shadow-sm overflow-hidden">
                 {/* Category Dropdown */}
-                <div className="relative border-r border-gray-200 cursor-pointer">
+                <div className="relative border-r border-gray-200">
                   <Combobox
                     options={[
                       { value: "all", label: "All Categories" },
@@ -73,7 +69,7 @@ const Header = () => {
                     value={selectedCategory}
                     onValueChange={setSelectedCategory}
                     placeholder="All Categories"
-                    className="w-44 border-0 rounded-none bg-transparent cursor-pointer"
+                    className="w-44 border-0 rounded-none bg-transparent"
                   />
                 </div>
                 
@@ -93,78 +89,60 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="flex items-center">
-              {/* Header Actions */}
-              <div className="flex items-center space-x-6">
-                {/* Location */}
-                <div className="relative">
-                  <Combobox
-                    options={[
-                      { value: "", label: "Your Location" },
-                      { value: "alabama", label: "Alabama" },
-                      { value: "alaska", label: "Alaska" },
-                      { value: "arizona", label: "Arizona" },
-                      { value: "delaware", label: "Delaware" },
-                      { value: "florida", label: "Florida" },
-                    ]}
-                    value={selectedLocation}
-                    onValueChange={setSelectedLocation}
-                    placeholder="Your Location"
-                    className="bg-gray-100 hover:bg-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-44 rounded-sm cursor-pointer"
-                  />  
-                </div>
+            {/* Header Actions */}
+            <div className="flex items-center space-x-6">
+              {/* Location */}
+              <div className="relative">
+                <Combobox
+                  options={[
+                    { value: "", label: "Your Location" },
+                    { value: "alabama", label: "Alabama" },
+                    { value: "alaska", label: "Alaska" },
+                    { value: "arizona", label: "Arizona" },
+                    { value: "delaware", label: "Delaware" },
+                    { value: "florida", label: "Florida" },
+                  ]}
+                  value={selectedLocation}
+                  onValueChange={setSelectedLocation}
+                  placeholder="Your Location"
+                  className="bg-gray-100 hover:bg-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-44 rounded-sm"
+                />
+              </div>
 
               {/* Compare */}
               <div className="flex flex-col items-center">
                 <div className="relative">
-                  <Link
-                    href="/compare"
-                    className="relative text-gray-600 hover:text-green-500"
-                    aria-label={
-                      compareCount > 0
-                        ? `Compare products, ${compareCount} in list`
-                        : 'Compare products'
-                    }
-                  >
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <Link href="/compare" className="text-gray-600 hover:text-green-500">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    {compareCount > 0 && (
-                      <span className="absolute -top-2 -right-2 flex min-h-[1.25rem] min-w-[1.25rem] items-center justify-center rounded-full border border-green-200 bg-green-100 px-1 text-[10px] font-bold text-green-800">
-                        {compareCount}
-                      </span>
-                    )}
+                    <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
                   </Link>
                 </div>
-                <span className="text-xs text-gray-500 mt-1 cursor-pointer">Compare</span>
+                <span className="text-xs text-gray-500 mt-1">Compare</span>
               </div>
 
               {/* Wishlist */}
-              <div className="flex flex-col items-center mb-[4px]">
-              {/* <div className="flex flex-col items-center -mt-[2px]"> */}
+              <div className="flex flex-col items-center">
                 <div className="relative">
                   <Link href="/wishlist" className="text-gray-600 hover:text-green-500">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
-                    {wishlistCount > 0 && (
-                      <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full min-w-[1.25rem] h-5 px-1 flex items-center justify-center">
-                        {wishlistCount > 99 ? '99+' : wishlistCount}
-                      </span>
-                    )}
+                    <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">6</span>
                   </Link>
                 </div>
-                <span className="text-xs text-gray-500 mt-1 cursor-pointer">Wishlist</span>
+                <span className="text-xs text-gray-500 mt-1">Wishlist</span>
               </div>
 
              
 
               {/* Account */}
-              <div className="flex flex-col items-center relative mt-[4px]">
+              <div className="flex flex-col items-center relative">
                 <div className="relative">
                   <button 
                     onClick={() => setIsAccountOpen(!isAccountOpen)}
-                    className="text-gray-600 hover:text-green-500 cursor-pointer"
+                    className="text-gray-600 hover:text-green-500"
                     aria-label="Account menu"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,7 +150,7 @@ const Header = () => {
                     </svg>
                   </button>
                 </div>
-                <span className="text-xs text-gray-500 mt-1 cursor-pointer">Account</span>
+                <span className="text-xs text-gray-500 mt-1">Account</span>
 
                 {isAccountOpen && (
                   <>
@@ -198,42 +176,58 @@ const Header = () => {
                           Order Tracking
                         </Link>
                         <Link href="/vouchers" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                          <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-                          </svg>
-                          My Voucher
-                        </Link>
-                        <Link href="/wishlist" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                          <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                          </svg>
-                          My Wishlist
-                        </Link>
-                        <Link href="/settings" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                          <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-                          </svg>
-                          Settings
-                        </Link>
-                        <hr className="my-2" />
-                        <Link href="/login" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                          <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
-                          </svg>
-                          Sign Out
-                        </Link>
-                      </div>
+                  <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border z-50">
+                    <div className="py-2">
+                      <Link href="/account" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                        </svg>
+                        My Account
+                      </Link>
+                      <Link href="/order-tracking" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                        </svg>
+                        Order Tracking
+                      </Link>
+                      <Link href="/vouchers" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                        </svg>
+                        My Voucher
+                      </Link>
+                      <Link href="/wishlist" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        My Wishlist
+                      </Link>
+                      <Link href="/settings" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                        </svg>
+                        Settings
+                      </Link>
+                      <hr className="my-2" />
+                      <Link href="/login" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
+                        </svg>
+                        Sign Out
+                      </Link>
                     </div>
-                  </>
+                  </div>
                 )}
+
                 
               </div>
-               <div className="flex flex-col items-center relative mt-[4px]">
+               {/* Cart — opens off-canvas panel */}
+               <div className="flex flex-col items-center relative">
                 <div className="relative">
                   <button
                     type="button"
                     onClick={toggleCart}
-                    className="text-gray-600 hover:text-green-500 cursor-pointer"
+                    className="text-gray-600 hover:text-green-500"
                     aria-label="View shopping cart"
                   >
                     <ShoppingCartIcon className="w-6 h-6" />
@@ -244,9 +238,8 @@ const Header = () => {
                     )}
                   </button>
                 </div>
-                <span className="text-xs text-gray-500 mt-1 cursor-pointer">Cart</span>
+                <span className="text-xs text-gray-500 mt-1">Cart</span>
               </div>
-            </div>
             </div>
           </div>
         </div>
@@ -380,33 +373,11 @@ const Header = () => {
 
             {/* Mobile Actions */}
             <div className="lg:hidden flex items-center space-x-4">
-              <Link
-                href="/compare"
-                className="relative text-gray-600"
-                aria-label={
-                  compareCount > 0
-                    ? `Compare products, ${compareCount} in list`
-                    : 'Compare products'
-                }
-              >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {compareCount > 0 && (
-                  <span className="absolute -top-2 -right-2 flex h-4 min-w-[1rem] items-center justify-center rounded-full border border-green-200 bg-green-100 px-0.5 text-[9px] font-bold text-green-800">
-                    {compareCount}
-                  </span>
-                )}
-              </Link>
-              <Link href="/wishlist" className="relative text-gray-600">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <Link href="/wishlist" className="relative">
+                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                {wishlistCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-[10px] rounded-full min-w-[1rem] h-4 px-0.5 flex items-center justify-center">
-                    {wishlistCount > 99 ? '99+' : wishlistCount}
-                  </span>
-                )}
+                <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">4</span>
               </Link>
               <button
                 type="button"

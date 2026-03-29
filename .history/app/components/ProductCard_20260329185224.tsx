@@ -190,7 +190,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
           >
             <button
               type="button"
-              className={`w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md transition-colors cursor-pointer ${
+              className={`w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md transition-colors ${
                 wishlisted
                   ? 'text-red-500 hover:bg-red-50'
                   : 'hover:bg-red-50 hover:text-red-500'
@@ -211,7 +211,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
                     ? 'Remove from compare'
                     : 'Add to compare'
               }
-              className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-colors cursor-pointer ${
+              className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-colors cur ${
                 compared
                   ? 'bg-green-50 text-green-600 ring-1 ring-green-200'
                   : compareDisabled

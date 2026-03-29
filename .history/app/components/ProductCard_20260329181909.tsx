@@ -1,16 +1,12 @@
 'use client';
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Heart, Shuffle } from 'lucide-react';
-import { IoAdd } from 'react-icons/io5';
-import { FaMinus } from "react-icons/fa6";
-
+import { IoAdd, IoTrashOutline } from 'react-icons/io5';
 import type { Product } from '../types/product';
 import { useCart } from '../context/CartContext';
-import { useWishlist } from '../context/WishlistContext';
-import { useCompare, MAX_COMPARE_PRODUCTS } from '../context/CompareContext';
 import ProductQuickViewModal, { type ModalTab } from './ProductQuickViewModal';
 
 interface ProductCardProps {
@@ -35,11 +31,6 @@ function getSimilarProducts(current: Product, all: Product[]): Product[] {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) => {
   const { addItem, removeOne, getQuantity } = useCart();
-  const { isInWishlist, toggleWishlist } = useWishlist();
-  const { isInCompare, addToCompare, removeFromCompare, canAdd } = useCompare();
-  const wishlisted = isInWishlist(product.id);
-  const compared = isInCompare(product.id);
-  const compareDisabled = !canAdd(product.id) && !compared;
   const [isHovered, setIsHovered] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState<ModalTab>('description');
@@ -78,26 +69,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
   const removeFromCart = () => {
     removeOne(product.id);
   };
-
-  const handleCompareIconClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (compareDisabled) return;
-      if (compared) {
-        removeFromCompare(product.id);
-      } else {
-        addToCompare(product);
-      }
-    },
-    [
-      compareDisabled,
-      compared,
-      product,
-      addToCompare,
-      removeFromCompare,
-    ]
-  );
 
   const renderStars = (rating: number) => {
     const filledStars = Math.floor(rating);
@@ -159,14 +130,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
                 <IoAdd className="w-6 h-6 cursor-pointer" />
               )}
               {productCartCounter > 0 && (
-                <div className="w-6 h-6 text-[16px] cursor-pointer" >{productCartCounter}</div>
+                <div className="w-6 h-6 text-[16px] cursor-pointer">{productCartCounter}</div>
               )}
             </button>
             {productCartCounter > 0 && (
               <div>
-                <div className="absolute top-0 right-[10px] h-[37px] w-[260px] bg-slate-200 rounded-full" />
+                <div className="absolute top-0 right-[10px] h-[37px] w-[260px] bg-green-500 rounded-full" />
                 <div
-                  className="absolute top-0 right-[10px] h-[37px] w-[238px] flex items-center space-x-1 text-white mr-4 mb-4 transition-colors text-sm z-[100] cursor-pointer rounded-full"
+                  className="absolute top-0 right-[10px] h-[37px] w-[238px] flex items-center space-x-1 text-white px-1.5 py-1.5 mr-4 mb-4 transition-colors text-sm z-[100] cursor-pointer rounded-full"
                   onClick={(e) => {
                     e.preventDefault();
                   }}
@@ -176,53 +147,32 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
                     type="button"
                     aria-label="Remove from cart"
                     onClick={() => removeFromCart()}
-                    className="bg-green-500 -ml-1 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer"
                   >
-                    <FaMinus className="w-4 h-4" />
+                    <FaMI className="w-6 h-6 cursor-pointer" />
+                    {/* <IoTrashOutline className="w-6 h-6 cursor-pointer" /> */}
                   </button>
                 </div>
               </div>
             )}
           </div>
+
           <div
-            className="absolute top-3 right-3 flex flex-col space-y-2 opacity-100 transition-opacity duration-300 md:opacity-0 md:group-hover:opacity-100"
+            className="absolute top-3 right-3 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
-              className={`w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md transition-colors cursor-pointer ${
-                wishlisted
-                  ? 'text-red-500 hover:bg-red-50'
-                  : 'hover:bg-red-50 hover:text-red-500'
-              }`}
-              aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-              aria-pressed={wishlisted}
-              onClick={() => toggleWishlist(product)}
+              className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-red-50 hover:text-red-500 transition-colors"
+              aria-label="Add to wishlist"
             >
-              <Heart className={`h-4 w-4 ${wishlisted ? 'fill-current' : ''}`} />
+              <Heart className="w-4 h-4" />
             </button>
             <button
               type="button"
-              disabled={compareDisabled}
-              title={
-                compareDisabled
-                  ? `Compare list is full (${MAX_COMPARE_PRODUCTS} products)`
-                  : compared
-                    ? 'Remove from compare'
-                    : 'Add to compare'
-              }
-              className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-colors cursor-pointer ${
-                compared
-                  ? 'bg-green-50 text-green-600 ring-1 ring-green-200'
-                  : compareDisabled
-                    ? 'cursor-not-allowed bg-gray-100 text-gray-300'
-                    : 'bg-white hover:bg-blue-50 hover:text-blue-500 text-gray-700'
-              }`}
-              aria-label={compared ? 'Remove from compare' : 'Add to compare'}
-              aria-pressed={compared}
-              onClick={handleCompareIconClick}
+              className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-blue-50 hover:text-blue-500 transition-colors"
+              aria-label="Compare"
             >
-              <Shuffle className="h-4 w-4" />
+              <Shuffle className="w-4 h-4" />
             </button>
           </div>
 
