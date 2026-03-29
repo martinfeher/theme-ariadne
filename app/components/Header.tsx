@@ -3,13 +3,16 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Combobox } from "@/components/ui/combobox"
+import { useRouter } from 'next/navigation';
+import { Combobox } from '@/components/ui/combobox';
+import SearchBarWithSuggestions from '@/app/components/SearchBarWithSuggestions';
 import ShoppingCartIcon from '@/app/components/icons/ShoppingCartIcon';
 import { useCart } from '@/app/context/CartContext';
 import { useWishlist } from '@/app/context/WishlistContext';
 import { useCompare } from '@/app/context/CompareContext';
 
 const Header = () => {
+  const router = useRouter();
   const { itemCount, openCart, toggleCart } = useCart();
   const { count: wishlistCount } = useWishlist();
   const { count: compareCount } = useCompare();
@@ -18,6 +21,24 @@ const Header = () => {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const submitSearch = () => {
+    const params = new URLSearchParams();
+    const q = searchQuery.trim();
+    if (q) params.set('q', q);
+    if (selectedCategory && selectedCategory !== 'all') {
+      params.set('category', selectedCategory);
+    }
+    const qs = params.toString();
+    router.push(qs ? `/search?${qs}` : '/search');
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    submitSearch();
+  };
 
   const categories = [
     { name: 'Milks and Dairies', icon: '/icons/category-1.svg' },
@@ -51,46 +72,16 @@ const Header = () => {
               </Link>
             </div>
 
-            {/* Search Bar */}
-            <div className="flex-1 max-w-2xl mx-8">
-              <div className="flex items-center bg-white border border-[#89b178]  rounded-lg shadow-sm overflow-hidden">
-                {/* Category Dropdown */}
-                <div className="relative border-r border-gray-200 cursor-pointer">
-                  <Combobox
-                    options={[
-                      { value: "all", label: "All Categories" },
-                      { value: "milks-dairies", label: "Milks and Dairies" },
-                      { value: "wines-alcohol", label: "Wines & Alcohol" },
-                      { value: "clothing-beauty", label: "Clothing & Beauty" },
-                      { value: "pet-foods-toy", label: "Pet Foods & Toy" },
-                      { value: "fast-food", label: "Fast food" },
-                      { value: "baking-material", label: "Baking material" },
-                      { value: "vegetables", label: "Vegetables" },
-                      { value: "fresh-seafood", label: "Fresh Seafood" },
-                      { value: "noodles-rice", label: "Noodles & Rice" },
-                      { value: "ice-cream", label: "Ice cream" }
-                    ]}
-                    value={selectedCategory}
-                    onValueChange={setSelectedCategory}
-                    placeholder="All Categories"
-                    className="w-44 border-0 rounded-none bg-transparent cursor-pointer"
-                  />
-                </div>
-                
-                {/* Search Input */}
-                <input
-                  type="text"
-                  placeholder="Search for items..."
-                  className="flex-1 px-4 py-3 text-sm border-0 focus:outline-none focus:ring-0 bg-transparent placeholder-gray-400"
-                />
-                
-                {/* Search Button */}
-                <button className="bg-green-500 text-white px-6 py-3 hover:bg-green-600 transition-colors flex items-center justify-center" aria-label="Search products">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-              </div>
+            {/* Search bar + live suggestions */}
+            <div className="flex-1 max-w-2xl mx-8 overflow-visible">
+              <SearchBarWithSuggestions
+                variant="desktop"
+                searchQuery={searchQuery}
+                onSearchQueryChange={setSearchQuery}
+                selectedCategory={selectedCategory}
+                onCategoryChange={setSelectedCategory}
+                onSubmit={handleSearchSubmit}
+              />
             </div>
 
             <div className="flex items-center">
@@ -429,21 +420,17 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t">
+          <div className="lg:hidden overflow-visible bg-white border-t">
             <div className="px-4 py-4 space-y-4">
-              {/* Mobile Search */}
-              <div className="flex">
-                <input
-                  type="text"
-                  placeholder="Search for items..."
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                />
-                <button className="bg-green-500 text-white px-4 py-2 rounded-r-lg" aria-label="Search products">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-              </div>
+              <SearchBarWithSuggestions
+                variant="mobile"
+                searchQuery={searchQuery}
+                onSearchQueryChange={setSearchQuery}
+                selectedCategory={selectedCategory}
+                onCategoryChange={setSelectedCategory}
+                onSubmit={handleSearchSubmit}
+                onAfterSuggestionPick={() => setIsMobileMenuOpen(false)}
+              />
 
               {/* Mobile Navigation Links */}
               <nav className="space-y-2">
