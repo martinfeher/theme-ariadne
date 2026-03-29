@@ -15,6 +15,89 @@ import { useCompare } from '@/app/context/CompareContext';
 /** Show fixed search + cart bar after scrolling past this many pixels */
 const SCROLL_Y_SHOW_FIXED_BAR = 64;
 
+const BROWSE_CATEGORIES = [
+  { name: 'Milks and Dairies', icon: '/icons/category-1.svg' },
+  { name: 'Clothing & beauty', icon: '/icons/category-2.svg' },
+  { name: 'Pet Foods & Toy', icon: '/icons/category-3.svg' },
+  { name: 'Baking material', icon: '/icons/category-4.svg' },
+  { name: 'Fresh Fruit', icon: '/icons/category-5.svg' },
+  { name: 'Wines & Drinks', icon: '/icons/category-6.svg' },
+  { name: 'Fresh Seafood', icon: '/icons/category-7.svg' },
+  { name: 'Fast food', icon: '/icons/category-8.svg' },
+  { name: 'Vegetables', icon: '/icons/category-9.svg' },
+  { name: 'Bread and Juice', icon: '/icons/category-10.svg' },
+] as const;
+
+function BrowseCategoriesControl({
+  isOpen,
+  onToggle,
+  onCloseRequest,
+  compact,
+}: {
+  isOpen: boolean;
+  onToggle: () => void;
+  onCloseRequest: () => void;
+  compact?: boolean;
+}) {
+  const t = useTranslations('Header');
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={onToggle}
+        className={
+          compact
+            ? 'flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-green-500 text-white transition-colors hover:bg-green-600'
+            : 'flex cursor-pointer items-center space-x-2 rounded-lg bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600'
+        }
+        aria-label={t('browseCategories')}
+        aria-expanded={isOpen ? 'true' : 'false'}
+      >
+        <svg className="h-5 w-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+        {!compact && (
+          <>
+            <span className="whitespace-nowrap">{t('browseCategories')}</span>
+            <svg className="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </>
+        )}
+      </button>
+
+      {isOpen && (
+        <div
+          className={
+            compact
+              ? 'absolute left-0 top-full z-60 mt-2 max-h-[min(24rem,70vh)] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto rounded-lg border bg-white py-2 shadow-xl'
+              : 'absolute left-0 top-full z-60 mt-2 max-h-[min(24rem,70vh)] w-96 overflow-y-auto rounded-lg border bg-white shadow-xl'
+          }
+        >
+          <div className="grid grid-cols-2 gap-4 p-4">
+            {BROWSE_CATEGORIES.map((category, index) => (
+              <Link
+                key={index}
+                href={`/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+                className="flex items-center space-x-3 rounded p-2 transition-colors hover:bg-gray-50"
+                onClick={onCloseRequest}
+              >
+                <Image src={category.icon} alt={category.name} width={24} height={24} />
+                <span className="text-sm text-gray-700">{category.name}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 const Header = () => {
   const t = useTranslations('Header');
   const router = useRouter();
@@ -55,26 +138,31 @@ const Header = () => {
     submitSearch();
   };
 
-  const categories = [
-    { name: 'Milks and Dairies', icon: '/icons/category-1.svg' },
-    { name: 'Clothing & beauty', icon: '/icons/category-2.svg' },
-    { name: 'Pet Foods & Toy', icon: '/icons/category-3.svg' },
-    { name: 'Baking material', icon: '/icons/category-4.svg' },
-    { name: 'Fresh Fruit', icon: '/icons/category-5.svg' },
-    { name: 'Wines & Drinks', icon: '/icons/category-6.svg' },
-    { name: 'Fresh Seafood', icon: '/icons/category-7.svg' },
-    { name: 'Fast food', icon: '/icons/category-8.svg' },
-    { name: 'Vegetables', icon: '/icons/category-9.svg' },
-    { name: 'Bread and Juice', icon: '/icons/category-10.svg' },
-  ];
+  const toggleCategories = () => setIsCategoriesOpen((o) => !o);
+  const closeCategories = () => setIsCategoriesOpen(false);
 
   return (
     <header className="header-area header-style-1 header-height-2">
       {/* Fixed search + cart only after scrolling down (avoids duplicate controls when at top) */}
       {showFixedSearchCart && (
         <>
-          <div className="fixed inset-x-0 top-0 z-40 w-full overflow-visible border-b border-[#c9ccb8] bg-[#ecede2] pt-[max(0.5rem,env(safe-area-inset-top))] shadow-sm">
+          <div className="fixed inset-x-0 top-0 z-200 w-full overflow-visible border-b border-[#c9ccb8] bg-[#ecede2] pt-[max(0.5rem,env(safe-area-inset-top))] shadow-sm">
             <div className="container mx-auto flex items-center gap-2 px-4 pb-2 sm:gap-3">
+              <div className="hidden shrink-0 lg:block">
+                <BrowseCategoriesControl
+                  isOpen={isCategoriesOpen}
+                  onToggle={toggleCategories}
+                  onCloseRequest={closeCategories}
+                />
+              </div>
+              <div className="shrink-0 lg:hidden">
+                <BrowseCategoriesControl
+                  isOpen={isCategoriesOpen}
+                  onToggle={toggleCategories}
+                  onCloseRequest={closeCategories}
+                  compact
+                />
+              </div>
               <div className="min-w-0 flex-1 overflow-visible">
                 <div className="hidden lg:block">
                   <SearchBarWithSuggestions
@@ -338,40 +426,13 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              {/* Categories Dropdown */}
-              <div className="relative">
-                <button 
-                  onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
-                  className="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors cursor-pointer"
-                  aria-label={t('browseCategories')}
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                  </svg>
-                  <span>{t('browseCategories')}</span>
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
-
-                {/* Categories Dropdown Menu */}
-                {isCategoriesOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-96 bg-white rounded-lg shadow-xl border z-50">
-                    <div className="grid grid-cols-2 gap-4 p-4">
-                      {categories.map((category, index) => (
-                        <Link 
-                          key={index}
-                          href={`/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
-                          className="flex items-center space-x-3 p-2 rounded hover:bg-gray-50 transition-colors"
-                        >
-                          <Image src={category.icon} alt={category.name} width={24} height={24} />
-                          <span className="text-sm text-gray-700">{category.name}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              {!showFixedSearchCart && (
+                <BrowseCategoriesControl
+                  isOpen={isCategoriesOpen}
+                  onToggle={toggleCategories}
+                  onCloseRequest={closeCategories}
+                />
+              )}
 
               {/* Main Navigation */}
               <nav className="flex items-center space-x-8">
