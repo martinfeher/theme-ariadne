@@ -15,6 +15,25 @@ import { useCompare } from '@/app/context/CompareContext';
 /** Show fixed search + cart bar after scrolling past this many pixels */
 const SCROLL_Y_SHOW_FIXED_BAR = 100;
 
+const locationOptions = [
+  // { value: "", label: t('locationPlaceholder') },
+  { value: "bratislava", label: "Bratislava" },
+  { value: "kosice", label: "Košice" },
+  { value: "presov", label: "Prešov" },
+  { value: "zilina", label: "Žilina" },
+  { value: "nitra", label: "Nitra" },
+  { value: "trnava", label: "Trnava" },
+  { value: "trencin", label: "Trenčín" },
+  { value: "banska-bystrica", label: "Banská Bystrica" },
+  { value: "poprad", label: "Poprad" },
+  { value: "martin", label: "Martin" },
+  { value: "zvolen", label: "Zvolen" },
+  { value: "michalovce", label: "Michalovce" },
+  { value: "prievidza", label: "Prievidza" },
+  { value: "levoca", label: "Levoča" },
+  { value: "ruzomberok", label: "Ružomberok" },
+] as const;
+
 const BROWSE_CATEGORIES = [
   { name: 'Vegetables', link: 'vegetables', icon: '/icons/category-9.svg' },
   { name: 'Clothing & beauty', link: 'clothing-beauty', icon: '/icons/category-2.svg' },
@@ -222,7 +241,7 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <div className="shrink-0">
               <Link href="/">
-                <Image src="/logo.svg" alt="WebAriadne" width={120} height={40} className="h-10 w-auto" />
+                <Image src="/logo.svg" alt="WebAriadne" width={120} height={40} className="h-[42px] w-auto" />
               </Link>
             </div>
 
@@ -247,28 +266,12 @@ const Header = () => {
                 </div>
                 <div className="relative">
                   <Combobox
-                    options={[
-                      { value: "", label: t('locationPlaceholder') },
-                      { value: "bratislava", label: "Bratislava" },
-                      { value: "kosice", label: "Košice" },
-                      { value: "presov", label: "Prešov" },
-                      { value: "zilina", label: "Žilina" },
-                      { value: "nitra", label: "Nitra" },
-                      { value: "trnava", label: "Trnava" },
-                      { value: "trencin", label: "Trenčín" },
-                      { value: "banska-bystrica", label: "Banská Bystrica" },
-                      { value: "poprad", label: "Poprad" },
-                      { value: "martin", label: "Martin" },
-                      { value: "zvolen", label: "Zvolen" },
-                      { value: "michalovce", label: "Michalovce" },
-                      { value: "prievidza", label: "Prievidza" },
-                      { value: "levoca", label: "Levoča" },
-                      { value: "ruzomberok", label: "Ružomberok" },
-                    ]}
+                    options={locationOptions}
                     value={selectedLocation}
                     onValueChange={setSelectedLocation}
                     placeholder={t('locationPlaceholder')}
-                    className="bg-gray-50 hover:bg-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-44 rounded-md cursor-pointer"
+                    className="bg-gray-50 hover:bg-gray-100 px-3 pt-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-44 rounded-md cursor-pointer"
+                    boxClassName="w-[180px]"
                   />  
                 </div>
 

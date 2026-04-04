@@ -32,6 +32,7 @@ interface ComboboxProps {
   searchPlaceholder?: string
   emptyText?: string
   className?: string
+  boxClassName?: string
   disabled?: boolean
 }
 
@@ -43,6 +44,7 @@ export function Combobox({
   searchPlaceholder = "Search...",
   emptyText = "No option found.",
   className,
+  boxClassName,
   disabled = false,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false)
@@ -63,7 +65,7 @@ export function Combobox({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className={cn("p-0", boxClassName)}>
         <Command>
           <CommandInput placeholder={searchPlaceholder} />
           <CommandList>
@@ -73,6 +75,7 @@ export function Combobox({
                 <CommandItem
                   key={option.value}
                   value={option.value}
+                  className="cursor-pointer"
                   onSelect={(currentValue) => {
                     const newValue = currentValue === value ? "" : currentValue
                     onValueChange?.(newValue)
@@ -82,7 +85,7 @@ export function Combobox({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === option.value ? "opacity-100" : "opacity-0"
+                      value === option.value ? "opacity-100" : "opacity-100"
                     )}
                   />
                   {option.label}
