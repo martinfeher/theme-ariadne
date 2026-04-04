@@ -133,6 +133,7 @@ export default function SearchResults() {
                     key={product.id}
                     product={product}
                     allProducts={allCatalog}
+                    size="medium"
                   />
                 ))}
               </div>

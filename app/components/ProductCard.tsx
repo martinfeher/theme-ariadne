@@ -18,6 +18,7 @@ import ProductQuickViewModal, { type ModalTab } from './ProductQuickViewModal';
 interface ProductCardProps {
   product: Product;
   allProducts?: Product[];
+  size?: 'small' | 'medium';
 }
 
 function getSimilarProducts(current: Product, all: Product[]): Product[] {
@@ -35,7 +36,7 @@ function getSimilarProducts(current: Product, all: Product[]): Product[] {
     .slice(0, 4);
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], size = 'medium' }) => {
   const t = useTranslations('ProductCard');
   const locale = useLocale();
   const { addItem, removeOne, getQuantity } = useCart();
@@ -76,10 +77,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
   const productCartCounter = getQuantity(product.id);
 
   const addToCart = () => {
+
+    console.log('addToCart');
     addItem(product, 1);
   };
 
   const removeFromCart = () => {
+    console.log('removeFromCart');
     removeOne(product.id);
   };
 
@@ -156,23 +160,25 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
           >
             <button
               type="button"
-              className="flex items-center justify-center mr-[9px] mb-[10px] space-x-1 bg-green-500 text-white px-1.5 py-1.5 transition-colors text-sm z-[100] cursor-pointer rounded-full"
+              className="flex items-center justify-center mr-[9px] mb-[10px] space-x-1 bg-green-500 text-white px-1.5 py-1.5 transition-colors text-sm z-40 cursor-pointer rounded-full"
               onClick={() => addToCart()}
-            >
+           >
               {productCartCounter === 0 && (
                 <IoAdd className="w-6 h-6 cursor-pointer" />
               )}
               {productCartCounter > 0 && (
-                <div className="w-6 h-6 text-[16px] cursor-pointer" >{productCartCounter}</div>
+                <div className="w-6 h-6 text-[16px] cursor-pointer z-100" >{productCartCounter}</div>
               )}
             </button>
             {productCartCounter > 0 && (
-              <div>
+              <div className="pointer-events-none">
                 <div
-                  className="absolute top-0 right-[10px] h-[37px] w-[95%] bg-slate-200 rounded-full blur-[1px] opacity-92"
+                  className="absolute top-0 right-[10px] h-[37px] bg-slate-200 rounded-full opacity-92"
+                  style={{ width: size === 'small' ? '90%' : '94.5%' }}
                 />
                 <div
-                  className="absolute top-0 right-[10px] h-[37px] w-[85%] flex items-center space-x-1 text-white mr-4 mb-4 transition-colors text-sm z-[100] cursor-pointer rounded-full"
+                  className="absolute top-0 right-[0.5%] h-[37px] flex items-center space-x-1 text-white mr-4 mb-4 transition-colors text-sm z-100 cursor-pointer rounded-full"
+                  style={{ width: size === 'small' ? '83%' : '90%' }}
                   onClick={(e) => {
                     e.preventDefault();
                   }}
@@ -182,7 +188,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
                     type="button"
                     aria-label={t('removeFromCart')}
                     onClick={() => removeFromCart()}
-                    className="bg-green-500 -ml-1 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer"
+                    className="bg-green-500 -ml-1 w-[36px] h-[36px] rounded-full flex items-center justify-center z-200 cursor-pointer pointer-events-auto"
                   >
                     <FaMinus className="w-4 h-4" />
                   </button>
@@ -222,7 +228,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
                   ? 'bg-green-50 text-green-600 ring-1 ring-green-200'
                   : compareDisabled
                     ? 'cursor-not-allowed bg-gray-100 text-gray-300'
-                    : 'bg-white hover:bg-blue-50 hover:text-blue-500 text-gray-700'
+                    : 'bg-white hover:text-green-500 text-gray-700'
               }`}
               aria-label={compared ? t('removeCompare') : t('addCompare')}
               aria-pressed={compared}
@@ -243,7 +249,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [] }) 
 
         <div className="p-4">
           <Link
-            href={`/category/${product.category.toLowerCase().replace(/\s+/g, '-')}`}
+            href={`/category/${product.categories?.find((c) => c !== 'all') ?? 'all'}`}
             onClick={(e) => e.stopPropagation()}
             className="text-sm text-gray-500 hover:text-green-500 transition-colors"
           >

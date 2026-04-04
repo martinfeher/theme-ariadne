@@ -85,6 +85,7 @@ const PopularProducts: React.FC = () => {
                   key={product.id}
                   product={product}
                   allProducts={products}
+                  size="medium"
                 />
               ))}
             </div>
@@ -98,7 +99,7 @@ const PopularProducts: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setActiveTab('all')}
-                  className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors"
+                  className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors cursor-pointer"
                 >
                   {t('viewAll')}
                 </button>

@@ -132,7 +132,7 @@ export default function SearchBarWithSuggestions({
         onSubmit={handleFormSubmit}
         className={
           isDesktop
-            ? 'flex items-center bg-white border border-[#89b178] rounded-lg shadow-sm overflow-visible'
+            ? 'flex items-center bg-white border border-[#89b178] rounded-sm shadow-sm overflow-visible'
             : 'flex rounded-lg overflow-visible border border-gray-300'
         }
       >
@@ -143,7 +143,7 @@ export default function SearchBarWithSuggestions({
               value={selectedCategory}
               onValueChange={onCategoryChange}
               placeholder={t('categories.all')}
-              className="w-44 border-0 rounded-none bg-transparent cursor-pointer"
+              className="w-40 border-0 rounded-none bg-transparent cursor-pointer"
             />
           </div>
         )}

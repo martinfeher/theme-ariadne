@@ -62,7 +62,7 @@ const CartOffCanvas: React.FC = () => {
           <button
             type="button"
             onClick={closeCart}
-            className="rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800"
+            className="rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800 cursor-pointer"
             aria-label={t('close')}
           >
             <X className="h-5 w-5" />
@@ -107,7 +107,7 @@ const CartOffCanvas: React.FC = () => {
                       <div className="flex items-center rounded-lg border border-gray-200">
                         <button
                           type="button"
-                          className="p-1.5 text-gray-600 hover:bg-gray-50"
+                          className="p-1.5 text-gray-600 hover:bg-gray-50 cursor-pointer"
                           aria-label={t('decreaseQty')}
                           onClick={() =>
                             quantity <= 1
@@ -122,7 +122,7 @@ const CartOffCanvas: React.FC = () => {
                         </span>
                         <button
                           type="button"
-                          className="p-1.5 text-gray-600 hover:bg-gray-50"
+                          className="p-1.5 text-gray-600 hover:bg-gray-50 cursor-pointer"
                           aria-label={t('increaseQty')}
                           onClick={() => addItem(product, 1)}
                         >

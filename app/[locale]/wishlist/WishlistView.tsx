@@ -140,7 +140,7 @@ export default function WishlistView() {
                     <th className="w-12 px-4 py-4 align-middle">
                       <input
                         type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                        className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
                         checked={allSelected}
                         onChange={toggleAll}
                         aria-label={t('selectAll')}
@@ -174,7 +174,7 @@ export default function WishlistView() {
                         <td className="px-4 py-6 align-middle">
                           <input
                             type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                            className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
                             checked={selected.has(product.id)}
                             onChange={() => toggleRow(product.id)}
                             aria-label={t('selectRow', { name: product.name })}
@@ -232,7 +232,7 @@ export default function WishlistView() {
                                 addItem(product, 1);
                                 openCart();
                               }}
-                              className="rounded-md bg-green-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-600"
+                              className="rounded-md bg-green-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-600 cursor-pointer"
                             >
                               {t('addToCart')}
                             </button>
@@ -249,7 +249,7 @@ export default function WishlistView() {
                           <button
                             type="button"
                             onClick={() => removeFromWishlist(product.id)}
-                            className="inline-flex rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-red-600"
+                            className="inline-flex rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-red-600 cursor-pointer"
                             aria-label={t('removeFromWishlist', { name: product.name })}
                           >
                             <Trash2 className="h-5 w-5" />

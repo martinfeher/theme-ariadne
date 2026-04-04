@@ -13,19 +13,18 @@ import { useWishlist } from '@/app/context/WishlistContext';
 import { useCompare } from '@/app/context/CompareContext';
 
 /** Show fixed search + cart bar after scrolling past this many pixels */
-const SCROLL_Y_SHOW_FIXED_BAR = 64;
+const SCROLL_Y_SHOW_FIXED_BAR = 100;
 
 const BROWSE_CATEGORIES = [
-  { name: 'Milks and Dairies', icon: '/icons/category-1.svg' },
-  { name: 'Clothing & beauty', icon: '/icons/category-2.svg' },
-  { name: 'Pet Foods & Toy', icon: '/icons/category-3.svg' },
-  { name: 'Baking material', icon: '/icons/category-4.svg' },
-  { name: 'Fresh Fruit', icon: '/icons/category-5.svg' },
-  { name: 'Wines & Drinks', icon: '/icons/category-6.svg' },
-  { name: 'Fresh Seafood', icon: '/icons/category-7.svg' },
-  { name: 'Fast food', icon: '/icons/category-8.svg' },
-  { name: 'Vegetables', icon: '/icons/category-9.svg' },
-  { name: 'Bread and Juice', icon: '/icons/category-10.svg' },
+  { name: 'Vegetables', link: 'vegetables', icon: '/icons/category-9.svg' },
+  { name: 'Clothing & beauty', link: 'clothing-beauty', icon: '/icons/category-2.svg' },
+  { name: 'Pet Foods & Toy', link: 'pet-foods-toy', icon: '/icons/category-3.svg' },
+  { name: 'Baking material', link: 'baking-material', icon: '/icons/category-4.svg' },
+  // { name: 'Fresh Fruit', link: 'fresh-fruit', icon: '/icons/category-5.svg' },
+  { name: 'Wines & Drinks', link: 'wines-drinks', icon: '/icons/category-6.svg' },
+  { name: 'Fresh Seafood', link: 'fresh-seafood', icon: '/icons/category-7.svg' },
+  { name: 'Fast food', link: 'fast-food', icon: '/icons/category-8.svg' },
+  { name: 'Bread and Juice', link: 'bread-juice', icon: '/icons/category-10.svg' },
 ] as const;
 
 function BrowseCategoriesControl({
@@ -83,7 +82,7 @@ function BrowseCategoriesControl({
             {BROWSE_CATEGORIES.map((category, index) => (
               <Link
                 key={index}
-                href={`/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+                href={`/category/${category.link.replace(/\s+/g, '-')}`}
                 className="flex items-center space-x-3 rounded p-2 transition-colors hover:bg-gray-50"
                 onClick={onCloseRequest}
               >
@@ -229,7 +228,7 @@ const Header = () => {
 
             {/* Search bar + live suggestions (hidden while fixed bar is active) */}
             <div
-              className={`mx-8 max-w-2xl flex-1 overflow-visible ${showFixedSearchCart ? 'hidden' : ''}`}
+              className={`mx-8 max-w-2xl flex-1 overflow-visible rounded-xl ${showFixedSearchCart ? 'hidden' : ''}`}
             >
               <SearchBarWithSuggestions
                 variant="desktop"
@@ -273,11 +272,11 @@ const Header = () => {
                   />  
                 </div>
 
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center group">
                 <div className="relative">
                   <Link
                     href="/compare"
-                    className="relative text-gray-600 hover:text-green-500"
+                    className="relative text-gray-600 group-hover:text-green-500"
                     aria-label={
                       compareCount > 0
                         ? t('compareWithCount', { count: compareCount })
@@ -286,41 +285,36 @@ const Header = () => {
                   >
                     <svg className="w-6 h-6" fill="currentColor" width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1,8A1,1,0,0,1,2,7H9.586L7.293,4.707A1,1,0,1,1,8.707,3.293l4,4a1,1,0,0,1,0,1.414l-4,4a1,1,0,1,1-1.414-1.414L9.586,9H2A1,1,0,0,1,1,8Zm21,7H14.414l2.293-2.293a1,1,0,0,0-1.414-1.414l-4,4a1,1,0,0,0,0,1.414l4,4a1,1,0,0,0,1.414-1.414L14.414,17H22a1,1,0,0,0,0-2Z" /></svg>
                     {compareCount > 0 && (
-                      <span className="absolute -top-2 -right-2 flex min-h-[1.25rem] min-w-[1.25rem] items-center justify-center rounded-full border border-green-200 bg-green-100 px-1 text-[10px] font-bold text-green-800">
+                      <span className="absolute -top-2 -right-2 flex min-h-[1.25rem] min-w-[1.25rem] items-center justify-center rounded-full border text-white border-green-200 bg-teal-500 px-1 text-[10px] font-bold text-white">
                         {compareCount}
                       </span>
                     )}
                   </Link>
                 </div>
-                <span className="text-xs text-gray-500 mt-1 cursor-pointer">{t('compare')}</span>
+                <span className="text-xs text-gray-500 mt-1 cursor-pointer group-hover:text-green-500 ">{t('compare')}</span>
               </div>
 
-              {/* Wishlist */}
-              <div className="flex flex-col items-center mb-[4px]">
-              {/* <div className="flex flex-col items-center -mt-[2px]"> */}
+              <div className="flex flex-col items-center group mb-[4px]">
                 <div className="relative">
-                  <Link href="/wishlist" className="text-gray-600 hover:text-green-500">
+                  <Link href="/wishlist" className="text-gray-600 group-hover:text-green-500">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                     {wishlistCount > 0 && (
-                      <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full min-w-[1.25rem] h-5 px-1 flex items-center justify-center">
+                      <span className="absolute -top-1 -right-2 bg-teal-500 text-white text-xs rounded-full min-w-[1.25rem] h-5 px-1 flex items-center justify-center">
                         {wishlistCount > 99 ? '99+' : wishlistCount}
                       </span>
                     )}
                   </Link>
                 </div>
-                <span className="text-xs text-gray-500 mt-1 cursor-pointer">{t('wishlist')}</span>
+                <span className="text-xs text-gray-500 cursor-pointer mt-[6px] group-hover:text-green-500 ">{t('wishlist')}</span>
               </div>
 
-             
-
-              {/* Account */}
-              <div className="flex flex-col items-center relative mt-[4px]">
+              <div className=" group flex flex-col items-center relative mt-[1px]">
                 <div className="relative">
                   <button 
                     onClick={() => setIsAccountOpen(!isAccountOpen)}
-                    className="text-gray-600 hover:text-green-500 cursor-pointer"
+                    className="text-gray-600 group-hover:text-green-500 cursor-pointer"
                     aria-label={t('accountMenu')}
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -328,11 +322,10 @@ const Header = () => {
                     </svg>
                   </button>
                 </div>
-                <span className="text-xs text-gray-500 mt-1 cursor-pointer">{t('account')}</span>
+                <span className="text-xs text-gray-500 mt-0 cursor-pointer group-hover:text-green-500">{t('account')}</span>
 
                 {isAccountOpen && (
                   <>
-                    {/* Overlay to catch outside clicks */}
                     <div
                       className="fixed inset-0 z-45"
                       onClick={() => setIsAccountOpen(false)}
@@ -384,26 +377,25 @@ const Header = () => {
                 )}
               </div>
 
-              {/* Cart */}
               <div
-                className={`relative mt-[4px] flex flex-col items-center ${showFixedSearchCart ? 'hidden' : ''}`}
+                className={`relative group mt-[3px] flex flex-col items-center ${showFixedSearchCart ? 'hidden' : ''}`}
               >
                 <div className="relative">
                   <button
                     type="button"
                     onClick={toggleCart}
-                    className="cursor-pointer text-gray-600 hover:text-green-500"
+                    className="group cursor-pointer text-gray-600"
                     aria-label={t('viewCart')}
                   >
-                    <ShoppingCartIcon className="h-6 w-6" />
+                    <ShoppingCartIcon className="h-6 w-6 group-hover:text-green-500" />
                     {itemCount > 0 && (
-                      <span className="absolute -top-2 -right-2 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-blue-500 px-1 text-xs text-white">
+                      <span className="absolute -top-2 -right-2 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-teal-500 px-1 text-xs text-white">
                         {itemCount > 99 ? '99+' : itemCount}
                       </span>
                     )}
                   </button>
                 </div>
-                <span className="mt-1 cursor-pointer text-xs text-gray-500">{t('cart')}</span>
+                <span className="cursor-pointer text-xs text-gray-500 group-hover:text-green-500">{t('cart')}</span>
               </div>
             </div>
             </div>
@@ -510,12 +502,11 @@ const Header = () => {
               <span className={`block w-6 h-0.5 bg-gray-600 transition-transform ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
             </button>
 
-            {/* Mobile Actions */}
             <div className="flex items-center space-x-3 lg:hidden">
               <LanguageSwitcher />
               <Link
                 href="/compare"
-                className="relative text-gray-600"
+                className="relative text-gray-600 group-hover:text-green-500"
                 aria-label={
                   compareCount > 0
                     ? t('compareWithCount', { count: compareCount })

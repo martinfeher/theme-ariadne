@@ -105,7 +105,7 @@ export default function CompareView() {
             <button
               type="button"
               onClick={clearCompare}
-              className="self-start text-sm font-medium text-gray-600 underline-offset-2 hover:text-green-600 hover:underline sm:self-auto"
+              className="self-start text-sm font-medium text-red-700 underline-offset-2 hover:text-green-600 hover:underline sm:self-auto cursor-pointer"
             >
               {t('clearAll')}
             </button>
@@ -235,7 +235,7 @@ export default function CompareView() {
                       <button
                         type="button"
                         onClick={() => removeFromCompare(product.id)}
-                        className="text-sm font-medium text-red-600 hover:text-red-700 hover:underline"
+                        className="text-sm font-medium text-red-600 hover:text-red-700 hover:underline cursor-pointer"
                       >
                         {t('remove')}
                       </button>

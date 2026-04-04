@@ -98,16 +98,16 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
     >
       <button
         type="button"
-        className="absolute inset-0 bg-black/50 backdrop-blur-[1px]"
+        className="absolute inset-0 bg-black/30 backdrop-blur-[1px]"
         aria-label={t('close')}
         onClick={onClose}
       />
-      <div className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl bg-white shadow-2xl">
-        <div className="sticky top-0 z-20 flex justify-end border-b border-gray-100 bg-white/95 px-4 py-2 backdrop-blur">
+      <div className="relative z-10 w-full max-w-4xl max-h-[90vh] rounded-xl bg-white shadow-2xl">
+        <div className="sticky top-0 z-20 flex justify-end border-b rounded-t-xl border-gray-100 bg-white/95 px-4 py-2 backdrop-blur">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800"
+            className="rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800 cursor-pointer"
             aria-label={t('close')}
           >
             <X className="h-5 w-5" />
@@ -179,7 +179,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 <button
                   type="button"
                   onClick={onAddToCart}
-                  className="rounded-lg bg-green-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-green-600"
+                  className="rounded-lg bg-green-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-green-600 cursor-pointer"
                 >
                   {t('addToCart')}
                 </button>
@@ -206,7 +206,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
                   activeTab === 'description'
                     ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-gray-600 hover:text-gray-900 cursor-pointer'
                 }`}
                 onClick={() => onTabChange('description')}
               >
@@ -219,7 +219,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
                   activeTab === 'similar'
                     ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-gray-600 hover:text-gray-900 cursor-pointer'
                 }`}
                 onClick={() => onTabChange('similar')}
               >
