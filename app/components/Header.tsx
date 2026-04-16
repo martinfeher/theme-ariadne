@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
+import { MapPin } from 'lucide-react';
 import { Combobox } from '@/components/ui/combobox';
 import SearchBarWithSuggestions from '@/app/components/SearchBarWithSuggestions';
 import LanguageSwitcher from '@/app/components/LanguageSwitcher';
@@ -67,7 +68,7 @@ function BrowseCategoriesControl({
         className={
           compact
             ? 'flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-green-500 text-white transition-colors hover:bg-green-600'
-            : 'flex cursor-pointer items-center space-x-2 rounded-lg bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600'
+            : 'flex cursor-pointer items-center space-x-2 rounded-lg bg-green-500 pl-4 pr-2 py-2 text-white transition-colors hover:bg-green-600'
         }
         aria-label={t('browseCategories')}
         aria-expanded={isOpen ? 'true' : 'false'}
@@ -90,27 +91,36 @@ function BrowseCategoriesControl({
       </button>
 
       {isOpen && (
-        <div
-          className={
-            compact
-              ? 'absolute left-0 top-full z-60 mt-2 max-h-[min(24rem,70vh)] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto rounded-lg border bg-white py-2 shadow-xl'
-              : 'absolute left-0 top-full z-60 mt-2 max-h-[min(24rem,70vh)] w-96 overflow-y-auto rounded-lg border bg-white shadow-xl'
-          }
-        >
-          <div className="grid grid-cols-2 gap-4 p-4">
-            {BROWSE_CATEGORIES.map((category, index) => (
-              <Link
-                key={index}
-                href={`/category/${category.link.replace(/\s+/g, '-')}`}
-                className="flex items-center space-x-3 rounded p-2 transition-colors hover:bg-gray-50"
-                onClick={onCloseRequest}
-              >
-                <Image src={category.icon} alt={category.name} width={24} height={24} />
-                <span className="text-sm text-gray-700">{category.name}</span>
-              </Link>
-            ))}
+        <>
+          <div
+            className="fixed inset-0 z-50"
+            onClick={onCloseRequest}
+            aria-hidden="true"
+            tabIndex={-1}
+          />
+          <div
+            className={
+              compact
+                ? 'absolute left-0 top-full z-60 mt-2 max-h-[min(24rem,70vh)] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto rounded-lg border bg-white py-2 shadow-xl'
+                : 'absolute left-0 top-full z-60 mt-1 max-h-[min(24rem,70vh)] w-96 overflow-y-auto rounded-lg border bg-white shadow-xl'
+            }
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="grid grid-cols-2 gap-1 px-2 py-2 pb-2">
+              {BROWSE_CATEGORIES.map((category, index) => (
+                <Link
+                  key={index}
+                  href={`/category/${category.link.replace(/\s+/g, '-')}`}
+                  className="flex items-center space-x-3 p-2 rounded-lg transition-colors hover:bg-gray-50"
+                  onClick={onCloseRequest}
+                >
+                  <Image src={category.icon} alt={category.name} width={24} height={24} />
+                  <span className="text-sm text-gray-700">{category.name}</span>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
@@ -149,19 +159,18 @@ const Header = () => {
     const qs = params.toString();
     router.push(qs ? `/search?${qs}` : '/search');
     setIsMobileMenuOpen(false);
-  };
+  }
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     submitSearch();
-  };
+  }
 
   const toggleCategories = () => setIsCategoriesOpen((o) => !o);
   const closeCategories = () => setIsCategoriesOpen(false);
 
   return (
     <header className="header-area header-style-1 header-height-2">
-      {/* Fixed search + cart only after scrolling down (avoids duplicate controls when at top) */}
       {showFixedSearchCart && (
         <>
           <div className="fixed inset-x-0 top-0 z-200 w-full overflow-visible border-b border-[#c9ccb8] bg-[#ecede2] pt-[max(0.5rem,env(safe-area-inset-top))] shadow-sm">
@@ -203,23 +212,22 @@ const Header = () => {
                   />
                 </div>
               </div>
-              <div className="flex shrink-0 flex-col items-center pt-0.5 ml-1 lg:ml-4">
+              <div className="flex shrink-0 flex-col items-center pt-0.5 ml-1 lg:ml-4 group cursor-pointer" onClick={toggleCart}>
                 <div className="relative">
                   <button
                     type="button"
-                    onClick={toggleCart}
-                    className="cursor-pointer text-gray-600 hover:text-green-500"
+                    className="cursor-pointer text-gray-600 group-hover:text-green-500"
                     aria-label={t('viewCart')}
                   >
                     <ShoppingCartIcon className="h-6 w-6" />
                     {itemCount > 0 && (
-                      <span className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-blue-500 px-1 text-xs text-white">
+                      <span className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-teal-500 px-1 text-xs text-white">
                         {itemCount > 99 ? '99+' : itemCount}
                       </span>
                     )}
                   </button>
                 </div>
-                <span className="mt-0.5 hidden text-xs text-gray-500 sm:inline">{t('cart')}</span>
+                <span className="mt-0.5 hidden text-xs text-gray-500 sm:inline group-hover:text-green-500">{t('cart')}</span>
               </div>
             </div>
           </div>
@@ -270,12 +278,15 @@ const Header = () => {
                     value={selectedLocation}
                     onValueChange={setSelectedLocation}
                     placeholder={t('locationPlaceholder')}
-                    className="bg-gray-50 hover:bg-gray-100 px-3 pt-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-44 rounded-md cursor-pointer"
-                    boxClassName="w-[180px]"
-                  />  
+                    leadingIcon={
+                      <MapPin className="h-5 w-5 shrink-0 text-gray-400" strokeWidth={1.5} aria-hidden />
+                    }
+                    className="h-10 w-[200px] min-w-[11.5rem] cursor-pointer border border-gray-200 bg-white px-3 py-2 text-sm font-normal shadow-[1px_1px_3px_rgba(0,0,0,0.08)] hover:border-gray-300 hover:bg-gray-50/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500/35 focus-visible:ring-offset-0"
+                    boxClassName="z-[60] w-[min(240px,calc(100vw-2rem))]"
+                  />
                 </div>
 
-              <div className="flex flex-col items-center group">
+              <div className="flex flex-col items-center group w-10">
                 <div className="relative">
                   <Link
                     href="/compare"
@@ -297,7 +308,7 @@ const Header = () => {
                 <span className="text-xs text-gray-500 mt-1 cursor-pointer group-hover:text-green-500 ">{t('compare')}</span>
               </div>
 
-              <div className="flex flex-col items-center group mb-[4px]">
+              <div className="flex flex-col items-center group w-10 mb-[4px]">
                 <div className="relative">
                   <Link href="/wishlist" className="text-gray-600 group-hover:text-green-500">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -313,7 +324,7 @@ const Header = () => {
                 <span className="text-xs text-gray-500 cursor-pointer mt-[6px] group-hover:text-green-500 ">{t('wishlist')}</span>
               </div>
 
-              <div className=" group flex flex-col items-center relative mt-[1px]">
+              <div className=" group flex flex-col items-center relative mt-[1px] w-10">
                 <div className="relative">
                   <button 
                     onClick={() => setIsAccountOpen(!isAccountOpen)}
@@ -381,7 +392,7 @@ const Header = () => {
               </div>
 
               <div
-                className={`relative group mt-[3px] flex flex-col items-center ${showFixedSearchCart ? 'hidden' : ''}`}
+                className={`relative group mt-[2px] flex flex-col items-center w-6 ${showFixedSearchCart ? 'hidden' : ''}`}
               >
                 <div className="relative">
                   <button
@@ -489,7 +500,7 @@ const Header = () => {
             <div className="hidden lg:flex items-center space-x-3">
               <Image src="/icons/icon-headphone.svg" alt="Support" width={24} height={24} />
               <div>
-                <p className="text-lg font-bold text-green-500">1900 - 888</p>
+                <p className="text-md font-bold text-green-500">1900 - 888</p>
                 <p className="text-xs text-gray-500">{t('hotline')}</p>
               </div>
             </div>
@@ -591,7 +602,7 @@ const Header = () => {
               {/* Mobile Support */}
               <div className="border-t pt-4">
                 <p className="text-sm text-gray-600">{t('needHelp')}</p>
-                <p className="text-lg font-bold text-green-500">+ 1800 900</p>
+                <p className="text-md font-bold text-green-500">+ 1800 900</p>
               </div>
             </div>
           </div>

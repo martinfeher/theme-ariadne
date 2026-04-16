@@ -103,7 +103,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
         onClick={onClose}
       />
       <div className="relative z-10 w-full max-w-4xl max-h-[90vh] rounded-xl bg-white shadow-2xl">
-        <div className="sticky top-0 z-20 flex justify-end border-b rounded-t-xl border-gray-100 bg-white/95 px-4 py-2 backdrop-blur">
+        <div className="sticky top-0 z-20 flex justify-end border-b rounded-t-xl border-gray-100 bg-white/95 px-3 py-2 backdrop-blur">
           <button
             type="button"
             onClick={onClose}
@@ -185,7 +185,6 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 </button>
                 <Link
                   href={`/product/${product.id}`}
-                  onClick={onClose}
                   className="rounded-lg border border-gray-200 px-6 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
                 >
                   {t('fullPage')}
@@ -229,7 +228,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
             <div className="mt-4 min-h-[120px]" role="tabpanel">
               {activeTab === 'description' && (
-                <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                <p className="text-gray-500 leading-relaxed whitespace-pre-line text-sm">
                   {descriptionText}
                 </p>
               )}

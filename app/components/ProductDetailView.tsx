@@ -527,15 +527,6 @@ export default function ProductDetailView({
               >
                 {t('filter')}
               </button>
-              <div className="pointer-events-none absolute -bottom-2 -right-2 h-24 w-24 opacity-40">
-                <Image
-                  src="/images/shop/thumbnail-3.jpg"
-                  alt=""
-                  width={96}
-                  height={96}
-                  className="rounded-full object-cover"
-                />
-              </div>
             </div>
 
             <div className="rounded-2xl bg-white p-5 shadow-sm">

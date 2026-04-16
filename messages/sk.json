@@ -1,6 +1,6 @@
 {
   "Meta": {
-    "title": "Nest – Univerzálny e-shop",
+    "title": "WebAriadne – Univerzálny e-shop",
     "description": "Váš obchod pre čerstvé potraviny a každodenné potreby"
   },
   "Header": {
@@ -48,7 +48,6 @@
       "milks-dairies": "Mliečne výrobky",
       "wines-alcohol": "Víno a alkohol",
       "clothing-beauty": "Oblečenie a krása",
-      "pet-foods-toy": "Krmivá a hračky pre zvieratá",
       "fast-food": "Rýchle občerstvenie",
       "baking-material": "Pečenie",
       "vegetables": "Zelenina",

@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { Check, ChevronDown, ChevronsUpDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -25,7 +25,7 @@ export interface ComboboxOption {
 }
 
 interface ComboboxProps {
-  options: ComboboxOption[]
+  options: readonly ComboboxOption[]
   value?: string
   onValueChange?: (value: string) => void
   placeholder?: string
@@ -34,6 +34,8 @@ interface ComboboxProps {
   className?: string
   boxClassName?: string
   disabled?: boolean
+  /** e.g. map pin for location picker */
+  leadingIcon?: React.ReactNode
 }
 
 export function Combobox({
@@ -46,6 +48,7 @@ export function Combobox({
   className,
   boxClassName,
   disabled = false,
+  leadingIcon,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false)
 
@@ -58,11 +61,30 @@ export function Combobox({
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className={cn("w-[200px] justify-between hover:bg-transparent border-0 rounded-none px-4", className)}
+          className={cn(
+            "w-[150px] justify-between gap-2 truncate border-0 px-4 py-2 hover:bg-transparent",
+            leadingIcon ? "rounded-lg" : "rounded-none pr-4 hover:bg-transparent",
+            className
+          )}
           disabled={disabled}
         >
-          {selectedOption ? selectedOption.label : placeholder}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <span className="flex min-w-0 flex-1 items-center gap-2">
+            {leadingIcon}
+            <span
+              className={cn(
+                "min-w-0 truncate text-left",
+                leadingIcon && !selectedOption && "text-green-600",
+                leadingIcon && selectedOption && "text-green-700"
+              )}
+            >
+              {selectedOption ? selectedOption.label : placeholder}
+            </span>
+          </span>
+          {leadingIcon ? (
+            <ChevronDown className="h-4 w-4 shrink-0 text-gray-400" aria-hidden />
+          ) : (
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className={cn("p-0", boxClassName)}>

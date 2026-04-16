@@ -203,7 +203,7 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
                     value={pageSize}
                     onChange={(e) => setPageSize(Number(e.target.value) as PageSize)}
                     aria-label={t('ariaPageSize')}
-                    className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-[#3BB77E] focus:outline-none focus:ring-1 focus:ring-[#3BB77E] cursor-pointer"
+                    className="rounded-lg border border-slate-200 bg-white pl-3 pr-4 py-2 text-sm text-slate-800 shadow-sm focus:border-[#3BB77E] focus:outline-none focus:ring-1 focus:ring-[#3BB77E] cursor-pointer"
                   >
                     {PAGE_SIZES.map((n) => (
                       <option key={n} value={n}>
@@ -401,15 +401,6 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
                 <Filter className="h-4 w-4" aria-hidden />
                 {tDetail('filter')}
               </button>
-              <div className="pointer-events-none absolute -bottom-2 -right-2 h-24 w-24 opacity-40">
-                <Image
-                  src="/images/shop/thumbnail-3.jpg"
-                  alt=""
-                  width={96}
-                  height={96}
-                  className="rounded-full object-cover"
-                />
-              </div>
             </div>
 
             <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">

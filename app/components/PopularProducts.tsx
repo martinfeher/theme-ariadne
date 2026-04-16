@@ -48,11 +48,10 @@ const PopularProducts: React.FC = () => {
       : products.filter((product) => product.categories?.includes(activeTab) ?? false);
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-8 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-800 mb-8">{t('title')}</h2>
-
           <div className="flex flex-wrap justify-center gap-2 mb-8">
             {TAB_IDS.map((id) => (
               <button
@@ -60,9 +59,7 @@ const PopularProducts: React.FC = () => {
                 type="button"
                 onClick={() => setActiveTab(id)}
                 className={`px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                  activeTab === id
-                    ? 'bg-green-500 text-white'
-                    : 'bg-white text-gray-600 hover:bg-green-50 hover:text-green-500'
+                  activeTab === id ? 'bg-green-500 text-white' : 'bg-white text-gray-600 hover:bg-green-50 hover:text-green-500'
                 }`}
               >
                 {t(`tabs.${id}`)}

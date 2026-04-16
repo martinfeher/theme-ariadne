@@ -17,7 +17,6 @@ const CATEGORY_VALUE_KEYS = [
   'milks-dairies',
   'wines-alcohol',
   'clothing-beauty',
-  'pet-foods-toy',
   'fast-food',
   'baking-material',
   'vegetables',
@@ -53,16 +52,13 @@ export default function SearchBarWithSuggestions({
   const tHeader = useTranslations('Header');
   const locale = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
-  const listId =
-    variant === 'desktop' ? 'search-suggestions-desktop' : 'search-suggestions-mobile';
+  const listId = variant === 'desktop' ? 'search-suggestions-desktop' : 'search-suggestions-mobile';
   const [suggestions, setSuggestions] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
 
-  const categoryOptions = useMemo(
-    () =>
-      CATEGORY_VALUE_KEYS.map((value) => ({
-        value,
+  const categoryOptions = useMemo(() =>
+      CATEGORY_VALUE_KEYS.map((value) => ({value,
         label: t(`categories.${value}`),
       })),
     [t]
@@ -137,14 +133,15 @@ export default function SearchBarWithSuggestions({
         }
       >
         {isDesktop && (
-          <div className="relative border-r border-gray-200 cursor-pointer shrink-0">
+          <div className="relative border-r border-gray-200 cursor-pointer shrink-0 pr-2">
+          {/* <div className="relative border-r border-gray-200 cursor-pointer shrink-0 pr-4"> */}
             <Combobox
               options={categoryOptions}
               value={selectedCategory}
               onValueChange={onCategoryChange}
               placeholder={t('categories.all')}
-              className="w-40 border-0 rounded-none bg-transparent cursor-pointer"
-              boxClassName="w-[160px]"
+              className="w-[160px] border-0 rounded-none bg-transparent cursor-pointer"
+              boxClassName="w-[160px] z-300"
             />
           </div>
         )}
@@ -174,8 +171,7 @@ export default function SearchBarWithSuggestions({
 
         <button
           type="submit"
-          className={
-            isDesktop
+          className={ isDesktop
               ? 'bg-green-500 text-white px-6 py-3 hover:bg-green-600 transition-colors flex items-center justify-center shrink-0'
               : 'bg-green-500 text-white px-4 py-2 rounded-r-lg shrink-0'
           }

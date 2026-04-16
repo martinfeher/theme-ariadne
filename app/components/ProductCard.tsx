@@ -64,7 +64,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
       case 'hot':
         return 'bg-red-500 text-white';
       case 'sale':
-        return 'bg-blue-500 text-white';
+        return 'bg-green-500 text-white';
       case 'new':
         return 'bg-green-500 text-white';
       case 'discount':
@@ -160,7 +160,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
           >
             <button
               type="button"
-              className="flex items-center justify-center mr-[9px] mb-[10px] space-x-1 bg-green-500 text-white px-1.5 py-1.5 transition-colors text-sm z-40 cursor-pointer rounded-full"
+              className="flex items-center justify-center mr-[7px] mb-[8px] space-x-1 bg-green-500 text-white px-1.5 py-1.5 transition-colors text-sm z-40 cursor-pointer rounded-full"
               onClick={() => addToCart()}
            >
               {productCartCounter === 0 && (
@@ -173,8 +173,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
             {productCartCounter > 0 && (
               <div className="pointer-events-none">
                 <div
-                  className="absolute top-0 right-[10px] h-[37px] bg-slate-200 rounded-full opacity-92"
-                  style={{ width: size === 'small' ? '90%' : '94.5%' }}
+                  className="absolute top-0 right-[10px] h-[37px] bg-[#d8e7fb] rounded-full opacity-92"
+                  style={{ width: size === 'small' ? '90%' : '93.5%' }}
                 />
                 <div
                   className="absolute top-0 right-[0.5%] h-[37px] flex items-center space-x-1 text-white mr-4 mb-4 transition-colors text-sm z-100 cursor-pointer rounded-full"
