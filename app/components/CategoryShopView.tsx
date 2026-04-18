@@ -2,10 +2,10 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Filter, Home, LayoutGrid, X } from 'lucide-react';
-import { formatEur } from '@/lib/format-price';
+import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { fetchProducts } from '@/lib/fetch-products';
 import {
   CATEGORY_SIDEBAR_ICONS,
@@ -46,7 +46,7 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
   const t = useTranslations('Category');
   const tDetail = useTranslations('ProductDetail');
   const tBar = useTranslations('SearchBar.categories');
-  const locale = useLocale();
+  const formatPrice = useFormatCurrency();
 
   const [catalog, setCatalog] = useState<Product[]>([]);
   const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading');
@@ -344,10 +344,10 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
                 </div>
                 <div className="flex justify-between text-xs text-slate-500">
                   <span>
-                    {tDetail('from')} {formatEur(draftPriceMin, locale)}
+                    {tDetail('from')} {formatPrice(draftPriceMin)}
                   </span>
                   <span>
-                    {tDetail('to')} {formatEur(draftPriceMax, locale)}
+                    {tDetail('to')} {formatPrice(draftPriceMax)}
                   </span>
                 </div>
               </div>
@@ -423,7 +423,7 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
                       <div className="min-w-0 flex-1">
                         <p className="line-clamp-2 text-sm font-medium text-[#3BB77E]">{p.name}</p>
                         <p className="mt-1 text-sm font-semibold text-amber-600">
-                          {formatEur(p.price, locale)}
+                          {formatPrice(p.price)}
                         </p>
                         <div className="mt-1">
                           <StarRow rating={p.rating} />

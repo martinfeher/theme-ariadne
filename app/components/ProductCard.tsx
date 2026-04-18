@@ -2,8 +2,8 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
-import { formatEur } from '@/lib/format-price';
+import { useTranslations } from 'next-intl';
+import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import { Heart, Shuffle } from 'lucide-react';
 import { IoAdd } from 'react-icons/io5';
@@ -38,7 +38,7 @@ function getSimilarProducts(current: Product, all: Product[]): Product[] {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], size = 'medium' }) => {
   const t = useTranslations('ProductCard');
-  const locale = useLocale();
+  const formatPrice = useFormatCurrency();
   const { addItem, removeOne, getQuantity } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
   const { isInCompare, addToCompare, removeFromCompare, canAdd } = useCompare();
@@ -105,7 +105,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
       addToCompare,
       removeFromCompare,
     ]
-  );
+  )
 
   const renderStars = (rating: number) => {
     const filledStars = Math.floor(rating);
@@ -277,11 +277,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <span className="text-lg font-semibold text-green-500">
-                {formatEur(product.price, locale)}
+                {formatPrice(product.price)}
               </span>
               {product.oldPrice && (
                 <span className="text-sm text-gray-400 line-through">
-                  {formatEur(product.oldPrice, locale)}
+                  {formatPrice(product.oldPrice)}
                 </span>
               )}
             </div>

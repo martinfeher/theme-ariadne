@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
-import { formatEur } from '@/lib/format-price';
+import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import { Combobox } from '@/components/ui/combobox';
 import { fetchProducts } from '@/lib/fetch-products';
@@ -51,6 +51,7 @@ export default function SearchBarWithSuggestions({
   const t = useTranslations('SearchBar');
   const tHeader = useTranslations('Header');
   const locale = useLocale();
+  const formatPrice = useFormatCurrency();
   const containerRef = useRef<HTMLDivElement>(null);
   const listId = variant === 'desktop' ? 'search-suggestions-desktop' : 'search-suggestions-mobile';
   const [suggestions, setSuggestions] = useState<Product[]>([]);
@@ -235,7 +236,7 @@ export default function SearchBarWithSuggestions({
                       {product.name}
                     </span>
                     <span className="mt-0.5 block text-sm font-semibold text-green-600">
-                      {formatEur(product.price, locale)}
+                      {formatPrice(product.price)}
                     </span>
                   </span>
                 </Link>

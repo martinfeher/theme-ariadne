@@ -2,8 +2,8 @@
 
 import React, { useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
-import { formatEur } from '@/lib/format-price';
+import { useTranslations } from 'next-intl';
+import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import { X } from 'lucide-react';
 import type { Product } from '../types/product';
@@ -58,7 +58,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 }) => {
   const t = useTranslations('ProductQuickView');
   const tBar = useTranslations('SearchBar');
-  const locale = useLocale();
+  const formatPrice = useFormatCurrency();
 
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
@@ -141,11 +141,11 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
               <div className="mt-4 flex flex-wrap items-baseline gap-2">
                 <span className="text-2xl font-semibold text-green-600">
-                  {formatEur(product.price, locale)}
+                  {formatPrice(product.price)}
                 </span>
                 {product.oldPrice != null && (
                   <span className="text-sm text-gray-400 line-through">
-                    {formatEur(product.oldPrice, locale)}
+                    {formatPrice(product.oldPrice)}
                   </span>
                 )}
               </div>
@@ -259,7 +259,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                                 {p.name}
                               </p>
                               <p className="mt-1 text-sm font-semibold text-green-600">
-                                {formatEur(p.price, locale)}
+                                {formatPrice(p.price)}
                               </p>
                             </div>
                           </Link>

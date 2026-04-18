@@ -2,8 +2,8 @@
 
 import React, { useCallback, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
-import { formatEur } from '@/lib/format-price';
+import { useTranslations } from 'next-intl';
+import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import { Heart, Minus, Plus, Search, Shuffle, ShoppingCart } from 'lucide-react';
 import type { Product } from '@/app/types/product';
@@ -76,7 +76,7 @@ export default function ProductDetailView({
 }) {
   const t = useTranslations('ProductDetail');
   const tBar = useTranslations('SearchBar.categories');
-  const locale = useLocale();
+  const formatPrice = useFormatCurrency();
   const { addItem, openCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
   const { isInCompare, addToCompare, removeFromCompare, canAdd } = useCompare();
@@ -201,11 +201,11 @@ export default function ProductDetailView({
                       className="text-3xl font-bold"
                       style={{ color: ACCENT }}
                     >
-                      {formatEur(product.price, locale)}
+                      {formatPrice(product.price)}
                     </span>
                     {product.oldPrice != null && product.oldPrice > product.price && (
                       <span className="text-lg text-gray-400 line-through">
-                        {formatEur(product.oldPrice, locale)}
+                        {formatPrice(product.oldPrice)}
                       </span>
                     )}
                     {pctOff != null && (
@@ -489,10 +489,10 @@ export default function ProductDetailView({
                 />
                 <div className="mt-2 flex justify-between text-xs text-gray-500">
                   <span>
-                    {t('from')} {formatEur(5, locale)}
+                    {t('from')} {formatPrice(5)}
                   </span>
                   <span>
-                    {t('to')} {formatEur(priceTo, locale)}
+                    {t('to')} {formatPrice(priceTo)}
                   </span>
                 </div>
               </div>
@@ -557,7 +557,7 @@ export default function ProductDetailView({
                           className="mt-1 text-sm font-semibold"
                           style={{ color: ACCENT }}
                         >
-                          {formatEur(p.price, locale)}
+                          {formatPrice(p.price)}
                         </p>
                         <div className="mt-1">
                           <StarRow rating={p.rating} />

@@ -15,6 +15,10 @@
     "browseCategories": "Prehliadať všetky kategórie",
     "deals": "Akcie",
     "home": "Domov",
+    "homeMenu1": "Domov 1",
+    "homeMenu2": "Domov 2",
+    "homeMenu3": "Domov 3",
+    "homeMenu4": "Domov 4",
     "about": "O nás",
     "shop": "Obchod",
     "vendors": "Predajcovia",
@@ -36,7 +40,15 @@
     "accountMenu": "Menu účtu",
     "toggleMenu": "Otvoriť mobilné menu",
     "searchProducts": "Hľadať produkty",
-    "language": "Jazyk"
+    "language": "Jazyk",
+    "currency": "Mena",
+    "localeEnglish": "English",
+    "localeSlovak": "Slovenčina",
+    "topBarPhoneDisplay": "+1910800642",
+    "topBarPhoneTel": "+1910800642",
+    "topBarDiscount": "Zľava",
+    "topBarFreeShippingAlways": "Doprava vždy zdarma",
+    "topBarBrandDiscount": "10 % zľava na naše značky"
   },
   "SearchBar": {
     "placeholder": "Hľadať položky...",

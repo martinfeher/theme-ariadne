@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
-import { formatEur } from '@/lib/format-price';
+import { useTranslations } from 'next-intl';
+import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import Header from '@/app/components/Header';
 import { useCompare, MAX_COMPARE_PRODUCTS } from '@/app/context/CompareContext';
@@ -55,7 +55,7 @@ const dataCell =
 export default function CompareView() {
   const t = useTranslations('Compare');
   const tHeader = useTranslations('Header');
-  const locale = useLocale();
+  const formatPrice = useFormatCurrency();
   const { items, removeFromCompare, clearCompare } = useCompare();
 
   const subtitle =
@@ -173,11 +173,11 @@ export default function CompareView() {
                   {items.map((product) => (
                     <td key={product.id} className={dataCell}>
                       <span className="text-xl font-bold text-green-600 tabular-nums sm:text-2xl">
-                        {formatEur(product.price, locale)}
+                        {formatPrice(product.price)}
                       </span>
                       {product.oldPrice != null && (
                         <span className="mt-1 block text-sm text-gray-400 line-through">
-                          {formatEur(product.oldPrice, locale)}
+                          {formatPrice(product.oldPrice)}
                         </span>
                       )}
                     </td>

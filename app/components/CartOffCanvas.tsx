@@ -2,8 +2,8 @@
 
 import React, { useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
-import { formatEur } from '@/lib/format-price';
+import { useTranslations } from 'next-intl';
+import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import { X, Minus, Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
@@ -11,7 +11,7 @@ import { useCart } from '../context/CartContext';
 const CartOffCanvas: React.FC = () => {
   const t = useTranslations('Cart');
   const tHeader = useTranslations('Header');
-  const locale = useLocale();
+  const formatPrice = useFormatCurrency();
   const {
     lines,
     isOpen,
@@ -101,7 +101,7 @@ const CartOffCanvas: React.FC = () => {
                       {product.name}
                     </Link>
                     <p className="mt-1 text-sm text-green-600 font-semibold">
-                      {formatEur(product.price, locale)}
+                      {formatPrice(product.price)}
                     </p>
                     <div className="mt-2 flex items-center gap-2">
                       <div className="flex items-center rounded-lg border border-gray-200">
@@ -139,7 +139,7 @@ const CartOffCanvas: React.FC = () => {
                     </div>
                   </div>
                   <div className="shrink-0 text-right text-sm font-semibold text-gray-900">
-                    {formatEur(product.price * quantity, locale)}
+                    {formatPrice(product.price * quantity)}
                   </div>
                 </li>
               ))}
@@ -151,7 +151,7 @@ const CartOffCanvas: React.FC = () => {
           <div className="border-t border-gray-100 bg-gray-50 px-4 py-4 space-y-4">
             <div className="flex justify-between text-base font-semibold text-gray-900">
               <span>{t('subtotal')}</span>
-              <span>{formatEur(subtotal, locale)}</span>
+              <span>{formatPrice(subtotal)}</span>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
               <Link

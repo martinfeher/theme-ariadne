@@ -7,6 +7,7 @@ import { Link, useRouter } from '@/i18n/navigation';
 import { MapPin } from 'lucide-react';
 import { Combobox } from '@/components/ui/combobox';
 import SearchBarWithSuggestions from '@/app/components/SearchBarWithSuggestions';
+import HeaderTopBar from '@/app/components/HeaderTopBar';
 import LanguageSwitcher from '@/app/components/LanguageSwitcher';
 import ShoppingCartIcon from '@/app/components/icons/ShoppingCartIcon';
 import { useCart } from '@/app/context/CartContext';
@@ -47,13 +48,69 @@ const BROWSE_CATEGORIES = [
   { name: 'Bread and Juice', link: 'bread-juice', icon: '/icons/category-10.svg' },
 ] as const;
 
+const HOME_MENU_SLUGS = ['home-1', 'home-2', 'home-3', 'home-4'] as const;
+
+function HomeMenuNav() {
+  const t = useTranslations('Header');
+  const [open, setOpen] = useState(false);
+  const menuKeys = ['homeMenu1', 'homeMenu2', 'homeMenu3', 'homeMenu4'] as const;
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <Link
+        href="/"
+        className={
+          open
+            ? 'flex items-center gap-1 font-medium text-green-600 transition-colors'
+            : 'flex items-center gap-1 font-medium text-gray-700 transition-colors hover:text-green-600'
+        }
+        aria-expanded={open ? 'true' : 'false'}
+        aria-haspopup="true"
+      >
+        <span>{t('home')}</span>
+        <svg className="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+          <path
+            fillRule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </Link>
+      {open && (
+        <div
+          role="menu"
+          className="absolute left-0 top-full z-[55] min-w-[12rem] rounded-lg border border-gray-100 bg-white py-1.5 shadow-lg"
+        >
+          {HOME_MENU_SLUGS.map((slug, i) => (
+            <Link
+              key={slug}
+              href={`/home/${slug}`}
+              role="menuitem"
+              className="block px-4 py-2.5 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-green-600"
+              onClick={() => setOpen(false)}
+            >
+              {t(menuKeys[i])}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function BrowseCategoriesControl({
   isOpen,
+  onOpenRequest,
   onToggle,
   onCloseRequest,
   compact,
 }: {
   isOpen: boolean;
+  onOpenRequest: () => void;
   onToggle: () => void;
   onCloseRequest: () => void;
   compact?: boolean;
@@ -61,7 +118,11 @@ function BrowseCategoriesControl({
   const t = useTranslations('Header');
 
   return (
-    <div className="relative">
+    <div
+      className="relative overflow-visible"
+      onMouseEnter={onOpenRequest}
+      onMouseLeave={onCloseRequest}
+    >
       <button
         type="button"
         onClick={onToggle}
@@ -72,6 +133,7 @@ function BrowseCategoriesControl({
         }
         aria-label={t('browseCategories')}
         aria-expanded={isOpen ? 'true' : 'false'}
+        aria-haspopup="true"
       >
         <svg className="h-5 w-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
           <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -91,21 +153,13 @@ function BrowseCategoriesControl({
       </button>
 
       {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-50"
-            onClick={onCloseRequest}
-            aria-hidden="true"
-            tabIndex={-1}
-          />
-          <div
-            className={
-              compact
-                ? 'absolute left-0 top-full z-60 mt-2 max-h-[min(24rem,70vh)] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto rounded-lg border bg-white py-2 shadow-xl'
-                : 'absolute left-0 top-full z-60 mt-1 max-h-[min(24rem,70vh)] w-96 overflow-y-auto rounded-lg border bg-white shadow-xl'
+        <div
+          className={
+            compact
+              ? 'absolute left-0 top-full z-60 max-h-[min(24rem,70vh)] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto rounded-lg border bg-white py-2 shadow-xl'
+              : 'absolute left-0 top-full z-60 max-h-[min(24rem,70vh)] w-96 overflow-y-auto rounded-lg border bg-white pt-1 shadow-xl'
             }
-            onClick={e => e.stopPropagation()}
-          >
+        >
             <div className="grid grid-cols-2 gap-1 px-2 py-2 pb-2">
               {BROWSE_CATEGORIES.map((category, index) => (
                 <Link
@@ -119,8 +173,7 @@ function BrowseCategoriesControl({
                 </Link>
               ))}
             </div>
-          </div>
-        </>
+        </div>
       )}
     </div>
   );
@@ -167,10 +220,12 @@ const Header = () => {
   }
 
   const toggleCategories = () => setIsCategoriesOpen((o) => !o);
+  const openCategories = () => setIsCategoriesOpen(true);
   const closeCategories = () => setIsCategoriesOpen(false);
 
   return (
     <header className="header-area header-style-1 header-height-2">
+      <HeaderTopBar />
       {showFixedSearchCart && (
         <>
           <div className="fixed inset-x-0 top-0 z-200 w-full overflow-visible border-b border-[#c9ccb8] bg-[#ecede2] pt-[max(0.5rem,env(safe-area-inset-top))] shadow-sm">
@@ -178,6 +233,7 @@ const Header = () => {
               <div className="hidden shrink-0 lg:block">
                 <BrowseCategoriesControl
                   isOpen={isCategoriesOpen}
+                  onOpenRequest={openCategories}
                   onToggle={toggleCategories}
                   onCloseRequest={closeCategories}
                 />
@@ -185,6 +241,7 @@ const Header = () => {
               <div className="shrink-0 lg:hidden">
                 <BrowseCategoriesControl
                   isOpen={isCategoriesOpen}
+                  onOpenRequest={openCategories}
                   onToggle={toggleCategories}
                   onCloseRequest={closeCategories}
                   compact
@@ -244,7 +301,7 @@ const Header = () => {
       </div>
 
       {/* Header Middle */}
-      <div className="hidden lg:block py-4 bg-[#ecede2]">
+      <div className="hidden lg:block py-4 bg-[#f3f4f5]">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="shrink-0">
@@ -269,9 +326,6 @@ const Header = () => {
 
             <div className="flex items-center">
               <div className="flex items-center space-x-6">
-                <div className="hidden shrink-0 items-center lg:flex">
-                  <LanguageSwitcher />
-                </div>
                 <div className="relative">
                   <Combobox
                     options={locationOptions}
@@ -281,7 +335,7 @@ const Header = () => {
                     leadingIcon={
                       <MapPin className="h-5 w-5 shrink-0 text-gray-400" strokeWidth={1.5} aria-hidden />
                     }
-                    className="h-10 w-[200px] min-w-[11.5rem] cursor-pointer border border-gray-200 bg-white px-3 py-2 text-sm font-normal shadow-[1px_1px_3px_rgba(0,0,0,0.08)] hover:border-gray-300 hover:bg-gray-50/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500/35 focus-visible:ring-offset-0"
+                    className="h-10 w-[200px] cursor-pointer border border-gray-200 bg-white px-3 py-2 text-sm font-normal shadow-[1px_1px_3px_rgba(0,0,0,0.08)] hover:border-gray-300 hover:bg-gray-50/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500/35 focus-visible:ring-offset-0"
                     boxClassName="z-[60] w-[min(240px,calc(100vw-2rem))]"
                   />
                 </div>
@@ -433,6 +487,7 @@ const Header = () => {
               {!showFixedSearchCart && (
                 <BrowseCategoriesControl
                   isOpen={isCategoriesOpen}
+                  onOpenRequest={openCategories}
                   onToggle={toggleCategories}
                   onCloseRequest={closeCategories}
                 />
@@ -440,20 +495,7 @@ const Header = () => {
 
               {/* Main Navigation */}
               <nav className="flex items-center space-x-8">
-                <div className="flex items-center space-x-2">
-                  <Image src="/icons/icon-hot.svg" alt="Hot" width={16} height={16} />
-                  <Link href="/deals" className="text-red-500 font-medium hover:text-red-600">{t('deals')}</Link>
-                </div>
-                
-                <div className="relative group">
-                  <Link href="/" className="flex items-center space-x-1 text-gray-700 hover:text-green-500 font-medium">
-                    <span>{t('home')}</span>
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </Link>
-                </div>
-
+                <HomeMenuNav />
                 <Link href="/about" className="text-gray-700 hover:text-green-500 font-medium">{t('about')}</Link>
                 
                 <div className="relative group">
@@ -583,7 +625,27 @@ const Header = () => {
 
               {/* Mobile Navigation Links */}
               <nav className="space-y-2">
-                <Link href="/" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('home')}</Link>
+                <div className="py-2">
+                  <Link href="/" className="font-medium text-gray-700 hover:text-green-500">
+                    {t('home')}
+                  </Link>
+                  <ul className="mt-1 space-y-1 border-l border-gray-200 pl-3">
+                    {HOME_MENU_SLUGS.map((slug, i) => {
+                      const keys = ['homeMenu1', 'homeMenu2', 'homeMenu3', 'homeMenu4'] as const;
+                      return (
+                        <li key={slug}>
+                          <Link
+                            href={`/home/${slug}`}
+                            className="block py-1 text-sm text-gray-600 hover:text-green-600"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {t(keys[i])}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
                 <Link href="/about" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('about')}</Link>
                 <Link href="/shop" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('shop')}</Link>
                 <Link href="/vendors" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('vendors')}</Link>

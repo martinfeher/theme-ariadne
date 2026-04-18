@@ -2,8 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
-import { formatEur } from '@/lib/format-price';
+import { useTranslations } from 'next-intl';
+import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import { Trash2 } from 'lucide-react';
 import Header from '@/app/components/Header';
@@ -46,7 +46,7 @@ function StarRating({ rating, ratingCount }: { rating: number; ratingCount: numb
 export default function WishlistView() {
   const t = useTranslations('Wishlist');
   const tHeader = useTranslations('Header');
-  const locale = useLocale();
+  const formatPrice = useFormatCurrency();
   const { items, removeFromWishlist } = useWishlist();
   const { addItem, openCart } = useCart();
   const [selected, setSelected] = useState<Set<number>>(new Set());
@@ -210,7 +210,7 @@ export default function WishlistView() {
                         </td>
                         <td className="px-4 py-6 align-middle">
                           <span className="text-xl font-bold text-green-600 tabular-nums">
-                            {formatEur(product.price, locale)}
+                            {formatPrice(product.price)}
                           </span>
                         </td>
                         <td className="px-4 py-6 align-middle">
