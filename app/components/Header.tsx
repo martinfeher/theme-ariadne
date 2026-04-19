@@ -18,7 +18,6 @@ import { useCompare } from '@/app/context/CompareContext';
 const SCROLL_Y_SHOW_FIXED_BAR = 100;
 
 const locationOptions = [
-  // { value: "", label: t('locationPlaceholder') },
   { value: "bratislava", label: "Bratislava" },
   { value: "kosice", label: "Košice" },
   { value: "presov", label: "Prešov" },
@@ -41,7 +40,6 @@ const BROWSE_CATEGORIES = [
   { name: 'Clothing & beauty', link: 'clothing-beauty', icon: '/icons/category-2.svg' },
   { name: 'Pet Foods & Toy', link: 'pet-foods-toy', icon: '/icons/category-3.svg' },
   { name: 'Baking material', link: 'baking-material', icon: '/icons/category-4.svg' },
-  // { name: 'Fresh Fruit', link: 'fresh-fruit', icon: '/icons/category-5.svg' },
   { name: 'Wines & Drinks', link: 'wines-drinks', icon: '/icons/category-6.svg' },
   { name: 'Fresh Seafood', link: 'fresh-seafood', icon: '/icons/category-7.svg' },
   { name: 'Fast food', link: 'fast-food', icon: '/icons/category-8.svg' },
@@ -335,8 +333,8 @@ const Header = () => {
                     leadingIcon={
                       <MapPin className="h-5 w-5 shrink-0 text-gray-400" strokeWidth={1.5} aria-hidden />
                     }
-                    className="h-10 w-[200px] cursor-pointer border border-gray-200 bg-white px-3 py-2 text-sm font-normal shadow-[1px_1px_3px_rgba(0,0,0,0.08)] hover:border-gray-300 hover:bg-gray-50/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500/35 focus-visible:ring-offset-0"
-                    boxClassName="z-[60] w-[min(240px,calc(100vw-2rem))]"
+                    className="h-10 w-[190px] cursor-pointer border border-gray-200 bg-white px-3 py-2 text-sm font-normal shadow-[1px_1px_3px_rgba(0,0,0,0.08)] hover:border-gray-300 hover:bg-gray-50/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500/35 focus-visible:ring-offset-0"
+                    boxClassName="z-[60] w-[190px] -mt-[5px]"
                   />
                 </div>
 
@@ -537,16 +535,6 @@ const Header = () => {
                 <Link href="/contact" className="text-gray-700 hover:text-green-500 font-medium">{t('contact')}</Link>
               </nav>
             </div>
-
-            {/* Hotline */}
-            <div className="hidden lg:flex items-center space-x-3">
-              <Image src="/icons/icon-headphone.svg" alt="Support" width={24} height={24} />
-              <div>
-                <p className="text-md font-bold text-green-500">1900 - 888</p>
-                <p className="text-xs text-gray-500">{t('hotline')}</p>
-              </div>
-            </div>
-
             {/* Mobile Menu Button */}
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

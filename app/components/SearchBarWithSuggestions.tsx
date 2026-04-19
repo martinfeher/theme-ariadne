@@ -142,7 +142,7 @@ export default function SearchBarWithSuggestions({
               onValueChange={onCategoryChange}
               placeholder={t('categories.all')}
               className="w-[160px] border-0 rounded-none bg-transparent cursor-pointer"
-              boxClassName="w-[160px] z-300"
+              boxClassName="ml-[10px] w-[170px] z-300"
             />
           </div>
         )}

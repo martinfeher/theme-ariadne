@@ -31,7 +31,7 @@ export default function LanguageSwitcher({ variant = 'tabs' }: LanguageSwitcherP
         <PopoverTrigger asChild>
           <button
             type="button"
-            className="flex items-center gap-1 text-gray-600 transition-colors hover:text-green-600 cursor-pointer"
+            className="flex items-center gap-1 text-[#2f833e] transition-colors hover:text-green-600 cursor-pointer"
             aria-label={t('language')}
             aria-expanded={open ? 'true' : 'false'}
           >
@@ -40,7 +40,7 @@ export default function LanguageSwitcher({ variant = 'tabs' }: LanguageSwitcherP
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-44 p-1" align="end" sideOffset={6}>
-          <nav className="flex flex-col gap-0.5" aria-label={t('language')}>
+          <nav className="flex flex-col gap-1 p-[1px]" aria-label={t('language')}>
             <Link
               href={pathname}
               locale="en"
@@ -49,7 +49,7 @@ export default function LanguageSwitcher({ variant = 'tabs' }: LanguageSwitcherP
               className={cn(
                 'rounded-md px-3 py-2 text-sm transition-colors',
                 locale === 'en'
-                  ? 'bg-green-50 font-medium text-green-800'
+                  ? 'bg-gray-50 font-medium text-green-800'
                   : 'text-gray-700 hover:bg-gray-50'
               )}
             >
@@ -63,7 +63,7 @@ export default function LanguageSwitcher({ variant = 'tabs' }: LanguageSwitcherP
               className={cn(
                 'rounded-md px-3 py-2 text-sm transition-colors',
                 locale === 'sk'
-                  ? 'bg-green-50 font-medium text-green-800'
+                  ? 'bg-gray-50 font-medium text-green-800'
                   : 'text-gray-700 hover:bg-gray-50'
               )}
             >
@@ -86,8 +86,8 @@ export default function LanguageSwitcher({ variant = 'tabs' }: LanguageSwitcherP
         locale="sk"
         className={`rounded px-2 py-1 text-xs font-semibold transition-colors ${
           locale === 'sk'
-            ? 'bg-green-500 text-white'
-            : 'text-gray-600 hover:bg-gray-50 hover:text-green-600'
+            ? 'bg-gray-500 text-white'
+            : 'text-[#2f833e] hover:bg-gray-50 hover:text-green-600'
         }`}
         prefetch={false}
       >
@@ -98,8 +98,8 @@ export default function LanguageSwitcher({ variant = 'tabs' }: LanguageSwitcherP
         locale="en"
         className={`rounded px-2 py-1 text-xs font-semibold transition-colors ${
           locale === 'en'
-            ? 'bg-green-500 text-white'
-            : 'text-gray-600 hover:bg-gray-50 hover:text-green-600'
+            ? 'bg-gray-500 text-white'
+            : 'text-[#2f833e] hover:bg-gray-50 hover:text-green-600'
         }`}
         prefetch={false}
       >
