@@ -7,10 +7,12 @@ import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import { X, Minus, Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useProductI18n } from '@/app/hooks/useProductI18n';
 
 const CartOffCanvas: React.FC = () => {
   const t = useTranslations('Cart');
   const tHeader = useTranslations('Header');
+  const { getProductName } = useProductI18n();
   const formatPrice = useFormatCurrency();
   const {
     lines,
@@ -74,7 +76,9 @@ const CartOffCanvas: React.FC = () => {
             <p className="text-center text-sm text-gray-500 py-12">{t('empty')}</p>
           ) : (
             <ul className="space-y-4">
-              {lines.map(({ product, quantity }) => (
+              {lines.map(({ product, quantity }) => {
+                const lineName = getProductName(product);
+                return (
                 <li
                   key={product.id}
                   className="flex gap-3 border-b border-gray-100 pb-4 last:border-0"
@@ -86,7 +90,7 @@ const CartOffCanvas: React.FC = () => {
                   >
                     <Image
                       src={product.image}
-                      alt={product.name}
+                      alt={lineName}
                       fill
                       className="object-cover"
                       sizes="80px"
@@ -98,7 +102,7 @@ const CartOffCanvas: React.FC = () => {
                       onClick={closeCart}
                       className="font-medium text-gray-900 line-clamp-2 hover:text-green-600"
                     >
-                      {product.name}
+                      {lineName}
                     </Link>
                     <p className="mt-1 text-sm text-green-600 font-semibold">
                       {formatPrice(product.price)}
@@ -142,7 +146,8 @@ const CartOffCanvas: React.FC = () => {
                     {formatPrice(product.price * quantity)}
                   </div>
                 </li>
-              ))}
+                );
+              })}
             </ul>
           )}
         </div>

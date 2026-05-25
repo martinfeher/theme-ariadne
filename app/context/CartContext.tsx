@@ -29,6 +29,7 @@ interface CartContextValue {
   removeLine: (productId: number) => void;
   setQuantity: (productId: number, quantity: number) => void;
   getQuantity: (productId: number) => number;
+  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -50,6 +51,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const toggleCart = useCallback(() => setIsOpen((o) => !o), []);
 
   const addItem = useCallback((product: Product, quantity = 1) => {
+    if (product.inStock === false) return;
     const q = Math.max(1, quantity);
     setLines((prev) => {
       const i = prev.findIndex((l) => l.product.id === product.id);
@@ -102,6 +104,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     [lines]
   );
 
+  const clearCart = useCallback(() => setLines([]), []);
+
   const itemCount = useMemo(
     () => lines.reduce((sum, l) => sum + l.quantity, 0),
     [lines]
@@ -126,6 +130,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       removeLine,
       setQuantity,
       getQuantity,
+      clearCart,
     }),
     [
       lines,
@@ -140,6 +145,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       removeLine,
       setQuantity,
       getQuantity,
+      clearCart,
     ]
   );
 

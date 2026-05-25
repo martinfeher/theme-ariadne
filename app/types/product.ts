@@ -17,4 +17,6 @@ export interface Product {
   description?: string;
   /** When false, product is treated as out of stock (wishlist / shop UI). Defaults to in stock if omitted. */
   inStock?: boolean;
+  /** Shows an organic label on product imagery. */
+  organic?: boolean;
 }

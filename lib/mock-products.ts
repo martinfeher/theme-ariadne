@@ -2,31 +2,27 @@ import type { Product } from '@/app/types/product';
 
 /**
  * Mock product photos live under /public/images/products/mock/.
- * Sourced from Unsplash (https://unsplash.com/license) for demo use only.
+ * Sourced from Pexels and Flickr (Creative Commons) for demo use only.
  */
 const MOCK_IMAGE_BASE = '/images/products/mock';
 
+const VANILLA_YOGURT_IMAGE =
+  'https://images.unsplash.com/photo-1571212515416-fef01fc43637?w=600&q=80';
+
+function mockProductImage(file: string): { image: string; hoverImage: string } {
+  const path = `${MOCK_IMAGE_BASE}/${file}`;
+  return { image: path, hoverImage: path };
+}
+
 const CATEGORY_MEDIA: Record<string, { image: string; hoverImage: string }> = {
-  vegetables: {
-    image: `${MOCK_IMAGE_BASE}/organic_quinoa.jpeg`,
-    hoverImage: `${MOCK_IMAGE_BASE}/organic_quinoa.jpeg`,
-  },
-  'coffees-teas': {
-    image: `${MOCK_IMAGE_BASE}/roast_ground_cofee.jpeg`,
-    hoverImage: `${MOCK_IMAGE_BASE}/roast_ground_cofee.jpeg`,
-  },
-  'pet-foods': {
-    image: `${MOCK_IMAGE_BASE}/pet-foods-a.jpg`,
-    hoverImage: `${MOCK_IMAGE_BASE}/pet-foods-a.jpg`,
-  },
+  vegetables: mockProductImage('organic_quinoa.jpeg'),
+  'coffees-teas': mockProductImage('roast_ground_cofee.jpeg'),
+  'pet-foods': mockProductImage('dry_dog_food.jpeg'),
   'milks-dairies': {
-    image: `${MOCK_IMAGE_BASE}/vanilla_greek_yogurt.jpeg`,
-    hoverImage: `${MOCK_IMAGE_BASE}/vanilla_greek_yogurt.jpeg`,
+    image: VANILLA_YOGURT_IMAGE,
+    hoverImage: VANILLA_YOGURT_IMAGE,
   },
-  fruits: {
-    image: `${MOCK_IMAGE_BASE}/granny_smith_apples.jpeg`,
-    hoverImage: `${MOCK_IMAGE_BASE}/granny_smith_apples.jpeg`,
-  },
+  fruits: mockProductImage('granny_smith_apples.jpeg'),
   'baking-material': {
     image: `${MOCK_IMAGE_BASE}/white_bread.jpeg`,
     hoverImage: `${MOCK_IMAGE_BASE}/white_bread.jpeg`,
@@ -60,7 +56,36 @@ export const MOCK_PRODUCTS: Product[] = [
     categories: ['all', 'vegetables'],
     description:
       'Organic whole grains blend of quinoa, brown rice, and red rice—ready in minutes and perfect as a side or bowl base.',
-    ...mediaForCategories(['all', 'vegetables']),
+    organic: false,
+    ...mockProductImage('organic_quinoa.jpeg'),
+  },
+  {
+    id: 19,
+    name: 'Fresh Broccoli Crowns',
+    category: 'Fresh Vegetables',
+    price: 2.99,
+    rating: 4.6,
+    ratingCount: 11,
+    vendor: 'Ariadne Foods',
+    categories: ['all', 'vegetables'],
+    description: 'Crisp green broccoli crowns, perfect for steaming, roasting, or stir-fries.',
+    organic: true,
+    ...mockProductImage('fresh_broccoli.jpg'),
+  },
+  {
+    id: 21,
+    name: 'Vine-Ripened Cherry Tomatoes',
+    category: 'Fresh Vegetables',
+    price: 3.49,
+    oldPrice: 4.29,
+    rating: 4.7,
+    ratingCount: 8,
+    vendor: 'Ariadne Foods',
+    categories: ['all', 'vegetables'],
+    description: 'Juicy cherry tomatoes picked at peak ripeness for salads and pasta.',
+    inStock: true,
+    organic: true,
+    ...mockProductImage('cherry_tomatoes.jpeg'),
   },
   {
     id: 6,
@@ -86,7 +111,48 @@ export const MOCK_PRODUCTS: Product[] = [
     vendor: 'Ariadne Foods',
     categories: ['all', 'fruits'],
     description: 'Crisp sweet Fuji apples, perfect for snacking, baking, or lunch boxes.',
-    ...mediaForCategories(['all', 'fruits']),
+    organic: true,
+    ...mockProductImage('granny_smith_apples.jpeg'),
+  },
+  {
+    id: 16,
+    name: 'Fresh Strawberries',
+    category: 'Fresh Fruit',
+    price: 4.49,
+    oldPrice: 5.99,
+    rating: 4.8,
+    ratingCount: 9,
+    vendor: 'Ariadne Foods',
+    description: 'Sweet ripe strawberries, ideal for desserts, smoothies, or eating fresh.',
+    inStock: false,
+    organic: true,
+    ...mockProductImage('strawberry_fruit.jpg'),
+  },
+  {
+    id: 17,
+    name: 'Organic Bananas',
+    category: 'Fresh Fruit',
+    price: 2.29,
+    rating: 4.5,
+    ratingCount: 14,
+    vendor: 'Ariadne Foods',
+    categories: ['all', 'fruits'],
+    description: 'Naturally ripened organic bananas, great for breakfast bowls and baking.',
+    organic: true,
+    ...mockProductImage('bananas.jpeg'),
+  },
+  {
+    id: 18,
+    name: 'Valencia Oranges',
+    category: 'Fresh Fruit',
+    price: 3.79,
+    rating: 4.6,
+    ratingCount: 8,
+    vendor: 'Ariadne Foods',
+    categories: ['all', 'fruits'],
+    description: 'Juicy Valencia oranges with a bright citrus flavor—perfect for fresh juice.',
+    organic: true,
+    ...mockProductImage('valencia_oranges.jpeg'),
   },
   {
     id: 13,
@@ -98,7 +164,63 @@ export const MOCK_PRODUCTS: Product[] = [
     vendor: 'Starbucks',
     categories: ['all', 'coffees-teas'],
     description: 'Smooth balanced medium roast ground coffee for drip or pour-over.',
-    ...mediaForCategories(['all', 'coffees-teas']),
+    ...mockProductImage('roast_ground_cofee.jpeg'),
+  },
+  {
+    id: 26,
+    name: 'Dark Roast Whole Bean Coffee',
+    category: 'Coffees & Teas',
+    price: 14.99,
+    oldPrice: 17.99,
+    rating: 4.8,
+    ratingCount: 28,
+    vendor: 'Ariadne Roasters',
+    categories: ['all', 'coffees-teas'],
+    description:
+      'Rich whole bean blend with notes of dark chocolate—freshly roasted for a bold morning cup.',
+    inStock: false,
+    ...mockProductImage('whole_bean_coffee.jpeg'),
+  },
+  {
+    id: 27,
+    name: 'Organic Green Tea',
+    category: 'Coffees & Teas',
+    price: 8.49,
+    rating: 4.6,
+    ratingCount: 19,
+    vendor: 'Ariadne Teas',
+    categories: ['all', 'coffees-teas'],
+    description:
+      'Light and refreshing green tea with a clean finish—perfect hot or iced.',
+    organic: true,
+    ...mockProductImage('organic_green_tea.jpeg'),
+  },
+  {
+    id: 28,
+    name: 'Jasmine Pearl Green Tea',
+    category: 'Coffees & Teas',
+    price: 11.99,
+    rating: 4.7,
+    ratingCount: 14,
+    vendor: 'Ariadne Teas',
+    categories: ['all', 'coffees-teas'],
+    description:
+      'Hand-rolled jasmine pearls that unfurl for a fragrant, floral cup with multiple infusions.',
+    ...mockProductImage('jasmine_tea.jpeg'),
+  },
+  {
+    id: 29,
+    name: 'Dark Roast Espresso',
+    category: 'Coffees & Teas',
+    price: 12.49,
+    rating: 4.5,
+    ratingCount: 21,
+    vendor: 'Ariadne Roasters',
+    categories: ['all', 'coffees-teas'],
+    inStock: false,
+    description:
+      'Intense dark roast espresso with a thick crema—ideal for lattes and straight shots.',
+    ...mockProductImage('dark_roast_espresso.jpeg'),
   },
   {
     id: 15,
@@ -107,6 +229,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 3.29,
     rating: 4.0,
     ratingCount: 17,
+    inStock: false,
     vendor: 'Wonder',
     categories: ['all', 'baking-material'],
     description: 'Soft classic sandwich bread for everyday toast and lunches.',

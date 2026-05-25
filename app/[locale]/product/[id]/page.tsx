@@ -8,6 +8,7 @@ import {
   getProductsExcept,
   MOCK_PRODUCTS,
 } from '@/lib/mock-products';
+import { getProductDescription, getProductName } from '@/lib/product-i18n';
 import { routing } from '@/i18n/routing';
 
 type Props = { params: Promise<{ locale: string; id: string }> };
@@ -21,13 +22,17 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, id } = await params;
   const product = getProductById(Number(id));
-  const t = await getTranslations({ locale, namespace: 'Meta' });
+  const tMeta = await getTranslations({ locale, namespace: 'Meta' });
   if (!product) {
-    return { title: t('title') };
+    return { title: tMeta('title') };
   }
+  const tNames = await getTranslations({ locale, namespace: 'Products.names' });
+  const tDescriptions = await getTranslations({ locale, namespace: 'Products.descriptions' });
+  const name = getProductName(product, tNames);
+  const description = getProductDescription(product, tDescriptions) ?? name;
   return {
-    title: `${product.name} | ${t('title')}`,
-    description: product.description ?? product.name,
+    title: `${name} | ${tMeta('title')}`,
+    description,
   };
 }
 

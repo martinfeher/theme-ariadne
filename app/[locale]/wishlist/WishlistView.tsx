@@ -10,6 +10,7 @@ import Header from '@/app/components/Header';
 import { useWishlist } from '@/app/context/WishlistContext';
 import { useCart } from '@/app/context/CartContext';
 import type { Product } from '@/app/types/product';
+import { useProductI18n } from '@/app/hooks/useProductI18n';
 
 function isInStock(product: Product) {
   return product.inStock !== false;
@@ -46,6 +47,7 @@ function StarRating({ rating, ratingCount }: { rating: number; ratingCount: numb
 export default function WishlistView() {
   const t = useTranslations('Wishlist');
   const tHeader = useTranslations('Header');
+  const { getProductName } = useProductI18n();
   const formatPrice = useFormatCurrency();
   const { items, removeFromWishlist } = useWishlist();
   const { addItem, openCart } = useCart();
@@ -166,6 +168,7 @@ export default function WishlistView() {
                 <tbody>
                   {items.map((product) => {
                     const inStock = isInStock(product);
+                    const itemName = getProductName(product);
                     return (
                       <tr
                         key={product.id}
@@ -177,7 +180,7 @@ export default function WishlistView() {
                             className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
                             checked={selected.has(product.id)}
                             onChange={() => toggleRow(product.id)}
-                            aria-label={t('selectRow', { name: product.name })}
+                            aria-label={t('selectRow', { name: itemName })}
                           />
                         </td>
                         <td className="px-4 py-6 align-middle">
@@ -188,7 +191,7 @@ export default function WishlistView() {
                             >
                               <Image
                                 src={product.image}
-                                alt={product.name}
+                                alt={itemName}
                                 fill
                                 className="object-cover"
                                 sizes="80px"
@@ -199,7 +202,7 @@ export default function WishlistView() {
                                 href={`/product/${product.id}`}
                                 className="font-semibold text-green-600 hover:text-green-700 line-clamp-2"
                               >
-                                {product.name}
+                                {itemName}
                               </Link>
                               <StarRating
                                 rating={product.rating}
@@ -250,7 +253,7 @@ export default function WishlistView() {
                             type="button"
                             onClick={() => removeFromWishlist(product.id)}
                             className="inline-flex rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-red-600 cursor-pointer"
-                            aria-label={t('removeFromWishlist', { name: product.name })}
+                            aria-label={t('removeFromWishlist', { name: itemName })}
                           >
                             <Trash2 className="h-5 w-5" />
                           </button>

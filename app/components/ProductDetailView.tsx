@@ -12,6 +12,9 @@ import { useWishlist } from '@/app/context/WishlistContext';
 import { useCompare, MAX_COMPARE_PRODUCTS } from '@/app/context/CompareContext';
 import { CATEGORY_SIDEBAR_ICONS } from '@/lib/category-shop';
 import { countProductsWithCategorySlug } from '@/lib/mock-products';
+import { useProductI18n } from '@/app/hooks/useProductI18n';
+import { vendorHref } from '@/lib/mock-vendors';
+import OrganicBadge from './OrganicBadge';
 
 const ACCENT = '#3BB77E';
 
@@ -76,6 +79,7 @@ export default function ProductDetailView({
 }) {
   const t = useTranslations('ProductDetail');
   const tBar = useTranslations('SearchBar.categories');
+  const { getProductName, getProductDescription } = useProductI18n();
   const formatPrice = useFormatCurrency();
   const { addItem, openCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
@@ -100,6 +104,9 @@ export default function ProductDetailView({
   const inStock = product.inStock !== false;
   const stockCount = inStock ? 8 : 0;
   const sku = `NT-${String(product.id).padStart(5, '0')}`;
+  const productName = getProductName(product);
+  const productDescription =
+    getProductDescription(product) ?? t('shortPlaceholder');
 
   const handleCompare = useCallback(() => {
     if (compareDisabled) return;
@@ -108,6 +115,7 @@ export default function ProductDetailView({
   }, [compareDisabled, compared, product, addToCompare, removeFromCompare]);
 
   const addToCart = () => {
+    if (!inStock) return;
     addItem(product, qty);
     openCart();
   };
@@ -130,7 +138,7 @@ export default function ProductDetailView({
             {t('breadcrumbHome')}
           </Link>
           <span className="mx-2">/</span>
-          <span className="text-gray-800">{product.name}</span>
+          <span className="text-gray-800">{productName}</span>
         </nav>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
@@ -141,12 +149,17 @@ export default function ProductDetailView({
                   <div className="relative aspect-square overflow-hidden rounded-xl border border-gray-100 bg-gray-50">
                     <Image
                       src={mainSrc}
-                      alt={product.name}
+                      alt={productName}
                       fill
                       className="object-cover"
                       sizes="(max-width: 1024px) 100vw, 50vw"
                       priority
                     />
+                    {product.organic && (
+                      <div className="absolute left-3 top-3 pointer-events-none">
+                        <OrganicBadge />
+                      </div>
+                    )}
                     <button
                       type="button"
                       onClick={() => setZoomOpen(true)}
@@ -187,7 +200,7 @@ export default function ProductDetailView({
                     </span>
                   )}
                   <h1 className="text-2xl font-bold leading-tight text-gray-900 sm:text-3xl">
-                    {product.name}
+                    {productName}
                   </h1>
                   <div className="mt-3 flex flex-wrap items-center gap-2">
                     <StarRow rating={product.rating} />
@@ -216,7 +229,7 @@ export default function ProductDetailView({
                   </div>
 
                   <p className="mt-4 text-sm leading-relaxed text-gray-600">
-                    {product.description ?? t('shortPlaceholder')}
+                    {productDescription}
                   </p>
 
                   <div className="mt-6">
@@ -277,7 +290,7 @@ export default function ProductDetailView({
                       style={{ backgroundColor: ACCENT }}
                     >
                       <ShoppingCart className="h-5 w-5" />
-                      {t('addToCart')}
+                      {inStock ? t('addToCart') : t('outStock')}
                     </button>
                     <button
                       type="button"
@@ -423,9 +436,15 @@ export default function ProductDetailView({
                   </div>
                 )}
                 {tab === 'vendor' && (
-                  <p>
-                    {t('vendorBlurb', { name: product.vendor })}
-                  </p>
+                  <div className="space-y-3">
+                    <p>{t('vendorBlurb', { name: product.vendor })}</p>
+                    <Link
+                      href={vendorHref(product.vendor)}
+                      className="inline-flex text-sm font-semibold text-green-600 hover:text-green-700"
+                    >
+                      {t('visitVendorStore')} →
+                    </Link>
+                  </div>
                 )}
                 {tab === 'reviews' && (
                   <p className="text-gray-500">{t('reviewsPlaceholder')}</p>
@@ -534,7 +553,9 @@ export default function ProductDetailView({
                 {t('newProducts')}
               </h2>
               <ul className="space-y-4">
-                {newProductsSidebar.map((p) => (
+                {newProductsSidebar.map((p) => {
+                  const sidebarName = getProductName(p);
+                  return (
                   <li key={p.id}>
                     <Link
                       href={`/product/${p.id}`}
@@ -543,7 +564,7 @@ export default function ProductDetailView({
                       <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-gray-100">
                         <Image
                           src={p.image}
-                          alt={p.name}
+                          alt={sidebarName}
                           fill
                           className="object-cover"
                           sizes="64px"
@@ -551,7 +572,7 @@ export default function ProductDetailView({
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="line-clamp-2 text-sm font-medium text-gray-900">
-                          {p.name}
+                          {sidebarName}
                         </p>
                         <p
                           className="mt-1 text-sm font-semibold"
@@ -565,7 +586,8 @@ export default function ProductDetailView({
                       </div>
                     </Link>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             </div>
 
@@ -607,7 +629,7 @@ export default function ProductDetailView({
             </button>
             <Image
               src={mainSrc}
-              alt={product.name}
+              alt={productName}
               fill
               className="object-contain p-4 pt-10"
               sizes="(max-width: 768px) 100vw, 768px"

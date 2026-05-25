@@ -14,6 +14,7 @@ import {
 import { countProductsWithCategorySlug } from '@/lib/mock-products';
 import type { Product } from '@/app/types/product';
 import ProductCard from './ProductCard';
+import { useProductI18n } from '@/app/hooks/useProductI18n';
 
 const BANNER_PATTERN =
   'url("data:image/svg+xml,%3Csvg width%3D%2280%22 height%3D%2280%22 viewBox%3D%220 0 80 80%22 xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath d%3D%22M12 48c8-18 22-28 36-32M20 24c12 4 20 14 24 28M52 20c-6 14-6 28 2 40%22 fill%3D%22none%22 stroke%3D%22%233BB77E%22 stroke-opacity%3D%220.14%22 stroke-width%3D%221.2%22 stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E")';
@@ -44,6 +45,7 @@ function StarRow({ rating }: { rating: number }) {
 
 export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
   const t = useTranslations('Category');
+  const { getProductName } = useProductI18n();
   const tDetail = useTranslations('ProductDetail');
   const tBar = useTranslations('SearchBar.categories');
   const formatPrice = useFormatCurrency();
@@ -408,20 +410,22 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
                 {tDetail('newProducts')}
               </h2>
               <ul className="space-y-4">
-                {newProductsSidebar.map((p) => (
+                {newProductsSidebar.map((p) => {
+                  const sidebarName = getProductName(p);
+                  return (
                   <li key={p.id}>
                     <Link href={`/product/${p.id}`} className="flex gap-3 rounded-lg hover:bg-slate-50">
                       <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-slate-100">
                         <Image
                           src={p.image}
-                          alt={p.name}
+                          alt={sidebarName}
                           fill
                           className="object-cover"
                           sizes="64px"
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="line-clamp-2 text-sm font-medium text-[#3BB77E]">{p.name}</p>
+                        <p className="line-clamp-2 text-sm font-medium text-[#3BB77E]">{sidebarName}</p>
                         <p className="mt-1 text-sm font-semibold text-amber-600">
                           {formatPrice(p.price)}
                         </p>
@@ -431,7 +435,8 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
                       </div>
                     </Link>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             </div>
           </aside>

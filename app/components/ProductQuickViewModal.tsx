@@ -7,6 +7,8 @@ import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import { X } from 'lucide-react';
 import type { Product } from '../types/product';
+import { useProductI18n } from '@/app/hooks/useProductI18n';
+import OrganicBadge from './OrganicBadge';
 
 const FILTER_CATEGORY_SLUGS = [
   'milks-dairies',
@@ -58,6 +60,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 }) => {
   const t = useTranslations('ProductQuickView');
   const tBar = useTranslations('SearchBar');
+  const { getProductName, getProductDescription } = useProductI18n();
   const formatPrice = useFormatCurrency();
 
   const handleEscape = useCallback(
@@ -80,14 +83,15 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
   if (!open || !product) return null;
 
+  const productName = getProductName(product);
+  const descriptionText =
+    getProductDescription(product) || t('noDescription');
+  const inStock = product.inStock !== false;
   const filterCategoryLinks =
     product.categories?.filter((c) => c !== 'all').map((id) => ({
       href: `/category/${id}`,
       label: isFilterCategorySlug(id) ? tBar(`categories.${id}`) : id,
     })) ?? [];
-
-  const descriptionText =
-    product.description?.trim() || t('noDescription');
 
   return (
     <div
@@ -119,12 +123,17 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
             <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-50">
               <Image
                 src={product.image}
-                alt={product.name}
+                alt={productName}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 400px"
                 priority
               />
+              {product.organic && (
+                <div className="absolute left-3 top-3 pointer-events-none">
+                  <OrganicBadge />
+                </div>
+              )}
             </div>
 
             <div className="flex flex-col">
@@ -132,7 +141,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 id="quick-view-title"
                 className="text-2xl font-semibold text-gray-900"
               >
-                {product.name}
+                {productName}
               </h2>
 
               <p className="mt-2 text-sm text-gray-600 line-clamp-3 md:line-clamp-none">
@@ -149,6 +158,14 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                   </span>
                 )}
               </div>
+
+              <p className="mt-3 text-sm font-medium">
+                {inStock ? (
+                  <span className="text-green-600">{t('inStock')}</span>
+                ) : (
+                  <span className="text-[#f74b81]">{t('outStock')}</span>
+                )}
+              </p>
 
               <div className="mt-4">
                 <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
@@ -179,9 +196,10 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 <button
                   type="button"
                   onClick={onAddToCart}
-                  className="rounded-lg bg-green-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-green-600 cursor-pointer"
+                  disabled={!inStock}
+                  className="rounded-lg bg-green-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
                 >
-                  {t('addToCart')}
+                  {inStock ? t('addToCart') : t('outStock')}
                 </button>
                 <Link
                   href={`/product/${product.id}`}
@@ -238,7 +256,9 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                     <p className="text-sm text-gray-500">{t('noSimilar')}</p>
                   ) : (
                     <ul className="grid gap-4 sm:grid-cols-2">
-                      {similarProducts.map((p) => (
+                      {similarProducts.map((p) => {
+                        const similarName = getProductName(p);
+                        return (
                         <li key={p.id}>
                           <Link
                             href={`/product/${p.id}`}
@@ -248,7 +268,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                             <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-gray-50">
                               <Image
                                 src={p.image}
-                                alt={p.name}
+                                alt={similarName}
                                 fill
                                 className="object-cover"
                                 sizes="80px"
@@ -256,7 +276,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                             </div>
                             <div className="min-w-0 flex-1">
                               <p className="font-medium text-gray-900 line-clamp-2">
-                                {p.name}
+                                {similarName}
                               </p>
                               <p className="mt-1 text-sm font-semibold text-green-600">
                                 {formatPrice(p.price)}
@@ -264,7 +284,8 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                             </div>
                           </Link>
                         </li>
-                      ))}
+                        );
+                      })}
                     </ul>
                   )}
                 </div>

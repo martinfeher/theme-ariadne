@@ -8,12 +8,11 @@ import { fetchProducts } from '@/lib/fetch-products';
 
 const TAB_IDS = [
   'all',
-  'milks-dairies',
-  'coffees-teas',
-  'pet-foods',
-  'meats',
-  'vegetables',
   'fruits',
+  'vegetables',
+  'pet-foods',
+  'coffees-teas',
+  'milks-dairies',
 ] as const;
 
 type TabId = (typeof TAB_IDS)[number];

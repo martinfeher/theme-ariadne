@@ -9,6 +9,7 @@ import { CartProvider } from '@/app/context/CartContext';
 import { WishlistProvider } from '@/app/context/WishlistContext';
 import { CompareProvider } from '@/app/context/CompareContext';
 import { CurrencyProvider } from '@/app/context/CurrencyContext';
+import { AuthProvider } from '@/app/context/AuthContext';
 
 const inter = Inter({
   subsets: ['latin', 'latin-ext'],
@@ -60,11 +61,13 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <CurrencyProvider>
-            <WishlistProvider>
-              <CartProvider>
-                <CompareProvider>{children}</CompareProvider>
-              </CartProvider>
-            </WishlistProvider>
+            <AuthProvider>
+              <WishlistProvider>
+                <CartProvider>
+                  <CompareProvider>{children}</CompareProvider>
+                </CartProvider>
+              </WishlistProvider>
+            </AuthProvider>
           </CurrencyProvider>
         </NextIntlClientProvider>
       </body>

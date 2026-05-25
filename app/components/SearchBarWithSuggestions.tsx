@@ -8,6 +8,7 @@ import { Link } from '@/i18n/navigation';
 import { Combobox } from '@/components/ui/combobox';
 import { fetchProducts } from '@/lib/fetch-products';
 import type { Product } from '@/app/types/product';
+import { useProductI18n } from '@/app/hooks/useProductI18n';
 
 const DEBOUNCE_MS = 280;
 const MAX_SUGGESTIONS = 8;
@@ -50,6 +51,7 @@ export default function SearchBarWithSuggestions({
 }: SearchBarWithSuggestionsProps) {
   const t = useTranslations('SearchBar');
   const tHeader = useTranslations('Header');
+  const { getProductName } = useProductI18n();
   const locale = useLocale();
   const formatPrice = useFormatCurrency();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -206,7 +208,9 @@ export default function SearchBarWithSuggestions({
             <p className="px-4 py-3 text-sm text-gray-500">{t('noMatches')}</p>
           )}
           {!loading &&
-            suggestions.map((product) => (
+            suggestions.map((product) => {
+              const suggestionName = getProductName(product);
+              return (
               <div
                 key={product.id}
                 role="option"
@@ -225,7 +229,7 @@ export default function SearchBarWithSuggestions({
                   <span className="relative block h-12 w-12 shrink-0 overflow-hidden rounded-md border border-gray-100 bg-gray-50">
                     <Image
                       src={product.image}
-                      alt={product.name}
+                      alt={suggestionName}
                       fill
                       className="object-cover"
                       sizes="48px"
@@ -233,7 +237,7 @@ export default function SearchBarWithSuggestions({
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="line-clamp-2 text-sm font-medium text-gray-900">
-                      {product.name}
+                      {suggestionName}
                     </span>
                     <span className="mt-0.5 block text-sm font-semibold text-green-600">
                       {formatPrice(product.price)}
@@ -241,7 +245,8 @@ export default function SearchBarWithSuggestions({
                   </span>
                 </Link>
               </div>
-            ))}
+              );
+            })}
           {!loading && suggestions.length > 0 && (
             <div className="border-t border-gray-100 px-3 pt-2">
               <Link

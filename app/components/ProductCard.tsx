@@ -14,6 +14,9 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useCompare, MAX_COMPARE_PRODUCTS } from '../context/CompareContext';
 import ProductQuickViewModal, { type ModalTab } from './ProductQuickViewModal';
+import OrganicBadge from './OrganicBadge';
+import { useProductI18n } from '@/app/hooks/useProductI18n';
+import { vendorHref } from '@/lib/mock-vendors';
 
 interface ProductCardProps {
   product: Product;
@@ -38,6 +41,8 @@ function getSimilarProducts(current: Product, all: Product[]): Product[] {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], size = 'medium' }) => {
   const t = useTranslations('ProductCard');
+  const { getProductName } = useProductI18n();
+  const productName = getProductName(product);
   const formatPrice = useFormatCurrency();
   const { addItem, removeOne, getQuantity } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
@@ -45,6 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
   const wishlisted = isInWishlist(product.id);
   const compared = isInCompare(product.id);
   const compareDisabled = !canAdd(product.id) && !compared;
+  const inStock = product.inStock !== false;
   const [isHovered, setIsHovered] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState<ModalTab>('description');
@@ -77,13 +83,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
   const productCartCounter = getQuantity(product.id);
 
   const addToCart = () => {
-
-    console.log('addToCart');
+    if (!inStock) return;
     addItem(product, 1);
   };
 
   const removeFromCart = () => {
-    console.log('removeFromCart');
     removeOne(product.id);
   };
 
@@ -149,7 +153,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
           <div className="relative aspect-square">
             <Image
               src={isHovered && product.hoverImage ? product.hoverImage : product.image}
-              alt={product.name}
+              alt={productName}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
@@ -158,42 +162,50 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
             className="relative flex justify-end items-center -mt-[50px]"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              type="button"
-              className="flex items-center justify-center mr-[7px] mb-[8px] space-x-1 bg-green-500 text-white px-1.5 py-1.5 transition-colors text-sm z-40 cursor-pointer rounded-full"
-              onClick={() => addToCart()}
-           >
-              {productCartCounter === 0 && (
-                <IoAdd className="w-6 h-6 cursor-pointer" />
-              )}
-              {productCartCounter > 0 && (
-                <div className="w-6 h-6 text-[16px] cursor-pointer z-100" >{productCartCounter}</div>
-              )}
-            </button>
-            {productCartCounter > 0 && (
-              <div className="pointer-events-none">
-                <div
-                  className="absolute top-0 right-[10px] h-[37px] bg-[#d8e7fb] rounded-full opacity-92"
-                  style={{ width: size === 'small' ? '90%' : '93.5%' }}
-                />
-                <div
-                  className="absolute top-0 right-[0.5%] h-[37px] flex items-center space-x-1 text-white mr-4 mb-4 transition-colors text-sm z-100 cursor-pointer rounded-full"
-                  style={{ width: size === 'small' ? '83%' : '90%' }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                  }}
-                  aria-label={t('removeFromCart')}
+            {inStock ? (
+              <>
+                <button
+                  type="button"
+                  className="flex items-center justify-center mr-[7px] mb-[8px] space-x-1 bg-green-500 text-white px-1.5 py-1.5 transition-colors text-sm z-40 cursor-pointer rounded-full"
+                  onClick={() => addToCart()}
                 >
-                  <button
-                    type="button"
-                    aria-label={t('removeFromCart')}
-                    onClick={() => removeFromCart()}
-                    className="bg-green-500 -ml-1 w-[36px] h-[36px] rounded-full flex items-center justify-center z-200 cursor-pointer pointer-events-auto"
-                  >
-                    <FaMinus className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+                  {productCartCounter === 0 && (
+                    <IoAdd className="w-6 h-6 cursor-pointer" />
+                  )}
+                  {productCartCounter > 0 && (
+                    <div className="w-6 h-6 text-[16px] cursor-pointer z-100">{productCartCounter}</div>
+                  )}
+                </button>
+                {productCartCounter > 0 && (
+                  <div className="pointer-events-none">
+                    <div
+                      className="absolute top-0 right-[10px] h-[37px] bg-[#d8e7fb] rounded-full opacity-92"
+                      style={{ width: size === 'small' ? '90%' : '93.5%' }}
+                    />
+                    <div
+                      className="absolute top-0 right-[0.5%] h-[37px] flex items-center space-x-1 text-white mr-4 mb-4 transition-colors text-sm z-100 cursor-pointer rounded-full"
+                      style={{ width: size === 'small' ? '83%' : '90%' }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                      }}
+                      aria-label={t('removeFromCart')}
+                    >
+                      <button
+                        type="button"
+                        aria-label={t('removeFromCart')}
+                        onClick={() => removeFromCart()}
+                        className="bg-green-500 -ml-1 w-[36px] h-[36px] rounded-full flex items-center justify-center z-200 cursor-pointer pointer-events-auto"
+                      >
+                        <FaMinus className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <span className="mr-[7px] mb-[8px] rounded-full bg-[#03ac85] px-3 py-1.5 text-xs font-semibold text-white z-40">
+                {t('outStock')}
+              </span>
             )}
           </div>
           <div
@@ -238,11 +250,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
             </button>
           </div>
 
-          {product.badge && (
+          {inStock && product.badge && (
             <div className="absolute top-3 left-3 pointer-events-none">
               <span className={`px-2 py-1 text-xs font-medium rounded ${getBadgeStyles(product.badge.type)}`}>
                 {product.badge.text}
               </span>
+            </div>
+          )}
+
+          {product.organic && (
+            <div
+              className={`absolute left-3 pointer-events-none ${
+                inStock && product.badge ? 'top-11' : 'top-3'
+              }`}
+            >
+              <OrganicBadge size={size === 'small' ? 'sm' : 'md'} />
             </div>
           )}
         </div>
@@ -257,7 +279,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
           </Link>
 
           <h3 className="mt-2 mb-2 text-gray-800 group-hover:text-green-500 transition-colors line-clamp-2">
-            {product.name}
+            {productName}
           </h3>
 
           <div className="mb-2">{renderStars(product.rating)}</div>
@@ -266,7 +288,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, allProducts = [], si
             <span className="text-sm text-gray-500">
               {t('by')}{' '}
               <Link
-                href={`/vendor/${product.vendor.toLowerCase().replace(/\s+/g, '-')}`}
+                href={vendorHref(product.vendor)}
                 className="text-green-500 hover:text-green-600"
               >
                 {product.vendor}

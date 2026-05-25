@@ -8,6 +8,7 @@ import { Link } from '@/i18n/navigation';
 import Header from '@/app/components/Header';
 import { useCompare, MAX_COMPARE_PRODUCTS } from '@/app/context/CompareContext';
 import type { Product } from '@/app/types/product';
+import { useProductI18n } from '@/app/hooks/useProductI18n';
 
 function isInStock(product: Product) {
   return product.inStock !== false;
@@ -41,8 +42,11 @@ function StarRating({ rating, ratingCount }: { rating: number; ratingCount: numb
   );
 }
 
-function descriptionText(product: Product) {
-  const d = product.description?.trim();
+function descriptionText(
+  product: Product,
+  getProductDescription: (product: Pick<Product, 'id' | 'name' | 'description'>) => string | undefined
+) {
+  const d = getProductDescription(product)?.trim();
   if (d) return d;
   return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 }
@@ -55,6 +59,7 @@ const dataCell =
 export default function CompareView() {
   const t = useTranslations('Compare');
   const tHeader = useTranslations('Header');
+  const { getProductName, getProductDescription } = useProductI18n();
   const formatPrice = useFormatCurrency();
   const { items, removeFromCompare, clearCompare } = useCompare();
 
@@ -132,7 +137,9 @@ export default function CompareView() {
                   <th scope="row" className={labelCell}>
                     {t('preview')}
                   </th>
-                  {items.map((product) => (
+                  {items.map((product) => {
+                    const compareName = getProductName(product);
+                    return (
                     <td key={product.id} className={dataCell}>
                       <div className="mx-auto flex max-w-[200px] flex-col items-center">
                         <Link
@@ -141,7 +148,7 @@ export default function CompareView() {
                         >
                           <Image
                             src={product.image}
-                            alt={product.name}
+                            alt={compareName}
                             fill
                             className="object-contain p-2"
                             sizes="180px"
@@ -149,22 +156,26 @@ export default function CompareView() {
                         </Link>
                       </div>
                     </td>
-                  ))}
+                    );
+                  })}
                 </tr>
                 <tr>
                   <th scope="row" className={labelCell}>
                     {t('name')}
                   </th>
-                  {items.map((product) => (
+                  {items.map((product) => {
+                    const compareName = getProductName(product);
+                    return (
                     <td key={product.id} className={dataCell}>
                       <Link
                         href={`/product/${product.id}`}
                         className="font-semibold text-gray-900 hover:text-green-600 line-clamp-3"
                       >
-                        {product.name}
+                        {compareName}
                       </Link>
                     </td>
-                  ))}
+                    );
+                  })}
                 </tr>
                 <tr>
                   <th scope="row" className={labelCell}>
@@ -203,7 +214,7 @@ export default function CompareView() {
                   {items.map((product) => (
                     <td key={product.id} className={dataCell}>
                       <p className="mx-auto max-w-xs text-center text-sm leading-relaxed text-gray-500">
-                        {descriptionText(product)}
+                        {descriptionText(product, getProductDescription)}
                       </p>
                     </td>
                   ))}

@@ -10,7 +10,9 @@ import SearchBarWithSuggestions from '@/app/components/SearchBarWithSuggestions'
 import HeaderTopBar from '@/app/components/HeaderTopBar';
 import LanguageSwitcher from '@/app/components/LanguageSwitcher';
 import ShoppingCartIcon from '@/app/components/icons/ShoppingCartIcon';
+import CategoriesMegaMenu, { MobileCategoriesNav } from '@/app/components/CategoriesMegaMenu';
 import { useCart } from '@/app/context/CartContext';
+import { useAuth } from '@/app/context/AuthContext';
 import { useWishlist } from '@/app/context/WishlistContext';
 import { useCompare } from '@/app/context/CompareContext';
 
@@ -35,18 +37,73 @@ const locationOptions = [
   { value: "ruzomberok", label: "Ružomberok" },
 ] as const;
 
-const BROWSE_CATEGORIES = [
-  { name: 'Vegetables', link: 'vegetables', icon: '/icons/category-9.svg' },
-  { name: 'Clothing & beauty', link: 'clothing-beauty', icon: '/icons/category-2.svg' },
-  { name: 'Pet Foods & Toy', link: 'pet-foods-toy', icon: '/icons/category-3.svg' },
-  { name: 'Baking material', link: 'baking-material', icon: '/icons/category-4.svg' },
-  { name: 'Wines & Drinks', link: 'wines-drinks', icon: '/icons/category-6.svg' },
-  { name: 'Fresh Seafood', link: 'fresh-seafood', icon: '/icons/category-7.svg' },
-  { name: 'Fast food', link: 'fast-food', icon: '/icons/category-8.svg' },
-  { name: 'Bread and Juice', link: 'bread-juice', icon: '/icons/category-10.svg' },
-] as const;
-
 const HOME_MENU_SLUGS = ['home-1', 'home-2', 'home-3', 'home-4'] as const;
+const BLOG_SAMPLE_SLUG = 'seasonal-spring-produce';
+
+function homeMenuHref(slug: (typeof HOME_MENU_SLUGS)[number]) {
+  return slug === 'home-1' ? '/' : `/home/${slug}`;
+}
+
+function BlogMenuNav() {
+  const t = useTranslations('Header');
+  const [open, setOpen] = useState(false);
+
+  const links = [
+    { href: '/blog', label: t('blogGrid') },
+    { href: '/blog/list', label: t('blogList') },
+    { href: '/blog/category/recipes', label: t('blogCategory') },
+    { href: '/blog/tag/seasonal', label: t('blogTag') },
+    { href: '/blog/author/ariadne-team', label: t('blogAuthor') },
+    { href: `/blog/${BLOG_SAMPLE_SLUG}`, label: t('blogPostSidebar') },
+    { href: `/blog/${BLOG_SAMPLE_SLUG}/full`, label: t('blogPostFull') },
+  ] as const;
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <Link
+        href="/blog"
+        className={
+          open
+            ? 'flex items-center gap-1 font-medium text-green-600 transition-colors'
+            : 'flex items-center gap-1 font-medium text-gray-700 transition-colors hover:text-green-600'
+        }
+        aria-expanded={open ? 'true' : 'false'}
+        aria-haspopup="true"
+      >
+        <span>{t('blog')}</span>
+        <svg className="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+          <path
+            fillRule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </Link>
+      {open && (
+        <div
+          role="menu"
+          className="absolute left-0 top-full z-[55] min-w-[14rem] rounded-lg border border-gray-100 bg-white py-1.5 shadow-lg"
+        >
+          {links.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              role="menuitem"
+              className="block px-4 py-2.5 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-green-600"
+              onClick={() => setOpen(false)}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function HomeMenuNav() {
   const t = useTranslations('Header');
@@ -86,7 +143,7 @@ function HomeMenuNav() {
           {HOME_MENU_SLUGS.map((slug, i) => (
             <Link
               key={slug}
-              href={`/home/${slug}`}
+              href={homeMenuHref(slug)}
               role="menuitem"
               className="block px-4 py-2.5 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-green-600"
               onClick={() => setOpen(false)}
@@ -106,12 +163,15 @@ function BrowseCategoriesControl({
   onToggle,
   onCloseRequest,
   compact,
+  showMenu = true,
 }: {
   isOpen: boolean;
   onOpenRequest: () => void;
   onToggle: () => void;
   onCloseRequest: () => void;
   compact?: boolean;
+  /** When false, only the trigger is rendered (mega panel rendered elsewhere). */
+  showMenu?: boolean;
 }) {
   const t = useTranslations('Header');
 
@@ -126,8 +186,12 @@ function BrowseCategoriesControl({
         onClick={onToggle}
         className={
           compact
-            ? 'flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-green-500 text-white transition-colors hover:bg-green-600'
-            : 'flex cursor-pointer items-center space-x-2 rounded-lg bg-green-500 pl-4 pr-2 py-2 text-white transition-colors hover:bg-green-600'
+            ? `flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg text-white transition-colors ${
+                isOpen ? 'bg-green-600 ring-2 ring-green-200' : 'bg-green-500 hover:bg-green-600'
+              }`
+            : `flex cursor-pointer items-center space-x-2 rounded-lg pl-4 pr-2 py-2 text-white transition-colors ${
+                isOpen ? 'bg-green-600 ring-2 ring-green-200' : 'bg-green-500 hover:bg-green-600'
+              }`
         }
         aria-label={t('browseCategories')}
         aria-expanded={isOpen ? 'true' : 'false'}
@@ -150,28 +214,11 @@ function BrowseCategoriesControl({
         )}
       </button>
 
-      {isOpen && (
-        <div
-          className={
-            compact
-              ? 'absolute left-0 top-full z-60 max-h-[min(24rem,70vh)] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto rounded-lg border bg-white py-2 shadow-xl'
-              : 'absolute left-0 top-full z-60 max-h-[min(24rem,70vh)] w-96 overflow-y-auto rounded-lg border bg-white pt-1 shadow-xl'
-            }
-        >
-            <div className="grid grid-cols-2 gap-1 px-2 py-2 pb-2">
-              {BROWSE_CATEGORIES.map((category, index) => (
-                <Link
-                  key={index}
-                  href={`/category/${category.link.replace(/\s+/g, '-')}`}
-                  className="flex items-center space-x-3 p-2 rounded-lg transition-colors hover:bg-gray-50"
-                  onClick={onCloseRequest}
-                >
-                  <Image src={category.icon} alt={category.name} width={24} height={24} />
-                  <span className="text-sm text-gray-700">{category.name}</span>
-                </Link>
-              ))}
-            </div>
-        </div>
+      {showMenu && isOpen && (
+        <CategoriesMegaMenu
+          onClose={onCloseRequest}
+          variant={compact ? 'compact' : 'full'}
+        />
       )}
     </div>
   );
@@ -179,7 +226,9 @@ function BrowseCategoriesControl({
 
 const Header = () => {
   const t = useTranslations('Header');
+  const tAuth = useTranslations('Auth');
   const router = useRouter();
+  const { user, logout } = useAuth();
   const { itemCount, openCart, toggleCart } = useCart();
   const { count: wishlistCount } = useWishlist();
   const { count: compareCount } = useCompare();
@@ -220,6 +269,12 @@ const Header = () => {
   const toggleCategories = () => setIsCategoriesOpen((o) => !o);
   const openCategories = () => setIsCategoriesOpen(true);
   const closeCategories = () => setIsCategoriesOpen(false);
+
+  const handleSignOut = () => {
+    logout();
+    setIsAccountOpen(false);
+    router.push('/login');
+  };
 
   return (
     <header className="header-area header-style-1 header-height-2">
@@ -338,108 +393,159 @@ const Header = () => {
                   />
                 </div>
 
-              <div className="flex flex-col items-center group w-10">
-                <div className="relative">
-                  <Link
-                    href="/compare"
-                    className="relative text-gray-600 group-hover:text-green-500"
-                    aria-label={
-                      compareCount > 0
-                        ? t('compareWithCount', { count: compareCount })
-                        : t('compareProducts')
-                    }
-                  >
-                    <svg className="w-6 h-6" fill="currentColor" width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1,8A1,1,0,0,1,2,7H9.586L7.293,4.707A1,1,0,1,1,8.707,3.293l4,4a1,1,0,0,1,0,1.414l-4,4a1,1,0,1,1-1.414-1.414L9.586,9H2A1,1,0,0,1,1,8Zm21,7H14.414l2.293-2.293a1,1,0,0,0-1.414-1.414l-4,4a1,1,0,0,0,0,1.414l4,4a1,1,0,0,0,1.414-1.414L14.414,17H22a1,1,0,0,0,0-2Z" /></svg>
-                    {compareCount > 0 && (
-                      <span className="absolute -top-2 -right-2 flex min-h-[1.25rem] min-w-[1.25rem] items-center justify-center rounded-full border text-white border-green-200 bg-teal-500 px-1 text-[10px] font-bold text-white">
-                        {compareCount}
-                      </span>
-                    )}
-                  </Link>
+              <Link
+                href="/compare"
+                className="flex flex-col items-center group w-10"
+                aria-label={
+                  compareCount > 0
+                    ? t('compareWithCount', { count: compareCount })
+                    : t('compareProducts')
+                }
+              >
+                <div className="relative group-hover:text-green-500">
+                  <svg className="w-6 h-6" fill="currentColor" width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1,8A1,1,0,0,1,2,7H9.586L7.293,4.707A1,1,0,1,1,8.707,3.293l4,4a1,1,0,0,1,0,1.414l-4,4a1,1,0,1,1-1.414-1.414L9.586,9H2A1,1,0,0,1,1,8Zm21,7H14.414l2.293-2.293a1,1,0,0,0-1.414-1.414l-4,4a1,1,0,0,0,0,1.414l4,4a1,1,0,0,0,1.414-1.414L14.414,17H22a1,1,0,0,0,0-2Z" />
+                  </svg>
+                  {compareCount > 0 && (
+                    <span className="absolute -top-2 -right-2 flex min-h-[1.25rem] min-w-[1.25rem] items-center justify-center rounded-full border text-white border-green-200 bg-teal-500 px-1 text-[10px] font-bold text-white">
+                      {compareCount}
+                    </span>
+                  )}
                 </div>
-                <span className="text-xs text-gray-500 mt-1 cursor-pointer group-hover:text-green-500 ">{t('compare')}</span>
-              </div>
+                <span className="text-xs text-gray-500 mt-1 cursor-pointer group-hover:text-green-500 ">
+                  {t('compare')}
+                </span>
+              </Link>
+         
 
-              <div className="flex flex-col items-center group w-10 mb-[4px]">
-                <div className="relative">
-                  <Link href="/wishlist" className="text-gray-600 group-hover:text-green-500">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                    {wishlistCount > 0 && (
-                      <span className="absolute -top-1 -right-2 bg-teal-500 text-white text-xs rounded-full min-w-[1.25rem] h-5 px-1 flex items-center justify-center">
-                        {wishlistCount > 99 ? '99+' : wishlistCount}
-                      </span>
-                    )}
-                  </Link>
+              <Link href="/wishlist" className="flex flex-col items-center group w-10 mb-[4px] text-gray-600 group-hover:text-green-500">
+                <div className="relative group-hover:text-green-500">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-1 -right-2 bg-teal-500 text-white text-xs rounded-full min-w-[1.25rem] h-5 px-1 flex items-center justify-center">
+                      {wishlistCount > 99 ? '99+' : wishlistCount}
+                    </span>
+                  )}
                 </div>
-                <span className="text-xs text-gray-500 cursor-pointer mt-[6px] group-hover:text-green-500 ">{t('wishlist')}</span>
-              </div>
+                <span className="text-xs text-gray-500 cursor-pointer mt-[6px] group-hover:text-green-500">{t('wishlist')}</span>
+              </Link>
+         
 
-              <div className=" group flex flex-col items-center relative mt-[1px] w-10">
+              <div
+                className="group relative mt-[1px] flex w-10 flex-col items-center"
+                onMouseEnter={() => setIsAccountOpen(true)}
+                onMouseLeave={() => setIsAccountOpen(false)}
+              >
                 <div className="relative">
-                  <button 
-                    onClick={() => setIsAccountOpen(!isAccountOpen)}
-                    className="text-gray-600 group-hover:text-green-500 cursor-pointer"
+                  <button
+                    type="button"
+                    className="cursor-pointer text-gray-600 group-hover:text-green-500"
                     aria-label={t('accountMenu')}
+                    aria-expanded={isAccountOpen}
+                    aria-haspopup="true"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   </button>
                 </div>
-                <span className="text-xs text-gray-500 mt-0 cursor-pointer group-hover:text-green-500">{t('account')}</span>
+                <span className="mt-0 cursor-pointer text-xs text-gray-500 group-hover:text-green-500">{t('account')}</span>
 
                 {isAccountOpen && (
-                  <>
+                  <div className="absolute right-0 top-full z-[55] w-48 pt-1.5">
                     <div
-                      className="fixed inset-0 z-45"
-                      onClick={() => setIsAccountOpen(false)}
-                      aria-hidden="true"
-                      tabIndex={-1}
-                    />
-                    <div className="absolute top-full right-0 z-55 mt-2 w-48 rounded-lg border bg-white shadow-xl">
-                      <div className="py-2">
-                        <Link href="/account" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      role="menu"
+                      className="rounded-lg border border-gray-100 bg-white shadow-xl"
+                    >
+                    <div className="py-2">
+                      <Link
+                        href="/account"
+                        role="menuitem"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsAccountOpen(false)}
+                      >
                           <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                           </svg>
                           {t('myAccount')}
                         </Link>
-                        <Link href="/order-tracking" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <Link
+                          href="/order-tracking"
+                          role="menuitem"
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsAccountOpen(false)}
+                        >
                           <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                           </svg>
                           {t('orderTracking')}
                         </Link>
-                        <Link href="/vouchers" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <Link
+                          href="/vouchers"
+                          role="menuitem"
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsAccountOpen(false)}
+                        >
                           <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
                           </svg>
                           {t('myVoucher')}
                         </Link>
-                        <Link href="/wishlist" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <Link
+                          href="/wishlist"
+                          role="menuitem"
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsAccountOpen(false)}
+                        >
                           <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                           </svg>
                           {t('myWishlist')}
                         </Link>
-                        <Link href="/settings" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                          <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-                          </svg>
-                          {t('settings')}
-                        </Link>
                         <hr className="my-2" />
-                        <Link href="/login" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                          <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
-                          </svg>
-                          {t('signOut')}
-                        </Link>
+                        {user ? (
+                          <button
+                            type="button"
+                            role="menuitem"
+                            className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                            onClick={handleSignOut}
+                          >
+                            <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
+                            </svg>
+                            {t('signOut')}
+                          </button>
+                        ) : (
+                          <>
+                            <Link
+                              href="/login"
+                              role="menuitem"
+                              className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                              onClick={() => setIsAccountOpen(false)}
+                            >
+                              <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                              </svg>
+                              {tAuth('signIn')}
+                            </Link>
+                            <Link
+                              href="/register"
+                              role="menuitem"
+                              className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                              onClick={() => setIsAccountOpen(false)}
+                            >
+                              <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                              </svg>
+                              {tAuth('signUp')}
+                            </Link>
+                          </>
+                        )}
                       </div>
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
 
@@ -470,9 +576,10 @@ const Header = () => {
       </div>
 
       {/* Header Bottom - Navigation */}
-      <div className="bg-white border-t">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
+      <div className={`relative ${isCategoriesOpen && !showFixedSearchCart ? 'z-[70]' : ''}`}>
+        <div className="border-t bg-white">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between h-16">
             {/* Mobile Logo */}
             <div className="lg:hidden">
               <Link href="/">
@@ -483,27 +590,30 @@ const Header = () => {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
               {!showFixedSearchCart && (
-                <BrowseCategoriesControl
-                  isOpen={isCategoriesOpen}
-                  onOpenRequest={openCategories}
-                  onToggle={toggleCategories}
-                  onCloseRequest={closeCategories}
-                />
+                <div
+                  className="relative"
+                  onMouseEnter={openCategories}
+                  onMouseLeave={closeCategories}
+                >
+                  <BrowseCategoriesControl
+                    isOpen={isCategoriesOpen}
+                    onOpenRequest={openCategories}
+                    onToggle={toggleCategories}
+                    onCloseRequest={closeCategories}
+                    showMenu={false}
+                  />
+                  {isCategoriesOpen && (
+                    <div className="absolute left-1/2 top-full z-[60] w-screen max-w-none -translate-x-1/2 pt-1.5">
+                      <CategoriesMegaMenu variant="full" onClose={closeCategories} />
+                    </div>
+                  )}
+                </div>
               )}
 
               {/* Main Navigation */}
               <nav className="flex items-center space-x-8">
                 <HomeMenuNav />
                 <Link href="/about" className="text-gray-700 hover:text-green-500 font-medium">{t('about')}</Link>
-                
-                <div className="relative group">
-                  <Link href="/shop" className="flex items-center space-x-1 text-gray-700 hover:text-green-500 font-medium">
-                    <span>{t('shop')}</span>
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </Link>
-                </div>
 
                 <div className="relative group">
                   <Link href="/vendors" className="flex items-center space-x-1 text-gray-700 hover:text-green-500 font-medium">
@@ -514,14 +624,7 @@ const Header = () => {
                   </Link>
                 </div>
 
-                <div className="relative group">
-                  <Link href="/blog" className="flex items-center space-x-1 text-gray-700 hover:text-green-500 font-medium">
-                    <span>{t('blog')}</span>
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </Link>
-                </div>
+                <BlogMenuNav />
 
                 <div className="relative group">
                   <Link href="/pages" className="flex items-center space-x-1 text-gray-700 hover:text-green-500 font-medium">
@@ -596,6 +699,7 @@ const Header = () => {
             </div>
           </div>
         </div>
+        </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
@@ -614,6 +718,12 @@ const Header = () => {
               {/* Mobile Navigation Links */}
               <nav className="space-y-2">
                 <div className="py-2">
+                  <p className="font-medium text-gray-700">{t('mobileCategories')}</p>
+                  <div className="mt-3">
+                    <MobileCategoriesNav onClose={() => setIsMobileMenuOpen(false)} />
+                  </div>
+                </div>
+                <div className="py-2">
                   <Link href="/" className="font-medium text-gray-700 hover:text-green-500">
                     {t('home')}
                   </Link>
@@ -623,7 +733,7 @@ const Header = () => {
                       return (
                         <li key={slug}>
                           <Link
-                            href={`/home/${slug}`}
+                            href={homeMenuHref(slug)}
                             className="block py-1 text-sm text-gray-600 hover:text-green-600"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
@@ -635,15 +745,59 @@ const Header = () => {
                   </ul>
                 </div>
                 <Link href="/about" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('about')}</Link>
-                <Link href="/shop" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('shop')}</Link>
                 <Link href="/vendors" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('vendors')}</Link>
-                <Link href="/blog" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('blog')}</Link>
+                <div>
+                  <Link
+                    href="/blog"
+                    className="block py-2 font-medium text-gray-700 hover:text-green-500"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {t('blog')}
+                  </Link>
+                  <ul className="mt-1 space-y-1 border-l border-gray-200 pl-3">
+                    {[
+                      { href: '/blog', label: t('blogGrid') },
+                      { href: '/blog/list', label: t('blogList') },
+                      { href: '/blog/category/recipes', label: t('blogCategory') },
+                      { href: '/blog/tag/seasonal', label: t('blogTag') },
+                      { href: '/blog/author/ariadne-team', label: t('blogAuthor') },
+                      { href: `/blog/${BLOG_SAMPLE_SLUG}`, label: t('blogPostSidebar') },
+                      { href: `/blog/${BLOG_SAMPLE_SLUG}/full`, label: t('blogPostFull') },
+                    ].map(({ href, label }) => (
+                      <li key={href}>
+                        <Link
+                          href={href}
+                          className="block py-1 text-sm text-gray-600 hover:text-green-600"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <Link href="/contact" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('contact')}</Link>
               </nav>
 
               {/* Mobile Account Links */}
               <div className="border-t pt-4 space-y-2">
-                <Link href="/account" className="block py-2 text-gray-600 hover:text-green-500">{t('myAccount')}</Link>
+                {user ? (
+                  <>
+                    <Link href="/account" className="block py-2 text-gray-600 hover:text-green-500">{t('myAccount')}</Link>
+                    <button
+                      type="button"
+                      className="block w-full py-2 text-left text-gray-600 hover:text-green-500 cursor-pointer"
+                      onClick={handleSignOut}
+                    >
+                      {t('signOut')}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/login" className="block py-2 text-gray-600 hover:text-green-500">{tAuth('signIn')}</Link>
+                    <Link href="/register" className="block py-2 text-gray-600 hover:text-green-500">{tAuth('signUp')}</Link>
+                  </>
+                )}
                 <Link href="/order-tracking" className="block py-2 text-gray-600 hover:text-green-500">{t('orderTracking')}</Link>
                 <Link href="/wishlist" className="block py-2 text-gray-600 hover:text-green-500">{t('wishlist')}</Link>
                 <Link href="/compare" className="block py-2 text-gray-600 hover:text-green-500">{t('compare')}</Link>
