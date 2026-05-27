@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import AccountView from './AccountView';
+import FaqView from './FaqView';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('Account');
+  const t = await getTranslations('FAQ');
   return {
-    title: `${t('breadcrumb')} | WebAriadne`,
+    title: `${t('title')} | WebAriadne`,
     description: t('metaDescription'),
   };
 }
 
-export default function AccountPage() {
-  return <AccountView />;
+export default function FaqPage() {
+  return <FaqView />;
 }

@@ -229,7 +229,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 3.29,
     rating: 4.0,
     ratingCount: 17,
-    inStock: false,
+    inStock: true,
     vendor: 'Wonder',
     categories: ['all', 'baking-material'],
     description: 'Soft classic sandwich bread for everyday toast and lunches.',

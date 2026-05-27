@@ -1,14 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { ChevronRight } from 'lucide-react';
 import {
   MEGA_MENU_COLUMNS,
+  MEGA_MENU_SIDEBAR,
   categoryHref,
   type MegaMenuColumn,
+  type MegaMenuSidebarItem,
+  type MegaMenuSubGroup,
 } from '@/lib/category-mega-menu';
 import { CATEGORY_SIDEBAR_ICONS } from '@/lib/category-shop';
 
@@ -23,28 +26,35 @@ type CategoriesMegaMenuProps = {
 
 function categoryLabel(
   slug: string,
-  tCat: ReturnType<typeof useTranslations<'SearchBar.categories'>>,
-  t: ReturnType<typeof useTranslations<'Header'>>
+  tCat: ReturnType<typeof useTranslations<'SearchBar.categories'>>
 ) {
   if (slug === 'all') return tCat('all');
   return tCat(slug as Parameters<typeof tCat>[0]);
+}
+
+function sidebarLabel(
+  item: MegaMenuSidebarItem,
+  t: ReturnType<typeof useTranslations<'Header'>>,
+  tCat: ReturnType<typeof useTranslations<'SearchBar.categories'>>
+) {
+  if (item.labelKey) {
+    return t(`megaSidebarLabels.${item.labelKey}` as Parameters<typeof t>[0]);
+  }
+  return categoryLabel(item.categorySlug, tCat);
 }
 
 function CategoryLink({
   slug,
   onClose,
   tCat,
-  t,
   compact,
 }: {
   slug: MegaMenuColumn['links'][0]['slug'];
   onClose: () => void;
   tCat: ReturnType<typeof useTranslations<'SearchBar.categories'>>;
-  t: ReturnType<typeof useTranslations<'Header'>>;
   compact?: boolean;
 }) {
   const icon = ICON_BY_SLUG[slug];
-  const showIcon = Boolean(icon && slug !== 'all');
 
   return (
     <Link
@@ -55,23 +65,15 @@ function CategoryLink({
       } hover:bg-green-50`}
       onClick={onClose}
     >
-      {showIcon && (
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gray-50 ring-1 ring-gray-100 transition-colors group-hover/link:bg-white group-hover/link:ring-green-100">
-          <Image src={icon!} alt="" width={20} height={20} className="h-5 w-5 object-contain" />
+      {icon && slug !== 'all' && (
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gray-50 ring-1 ring-gray-100">
+          <Image src={icon} alt="" width={20} height={20} className="h-5 w-5 object-contain" />
         </span>
       )}
-      {!showIcon && slug === 'all' && (
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-50 text-green-600 ring-1 ring-green-100">
-          <ChevronRight className="h-4 w-4" aria-hidden />
-        </span>
-      )}
-      <span className="min-w-0 flex-1 text-sm text-gray-600 transition-colors group-hover/link:text-green-700">
-        {categoryLabel(slug, tCat, t)}
+      <span className="min-w-0 flex-1 text-sm text-gray-600 group-hover/link:text-green-700">
+        {categoryLabel(slug, tCat)}
       </span>
-      <ChevronRight
-        className="h-3.5 w-3.5 shrink-0 text-gray-300 opacity-0 transition-all group-hover/link:translate-x-0.5 group-hover/link:text-green-500 group-hover/link:opacity-100"
-        aria-hidden
-      />
+      <ChevronRight className="h-3.5 w-3.5 shrink-0 text-gray-300 opacity-0 group-hover/link:opacity-100" aria-hidden />
     </Link>
   );
 }
@@ -89,34 +91,20 @@ function MegaMenuColumnBlock({
   tCat: ReturnType<typeof useTranslations<'SearchBar.categories'>>;
   compact?: boolean;
 }) {
-  const columnIcon = ICON_BY_SLUG[column.categorySlug];
-
   return (
     <div className={compact ? '' : 'min-w-0'}>
       <Link
         href={categoryHref(column.categorySlug)}
         role="menuitem"
-        className={`group/title inline-flex items-center gap-2 transition-colors hover:text-green-600 ${
-          compact
-            ? 'text-sm font-bold text-gray-900'
-            : 'text-base font-bold text-gray-900 lg:text-[17px]'
-        }`}
+        className="text-sm font-bold text-gray-900 hover:text-green-600"
         onClick={onClose}
       >
-        {columnIcon && !compact && (
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-green-50 ring-1 ring-green-100">
-            <Image src={columnIcon} alt="" width={22} height={22} className="h-[22px] w-[22px] object-contain" />
-          </span>
-        )}
-        <span>{t(column.titleKey as Parameters<typeof t>[0])}</span>
+        {t(column.titleKey as Parameters<typeof t>[0])}
       </Link>
-      {!compact && (
-        <div className="mt-2 h-0.5 w-10 rounded-full bg-green-500/80 transition-all group-hover/title:w-14" />
-      )}
-      <ul className={compact ? 'mt-2 space-y-0.5' : 'mt-4 space-y-0.5'}>
+      <ul className="mt-2 space-y-0.5">
         {column.links.map(({ slug }) => (
           <li key={`${column.titleKey}-${slug}`}>
-            <CategoryLink slug={slug} onClose={onClose} tCat={tCat} t={t} compact={compact} />
+            <CategoryLink slug={slug} onClose={onClose} tCat={tCat} compact={compact} />
           </li>
         ))}
       </ul>
@@ -124,39 +112,162 @@ function MegaMenuColumnBlock({
   );
 }
 
-function PromoBanner({ onClose, t }: { onClose: () => void; t: ReturnType<typeof useTranslations<'Header'>> }) {
+function SubGroupPanel({
+  group,
+  onClose,
+  tCat,
+  t,
+}: {
+  group: MegaMenuSubGroup;
+  onClose: () => void;
+  tCat: ReturnType<typeof useTranslations<'SearchBar.categories'>>;
+  t: ReturnType<typeof useTranslations<'Header'>>;
+}) {
   return (
-    <div className="relative h-full min-h-[240px] overflow-hidden rounded-2xl bg-gradient-to-br from-green-600 to-green-500 shadow-inner">
-      <Image
-        src="/images/products/mock/fruits-a.jpg"
-        alt=""
-        fill
-        className="object-cover opacity-90 mix-blend-overlay"
-        sizes="(max-width: 1024px) 100vw, 380px"
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-green-700/75 via-green-600/55 to-transparent" />
-      <div className="relative flex h-full flex-col justify-center p-6 sm:p-8">
-        <p className="text-xs font-bold uppercase tracking-[0.14em] text-green-100">
-          {t('megaBannerEyebrow')}
-        </p>
-        <h3 className="mt-2 max-w-[12rem] text-2xl font-bold leading-tight text-white whitespace-pre-line sm:text-[1.65rem]">
-          {t('megaBannerTitle')}
-        </h3>
-        <p className="mt-2 text-sm font-semibold text-green-100">{t('megaBannerSave')}</p>
+    <div className="flex min-h-[9.5rem] gap-4">
+      <Link
+        href={categoryHref(group.slug)}
+        className="group/image relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-gray-50"
+        onClick={onClose}
+      >
+        <Image
+          src={group.image}
+          alt=""
+          fill
+          className="object-cover transition-transform group-hover/image:scale-105"
+          sizes="80px"
+        />
+      </Link>
+      <div className="min-w-0 flex-1">
         <Link
-          href="/category/all"
-          className="mt-5 inline-flex w-fit rounded-lg bg-white px-5 py-2.5 text-sm font-bold text-green-700 shadow-sm transition-colors hover:bg-green-50"
+          href={categoryHref(group.slug)}
+          className="text-[15px] font-bold leading-snug text-gray-900 hover:text-green-700"
           onClick={onClose}
         >
-          {t('megaBannerCta')}
+          {categoryLabel(group.slug, tCat)}
+        </Link>
+        <ul className="mt-2.5 space-y-1.5">
+          {group.sampleLinkKeys.map((key) => (
+            <li key={key}>
+              <Link
+                href={categoryHref(group.slug)}
+                className="text-sm leading-snug text-gray-600 hover:text-gray-900 hover:underline"
+                onClick={onClose}
+              >
+                {t(`megaSubLinks.${key}` as Parameters<typeof t>[0])}
+              </Link>
+            </li>
+          ))}
+          <li>
+            <Link
+              href={categoryHref(group.slug)}
+              className="text-sm text-gray-500 hover:text-gray-700"
+              onClick={onClose}
+            >
+              {t('megaMore')}
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function MegaMenuSidebar({
+  items,
+  activeSlug,
+  onActiveChange,
+  t,
+  tCat,
+}: {
+  items: MegaMenuSidebarItem[];
+  activeSlug: MegaMenuSidebarItem['categorySlug'];
+  onActiveChange: (slug: MegaMenuSidebarItem['categorySlug']) => void;
+  t: ReturnType<typeof useTranslations<'Header'>>;
+  tCat: ReturnType<typeof useTranslations<'SearchBar.categories'>>;
+}) {
+  return (
+    <aside className="w-[15.5rem] shrink-0 border-r border-gray-200 bg-gray-200">
+      <ul className="max-h-[min(28rem,70vh)] overflow-y-auto py-1">
+        {items.map((item) => {
+          const isActive = item.categorySlug === activeSlug;
+          return (
+            <li key={`${item.categorySlug}-${item.labelKey ?? 'default'}`}>
+              <button
+                type="button"
+                className={`flex w-full cursor-pointer items-center gap-3 px-3 py-2.5 text-left transition-colors ${
+                  isActive ? 'bg-white shadow-[inset_3px_0_0_0_#16a34a]' : 'hover:bg-gray-100/80'
+                }`}
+                onMouseEnter={() => onActiveChange(item.categorySlug)}
+                onFocus={() => onActiveChange(item.categorySlug)}
+              >
+                <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md bg-white ring-1 ring-gray-200/80">
+                  <Image
+                    src={item.sidebarImage}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="40px"
+                  />
+                </span>
+                <span
+                  className={`min-w-0 flex-1 text-sm leading-snug ${
+                    isActive ? 'font-semibold text-gray-900' : 'font-medium text-gray-700'
+                  }`}
+                >
+                  {sidebarLabel(item, t, tCat)}
+                </span>
+                <ChevronRight
+                  className={`h-4 w-4 shrink-0 ${isActive ? 'text-gray-400' : 'text-gray-300'}`}
+                  strokeWidth={1.5}
+                  aria-hidden
+                />
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </aside>
+  );
+}
+
+function MegaMenuFullPanel({
+  item,
+  onClose,
+  t,
+  tCat,
+}: {
+  item: MegaMenuSidebarItem;
+  onClose: () => void;
+  t: ReturnType<typeof useTranslations<'Header'>>;
+  tCat: ReturnType<typeof useTranslations<'SearchBar.categories'>>;
+}) {
+  const categoryName = sidebarLabel(item, t, tCat);
+
+  return (
+    <div className="min-w-0 flex-1 overflow-y-auto bg-white">
+      <div className="border-b border-gray-100 px-8 py-5">
+        <Link
+          href={categoryHref(item.categorySlug)}
+          className="inline-flex items-center gap-1 text-[15px] font-bold text-gray-900 hover:text-green-700"
+          onClick={onClose}
+        >
+          {t('megaAllFrom', { category: categoryName })}
+          <ChevronRight className="h-4 w-4" strokeWidth={1.75} aria-hidden />
         </Link>
       </div>
-      <div
-        className="pointer-events-none absolute -right-1 top-3 flex h-[4.5rem] w-[4.5rem] flex-col items-center justify-center rounded-full bg-orange-500 text-center text-white shadow-lg ring-4 ring-white/20 sm:h-20 sm:w-20"
-        aria-hidden
-      >
-        <span className="text-lg font-black leading-none sm:text-xl">25%</span>
-        <span className="text-[10px] font-bold uppercase leading-tight sm:text-xs">off</span>
+
+      <div className="grid grid-cols-1 border-gray-100 sm:grid-cols-2">
+        {item.subgroups.map((group, index) => (
+          <div
+            key={`${item.categorySlug}-${group.slug}-${index}`}
+            className={`border-b border-gray-100 p-6 sm:p-7 ${
+              index % 2 === 0 ? 'sm:border-r' : ''
+            }`}
+          >
+            <SubGroupPanel group={group} onClose={onClose} tCat={tCat} t={t} />
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -168,12 +279,18 @@ export default function CategoriesMegaMenu({
 }: CategoriesMegaMenuProps) {
   const t = useTranslations('Header');
   const tCat = useTranslations('SearchBar.categories');
+  const [activeSlug, setActiveSlug] = useState<MegaMenuSidebarItem['categorySlug']>(
+    MEGA_MENU_SIDEBAR[0].categorySlug
+  );
+
+  const activeItem =
+    MEGA_MENU_SIDEBAR.find((item) => item.categorySlug === activeSlug) ?? MEGA_MENU_SIDEBAR[0];
 
   if (variant === 'compact') {
     return (
       <div
         role="menu"
-        className="absolute left-0 top-full z-[60] mt-1.5 w-[min(38rem,calc(100vw-1.5rem))] overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl ring-1 ring-black/5"
+        className="absolute left-0 top-full z-[60] -mt-px w-[min(38rem,calc(100vw-1.5rem))] overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl ring-1 ring-black/5 before:absolute before:inset-x-0 before:bottom-full before:h-2 before:content-['']"
       >
         <div className="border-b border-gray-100 bg-gray-50/80 px-4 py-3">
           <p className="text-xs font-bold uppercase tracking-wide text-gray-500">{t('megaMenuTitle')}</p>
@@ -190,16 +307,6 @@ export default function CategoriesMegaMenu({
             />
           ))}
         </div>
-        <div className="border-t border-gray-100 bg-gray-50/60 px-4 py-3">
-          <Link
-            href="/category/all"
-            className="inline-flex items-center gap-1 text-sm font-semibold text-green-600 hover:text-green-700"
-            onClick={onClose}
-          >
-            {t('megaViewAll')}
-            <ChevronRight className="h-4 w-4" aria-hidden />
-          </Link>
-        </div>
       </div>
     );
   }
@@ -207,79 +314,60 @@ export default function CategoriesMegaMenu({
   return (
     <div
       role="menu"
-      className="overflow-hidden rounded-b-2xl border border-t-0 border-gray-100 bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.18)] ring-1 ring-black/5"
+      className="overflow-hidden rounded-b-lg border border-t-0 border-gray-200 bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)]"
     >
-      <div className="border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
-        <div className="container mx-auto flex items-center justify-between px-4 py-3.5">
-          <p className="text-sm font-bold text-gray-900">{t('megaMenuTitle')}</p>
-          <Link
-            href="/category/all"
-            className="inline-flex items-center gap-1 text-sm font-semibold text-green-600 transition-colors hover:text-green-700"
-            onClick={onClose}
-          >
-            {t('megaViewAll')}
-            <ChevronRight className="h-4 w-4" aria-hidden />
-          </Link>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-7 lg:py-8">
-        <div className="flex flex-col gap-8 lg:flex-row lg:gap-6 xl:gap-8">
-          <div className="grid flex-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-            {MEGA_MENU_COLUMNS.map((column) => (
-              <MegaMenuColumnBlock
-                key={column.titleKey}
-                column={column}
-                onClose={onClose}
-                t={t}
-                tCat={tCat}
-              />
-            ))}
-          </div>
-
-          <div className="w-full shrink-0 lg:w-[min(100%,22rem)] xl:w-[min(100%,24rem)]">
-            <PromoBanner onClose={onClose} t={t} />
-          </div>
-        </div>
+      <div className="flex min-h-[24rem] max-h-[min(32rem,72vh)]">
+        <MegaMenuSidebar
+          items={MEGA_MENU_SIDEBAR}
+          activeSlug={activeSlug}
+          onActiveChange={setActiveSlug}
+          t={t}
+          tCat={tCat}
+        />
+        <MegaMenuFullPanel item={activeItem} onClose={onClose} t={t} tCat={tCat} />
       </div>
     </div>
   );
 }
 
-/** Mobile drawer category list — shared styling with mega menu */
+/** Mobile drawer category list */
 export function MobileCategoriesNav({ onClose }: { onClose: () => void }) {
   const t = useTranslations('Header');
   const tCat = useTranslations('SearchBar.categories');
 
   return (
     <div className="space-y-3">
-      {MEGA_MENU_COLUMNS.map((column) => (
+      {MEGA_MENU_SIDEBAR.map((item) => (
         <div
-          key={column.titleKey}
+          key={`${item.categorySlug}-${item.labelKey ?? 'default'}`}
           className="overflow-hidden rounded-xl border border-gray-100 bg-gray-50/50"
         >
           <Link
-            href={categoryHref(column.categorySlug)}
+            href={categoryHref(item.categorySlug)}
             className="flex items-center gap-3 border-b border-gray-100 bg-white px-3 py-2.5 text-sm font-bold text-gray-900 hover:text-green-600"
             onClick={onClose}
           >
-            {ICON_BY_SLUG[column.categorySlug] && (
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-50 ring-1 ring-green-100">
-                <Image
-                  src={ICON_BY_SLUG[column.categorySlug]}
-                  alt=""
-                  width={20}
-                  height={20}
-                  className="h-5 w-5 object-contain"
-                />
-              </span>
-            )}
-            {t(column.titleKey as Parameters<typeof t>[0])}
+            <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md bg-gray-100">
+              <Image
+                src={item.sidebarImage}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="36px"
+              />
+            </span>
+            {sidebarLabel(item, t, tCat)}
           </Link>
           <ul className="space-y-0.5 p-2">
-            {column.links.map(({ slug }) => (
-              <li key={`${column.titleKey}-${slug}`}>
-                <CategoryLink slug={slug} onClose={onClose} tCat={tCat} t={t} compact />
+            {item.subgroups.map((group, index) => (
+              <li key={`${group.slug}-${index}`}>
+                <Link
+                  href={categoryHref(group.slug)}
+                  className="block rounded-lg px-2 py-1.5 text-sm text-gray-600 hover:bg-green-50 hover:text-green-700"
+                  onClick={onClose}
+                >
+                  {categoryLabel(group.slug, tCat)}
+                </Link>
               </li>
             ))}
           </ul>

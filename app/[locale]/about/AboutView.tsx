@@ -51,17 +51,25 @@ export default function AboutView() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-green-700/90 via-green-600/85 to-green-500/80" aria-hidden />
           <div className="container relative mx-auto px-4 py-14 lg:py-20">
-            <nav className="text-sm text-green-100" aria-label={t('breadcrumbNav')}>
-              <ol className="flex flex-wrap items-center gap-1">
-                <li>
-                  <Link href="/" className="hover:text-white">
-                    {tHeader('home')}
-                  </Link>
-                </li>
-                <li aria-hidden>/</li>
-                <li className="font-medium text-white">{t('breadcrumbAbout')}</li>
-              </ol>
-            </nav>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <nav className="text-sm text-green-100" aria-label={t('breadcrumbNav')}>
+                <ol className="flex flex-wrap items-center gap-1">
+                  <li>
+                    <Link href="/" className="hover:text-white">
+                      {tHeader('home')}
+                    </Link>
+                  </li>
+                  <li aria-hidden>/</li>
+                  <li className="font-medium text-white">{t('breadcrumbAbout')}</li>
+                </ol>
+              </nav>
+              <Link
+                href="/about-2"
+                className="text-sm font-medium text-green-100 underline-offset-2 hover:text-white hover:underline"
+              >
+                {t('viewVersion2')}
+              </Link>
+            </div>
             <h1 className="mt-6 max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
               {t('heroTitle')}
             </h1>

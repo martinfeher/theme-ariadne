@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import { Percent } from 'lucide-react';
 import { FaShippingFast } from "react-icons/fa";
 import LanguageSwitcher from '@/app/components/LanguageSwitcher';

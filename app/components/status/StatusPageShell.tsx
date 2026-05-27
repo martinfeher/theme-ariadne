@@ -20,7 +20,7 @@ export default function StatusPageShell({ children, minimal = false }: StatusPag
             <Image
               src="/logo.svg"
               alt="WebAriadne"
-              width={120}
+              width={130}
               height={40}
               className="h-9 w-auto"
             />

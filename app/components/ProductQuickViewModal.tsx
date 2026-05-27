@@ -9,6 +9,7 @@ import { X } from 'lucide-react';
 import type { Product } from '../types/product';
 import { useProductI18n } from '@/app/hooks/useProductI18n';
 import OrganicBadge from './OrganicBadge';
+import DiscountBadge, { getDiscountPercent } from './DiscountBadge';
 
 const FILTER_CATEGORY_SLUGS = [
   'milks-dairies',
@@ -87,6 +88,7 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
   const descriptionText =
     getProductDescription(product) || t('noDescription');
   const inStock = product.inStock !== false;
+  const discountPercent = getDiscountPercent(product.price, product.oldPrice);
   const filterCategoryLinks =
     product.categories?.filter((c) => c !== 'all').map((id) => ({
       href: `/category/${id}`,
@@ -132,6 +134,11 @@ const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
               {product.organic && (
                 <div className="absolute left-3 top-3 pointer-events-none">
                   <OrganicBadge />
+                </div>
+              )}
+              {discountPercent != null && (
+                <div className="absolute right-3 top-3 pointer-events-none">
+                  <DiscountBadge percent={discountPercent} />
                 </div>
               )}
             </div>

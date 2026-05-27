@@ -11,6 +11,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import { useHydrated } from '@/app/hooks/useHydrated';
 
 type LanguageSwitcherProps = {
   /** `tabs` = SK/EN chips (default). `dropdown` = label + chevron like a select. */
@@ -22,23 +23,31 @@ export default function LanguageSwitcher({ variant = 'tabs' }: LanguageSwitcherP
   const pathname = usePathname();
   const t = useTranslations('Header');
   const [open, setOpen] = useState(false);
+  const hydrated = useHydrated();
 
   if (variant === 'dropdown') {
     const currentLabel = locale === 'en' ? t('localeEnglish') : t('localeSlovak');
 
+    const triggerButton = (
+      <button
+        type="button"
+        className="flex items-center gap-1 text-[#2f833e] transition-colors hover:text-green-600 cursor-pointer"
+        aria-label={t('language')}
+        aria-expanded={open ? 'true' : 'false'}
+        aria-haspopup="listbox"
+      >
+        <span className="text-sm">{currentLabel}</span>
+        <ChevronDown className="h-4 w-4 shrink-0 text-gray-400" aria-hidden />
+      </button>
+    );
+
+    if (!hydrated) {
+      return triggerButton;
+    }
+
     return (
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <button
-            type="button"
-            className="flex items-center gap-1 text-[#2f833e] transition-colors hover:text-green-600 cursor-pointer"
-            aria-label={t('language')}
-            aria-expanded={open ? 'true' : 'false'}
-          >
-            <span className="text-sm">{currentLabel}</span>
-            <ChevronDown className="h-4 w-4 shrink-0 text-gray-400" aria-hidden />
-          </button>
-        </PopoverTrigger>
+        <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
         <PopoverContent className="w-44 p-1" align="end" sideOffset={6}>
           <nav className="flex flex-col gap-1 p-[1px]" aria-label={t('language')}>
             <Link

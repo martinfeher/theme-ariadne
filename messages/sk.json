@@ -12,6 +12,9 @@
     "account": "Účet",
     "cart": "Košík",
     "locationPlaceholder": "Vaša lokalita",
+    "deliveryCityPlaceholder": "Mesto doručenia",
+    "locationSearchPlaceholder": "Hľadať mesto…",
+    "locationNotFound": "Mesto sa nenašlo.",
     "browseCategories": "Kategórie",
     "deals": "Akcie",
     "home": "Domov",
@@ -31,7 +34,22 @@
     "blogTag": "Archív štítku",
     "blogAuthor": "Archív autora",
     "pages": "Stránky",
+    "pagesMenuAccount": "Môj účet",
+    "pagesMenuHub": "Všetky stránky",
+    "pagesMenuAbout": "O nás",
+    "pagesMenuAbout2": "O nás (rozloženie 2)",
+    "pagesMenuContact": "Kontakt",
+    "pagesMenuFaq": "FAQ",
+    "pagesMenuRefundPolicy": "Reklamačný poriadok",
+    "pagesMenuOrderTracking": "Sledovanie objednávky",
+    "pagesMenuLogin": "Prihlásenie",
+    "pagesMenuRegister": "Registrácia",
+    "pagesMenu404": "404 — Nenájdené",
+    "pagesMenu500": "500 — Chyba servera",
+    "pagesMenuMaintenance": "Údržba",
+    "pagesMenuComingSoon": "Čoskoro",
     "contact": "Kontakt",
+    "faq": "FAQ",
     "hotline": "Podpora 24/7",
     "myAccount": "Môj účet",
     "orderTracking": "Sledovanie objednávky",
@@ -61,6 +79,66 @@
     "megaBannerBadge": "−25 %",
     "megaMenuTitle": "Prehliadať kategórie",
     "megaViewAll": "Všetky kategórie",
+    "megaAllFrom": "Všetko z {category}",
+    "megaMore": "+ Viac",
+    "megaSidebarLabels": {
+      "produce": "Ovocie a zelenina",
+      "meatsSeafood": "Mäso a ryby",
+      "dairy": "Mliečne a chladené",
+      "bakery": "Pekáreň a pečenie",
+      "drinks": "Nápoje",
+      "pets": "Krmivo pre zvieratá"
+    },
+    "megaSubLinks": {
+      "citrus": "Citrusy",
+      "berries": "Bobule",
+      "applesPears": "Jablká a hrušky",
+      "saladGreens": "Šaláty a listová zelenina",
+      "rootVegetables": "Koreňová zelenina",
+      "tomatoesPeppers": "Paradajky a papriky",
+      "seasonalFruit": "Sezónne ovocie",
+      "organicFruit": "Bio ovocie",
+      "exoticFruit": "Banány a exotické ovocie",
+      "herbs": "Čerstvé bylinky",
+      "preparedSalads": "Pripravené šaláty",
+      "frozenVegetables": "Mrazená zelenina",
+      "poultry": "Hydina",
+      "beefVeal": "Hovädzie a teľacie",
+      "porkLamb": "Bravčové a jahňacie",
+      "fishFillets": "Filé z rýb",
+      "shellfish": "Kôrovce a mušle",
+      "smokedFish": "Údené ryby",
+      "grillMeat": "Grilovanie a BBQ",
+      "mincedMeat": "Mleté mäso",
+      "coldCuts": "Údeniny",
+      "organicMeat": "Bio mäso a ryby",
+      "readyToCook": "Pripravené na varenie",
+      "specialtyCuts": "Špeciálne kúsky",
+      "milk": "Mlieko",
+      "yogurt": "Jogurty a skyr",
+      "cheese": "Syry",
+      "butter": "Maslo a nátierky",
+      "eggs": "Vajcia",
+      "plantBasedDairy": "Rastlinné alternatívy",
+      "breadRolls": "Chlieb a pečivo",
+      "pastries": "Pečivo a zákusky",
+      "bakingIngredients": "Pečacie suroviny",
+      "cakes": "Torty a dezerty",
+      "crispbread": "Chrumky a krekry",
+      "glutenFreeBakery": "Bezlepkové pečivo",
+      "groundCoffee": "Mletá káva",
+      "wholeBean": "Káva v zrne",
+      "instantCoffee": "Instantná káva",
+      "tea": "Čaj",
+      "herbalTea": "Bylinné a ovocné čaje",
+      "coldDrinks": "Šťavy a nealko",
+      "dogFood": "Krmivo pre psov",
+      "catFood": "Krmivo pre mačky",
+      "treats": "Maškrty",
+      "wetFood": "Konzervy",
+      "petCare": "Starostlivosť o zvieratá",
+      "organicPetFood": "Bio krmivo"
+    },
     "mobileCategories": "Kategórie",
     "topBarPhoneDisplay": "+1910800642",
     "topBarPhoneTel": "+1910800642",
@@ -92,6 +170,7 @@
   },
   "Category": {
     "allCategories": "Všetky produkty",
+    "browseAllShop": "Celý obchod",
     "breadcrumbNav": "Drobečková navigácia",
     "breadcrumbHome": "Domov",
     "breadcrumbShop": "Obchod",
@@ -126,6 +205,28 @@
     "securePaymentDesc": "100 % bezpečné spracovanie platieb",
     "support": "Podpora 24/7",
     "supportDesc": "Zákaznícka podpora nepretržite"
+  },
+  "Home2": {
+    "metaTitle": "Domov 2",
+    "metaDescription": "Prehliadajte obľúbené potraviny podľa kategórie s bočným panelom kategórií.",
+    "breadcrumbNav": "Drobečková navigácia",
+    "heroTitle": "Nakupujte podľa kategórie",
+    "heroSubtitle": "Vyberte kategóriu vpravo pre filtrovanie produktov alebo prehliadajte celú ponuku.",
+    "perkShippingTitle": "Doprava zdarma",
+    "perkShippingDesc": "Pri objednávkach nad 50 €",
+    "perkSecureTitle": "Bezpečná platba",
+    "perkSecureDesc": "Chránené platby",
+    "perkSupportTitle": "Podpora 24/7",
+    "perkSupportDesc": "Sme tu pre vás",
+    "productsAll": "Obľúbené produkty",
+    "productsInCategory": "{category}",
+    "countOne": "Zobrazený 1 produkt",
+    "countMany": "Zobrazených {count} produktov",
+    "clearFilter": "Zobraziť všetky kategórie",
+    "loading": "Načítavam produkty…",
+    "error": "Produkty sa nepodarilo načítať. Obnovte stránku.",
+    "noProducts": "V tejto kategórii zatiaľ nie sú produkty.",
+    "shopCategory": "Celý obchod kategórie"
   },
   "PopularProducts": {
     "title": "Obľúbené produkty",
@@ -410,6 +511,184 @@
     "mapTitle": "Poloha predajne WebAriadne na mape",
     "demoHint": "Demo kontaktný formulár — správy sa neodosielajú do skutočnej schránky."
   },
+  "RefundPolicy": {
+    "metaDescription": "Reklamačný poriadok WebAriadne — kedy a ako požadovať refundáciu, náhradu alebo dobropis.",
+    "title": "Reklamačný poriadok pre zákazníkov",
+    "breadcrumb": "Reklamačný poriadok",
+    "breadcrumbNav": "Drobečková navigácia",
+    "subtitle": "Tento dokument vysvetľuje, kedy a ako vydávame refundácie, náhrady alebo dobropisy za objednávky na WebAriadne.",
+    "lastUpdated": "Posledná aktualizácia: máj 2026",
+    "tocTitle": "Na tejto stránke",
+    "helpTitle": "Potrebujete pomoc s objednávkou?",
+    "helpDesc": "Kontaktujte podporu s číslom objednávky a prípadne fotografiami.",
+    "contactCta": "Kontaktovať podporu",
+    "faqCta": "Zobraziť FAQ",
+    "sections": {
+      "overview": {
+        "title": "Prehľad",
+        "body": "Chceme, aby ste vždy dostali čerstvé a správne potraviny. Ak s objednávkou niečo nie je v poriadku, spoločne to férovo vyriešime. Tento poriadok platí pre nákupy cez webariadne.com a naše zákaznícke kanály."
+      },
+      "eligibility": {
+        "title": "Kedy môžete dostať refundáciu",
+        "body": "Na plnú alebo čiastkovú refundáciu, náhradné doručenie alebo dobropis máte nárok napríklad ak:",
+        "list": [
+          "Položka chýbala, bola poškodená, skazená alebo po dátume spotreby pri doručení",
+          "Dostali ste nesprávny produkt, veľkosť alebo množstvo",
+          "Náhrada nebola schválená a nie je vhodná",
+          "Objednávku sme zrušili my alebo ju nebolo možné doručiť bez vašej viny",
+          "Vyskytla sa duplicitná platba alebo chyba vo fakturácii"
+        ]
+      },
+      "freshProducts": {
+        "title": "Čerstvé, chladené a mrazené produkty",
+        "body": "Pre tieto produkty platia dodatočné podmienky:",
+        "list": [
+          "Nahláste problém do 24 hodín od doručenia s číslom objednávky a fotografiami",
+          "Produkty uchovávajte v chladničke, kým posúdime reklamáciu, ak je to bezpečné",
+          "Môžeme ponúknuť náhradu v ďalšom termíne alebo refundáciu na pôvodný spôsob platby",
+          "Otvorené čerstvé položky refundujeme len pri zjavnom znížení kvality alebo bezpečnosti pri doručení"
+        ]
+      },
+      "nonPerishable": {
+        "title": "Trvanlivý a neotvorený tovar",
+        "body": "Pre balené netrvanlivé produkty v predajnom stave:",
+        "list": [
+          "Vrátenie môžeme prijať do 14 dní od doručenia s dokladom o kúpe",
+          "Položky musia byť neotvorené, nepoškodené a v pôvodnom balení",
+          "Poplatok za dopravu sa nevracia, ak nejde o našu chybu",
+          "Refundácia prebehne po prijatí a kontrole vráteného tovaru"
+        ]
+      },
+      "damagedItems": {
+        "title": "Poškodené alebo nesprávne položky",
+        "body": "Ak doručenie príde poškodené alebo nezodpovedá objednávke, likvidujte tovar až po našom pokyne — fotografie nám pomáhajú zlepšovať balenie a kvalitu. Podľa pravidiel bezpečnosti potravín môžeme požiadať o ponechanie alebo vrátenie konkrétnych položiek."
+      },
+      "substitutions": {
+        "title": "Náhrady a vypredané položky",
+        "body": "Ak ste pri pokladni povolili náhrady, môžeme nahradiť nedostupné položky rovnakou alebo lepšou kvalitou za rovnakú alebo nižšiu cenu. Ak ste náhrady odmietli, chýbajúce položky refundujeme po doručení. Pri nevhodnej náhrade nás kontaktujte do 24 hodín."
+      },
+      "cancellations": {
+        "title": "Zrušenie pred doručením",
+        "body": "Objednávku môžete bez poplatku zrušiť pred začatím prípravy na expedíciu. Po začatí kompletácie alebo pri doručení už zrušenie nemusí byť možné; odmietnutie zásielky môže byť spoplatnené, ak to nevyžaduje zákon alebo chyba nie je na našej strane."
+      },
+      "refundMethods": {
+        "title": "Spôsob refundácie",
+        "body": "Schválené refundácie vydávame jedným z týchto spôsobov:",
+        "list": [
+          "Na pôvodný spôsob platby (karta, peňaženka alebo iná metóda pri pokladni)",
+          "Dobropis alebo poukážka na ďalší nákup, ak si to želáte alebo nie je možná refundácia na kartu",
+          "Náhradné položky pri ďalšom doručení po dohode s podporou"
+        ]
+      },
+      "timelines": {
+        "title": "Lehoty spracovania",
+        "body": "Na reklamácie odpovedáme zvyčajne do dvoch pracovných dní. Po schválení sa refundácia na kartu objaví zvyčajne do 5–10 pracovných dní podľa banky. Dobropis pripíšeme hneď po uzavretí prípadu."
+      },
+      "exclusions": {
+        "title": "Čo nie je kryté",
+        "body": "Refundáciu zvyčajne neposkytujeme, ak:",
+        "list": [
+          "Problém bol nahlásený po lehote v tomto poriadku",
+          "Produkty boli po doručení nesprávne skladované (napr. mimo chladničky)",
+          "Ide o drobné estetické vady bez vplyvu na bezpečnosť alebo použitie",
+          "Ide o akciový alebo výpredajový tovar označený ako konečný, ak nie je chybný pri doručení",
+          "Problém spôsobila nesprávna adresa alebo nedostupnosť príjemcu"
+        ]
+      },
+      "howToClaim": {
+        "title": "Ako požiadať o refundáciu",
+        "body": "Na začatie reklamácie pripravte číslo objednávky a kontaktujte nás:",
+        "list": [
+          "Cez stránku Kontakt na webe",
+          "E-mailom na hello@webariadne.com s fotografiami a krátkym popisom",
+          "Telefonicky na linku v hlavičke počas pracovných hodín",
+          "Pomocou Sledovania objednávky pri potrebe aktualizácií počas riešenia"
+        ]
+      }
+    }
+  },
+  "FAQ": {
+    "metaDescription": "Odpovede na bežné otázky o objednávkach, doručení, produktoch, platbách a vašom účte WebAriadne.",
+    "breadcrumbNav": "Navigácia",
+    "breadcrumbFaq": "FAQ",
+    "title": "Často kladené otázky",
+    "subtitle": "Rýchle odpovede o nákupe, doručení a účte. Nenašli ste, čo hľadáte? Kontaktujte náš tím.",
+    "contactCta": "Stále máte otázky?",
+    "contactHint": "Náš tím podpory vám rád pomôže s objednávkami, produktmi alebo účtom.",
+    "contactLink": "Kontaktujte nás",
+    "sections": {
+      "orders": "Objednávky a sledovanie",
+      "delivery": "Doručenie",
+      "products": "Produkty a dostupnosť",
+      "account": "Účet a platba"
+    },
+    "items": {
+      "trackOrder": {
+        "question": "Ako sledujem objednávku?",
+        "answer": "Po dokončení objednávky dostanete potvrdenie e-mailom s číslom objednávky. V hlavičke otvorte Sledovanie objednávky a zadajte číslo objednávky a e-mail. Tento demo obchod zobrazuje len ukážkové kroky sledovania."
+      },
+      "modifyOrder": {
+        "question": "Môžem objednávku po odoslaní zmeniť?",
+        "answer": "Ak objednávka ešte nebola zabalená, kontaktujte nás čo najskôr a pokúsime sa upraviť položky alebo údaje o doručení. Po začatí vychystávania už zmeny nemusia byť možné."
+      },
+      "cancelOrder": {
+        "question": "Ako zruším objednávku?",
+        "answer": "Otvorte Sledovanie objednávky alebo kontaktujte podporu s číslom objednávky. Zrušenie je bezplatné pred odoslaním na doručenie. Po odoslaní môžete odmietnuť balík alebo požiadať o vrátenie podľa našich pravidiel."
+      },
+      "orderConfirmation": {
+        "question": "Nedostal som potvrdenie objednávky e-mailom.",
+        "answer": "Skontrolujte spam a overte e-mail zadaný pri objednávke. Prihlásením do Môj účet uvidíte posledné objednávky. Ak potvrdenie stále nenájdete, kontaktujte nás so menom a doručovacou adresou."
+      },
+      "deliveryAreas": {
+        "question": "Do akých oblastí doručujete?",
+        "answer": "Doručujeme do vybraných miest v poli Doručovacie mesto v hlavičke. Zadajte mesto a uvidíte dostupné termíny. Pravidelne rozširujeme pokrytie — ak vaša oblasť chýba, dajte nám vedieť."
+      },
+      "deliveryTimes": {
+        "question": "Aké termíny doručenia sú k dispozícii?",
+        "answer": "Pri objednávke si vyberiete termín v ten istý alebo nasledujúci deň, ak je voľný. Vo víkendoch a sviatkoch sa termíny rýchlo plnia — odporúčame objednať včas. Presný čas je v súhrne objednávky."
+      },
+      "deliveryFees": {
+        "question": "Je doručenie zadarmo?",
+        "answer": "Štandardné doručenie je zadarmo nad minimálnou hodnotou objednávky uvedenou v promo lište. Pri menších objednávkach môže byť pripočítaný paušálny poplatok vypočítaný pred platbou."
+      },
+      "missedDelivery": {
+        "question": "Čo ak zmeškám doručenie?",
+        "answer": "Kuriér zanechá oznámenie a môže skúsiť doručiť znova alebo uschovať chladené položky podľa miestnych pravidiel. Kontaktujte podporu v ten istý deň kvôli preobjednaniu alebo vyzdvihnutiu na odbernom mieste."
+      },
+      "organicProducts": {
+        "question": "Ako sú označené bio produkty?",
+        "answer": "Produkty certifikované alebo predávané ako bio majú zelený bio štítok na obrázku a detailnej stránke. Filtrujte podľa kategórie alebo hľadajte bio položky v čerstvej zelenine a spajke."
+      },
+      "freshness": {
+        "question": "Ako udržiavate ovocie a zeleninu čerstvé?",
+        "answer": "Skladateľné položky vychystávame blízko termínu doručenia a prepravujeme v chladených vozidlách. Uprednostňujeme miestnych dodávateľov a denne obmieňame sklad, aby sme znížili odpad."
+      },
+      "outOfStock": {
+        "question": "Položka je vypredaná — bude znova?",
+        "answer": "Vypredané produkty nie je možné pridať do košíka. Sezónne položky sa často vrátia do pár dní. Pridajte produkt do wishlistu alebo si pozrite podobné položky na stránke produktu."
+      },
+      "substitutions": {
+        "question": "Môžem povoliť náhradu chýbajúcich položiek?",
+        "answer": "Pri objednávke môžete súhlasiť s náhradou rovnakej alebo lepšej kvality za rovnakú alebo nižšiu cenu. Ak náhrady odmietnete, chýbajúce položky refundujeme po doručení."
+      },
+      "createAccount": {
+        "question": "Potrebujem účet na nákup?",
+        "answer": "Môžete prehliadať a pridávať do košíka bez prihlásenia, ale účet ukladá adresy, históriu objednávok, wishlist a vouchery. Registrácia trvá menej ako minútu e-mailom a heslom."
+      },
+      "paymentMethods": {
+        "question": "Aké platobné metódy akceptujete?",
+        "answer": "Tento demo checkout akceptuje hlavné kartové značky zobrazené pri platbe. V produkcii podporujeme aj digitálne peňaženky a bankový prevod podľa regiónu."
+      },
+      "vouchers": {
+        "question": "Ako použijem voucher alebo promo kód?",
+        "answer": "V menu účtu otvorte Môj voucher pre aktívne kódy alebo zadajte kód pri objednávke. Každý kód má vlastnú minimálnu sumu, platnosť a obmedzenia produktov."
+      },
+      "returns": {
+        "question": "Aké sú pravidlá vrátenia tovaru?",
+        "answer": "Neotvorený netrvanlivý tovar môžete vrátiť do 14 dní s dokladom o kúpe. Čerstvé a chladené produkty refundujeme len pri poškodení, nesprávnom tovare alebo po uplynutí spotreby pri doručení — kontaktujte nás s fotkami do 24 hodín."
+      }
+    }
+  },
   "About": {
     "metaDescription": "Spoznajte WebAriadne — náš príbeh, hodnoty a záväzok k čerstvým potravinám doručeným s dôverou.",
     "title": "O nás",
@@ -440,7 +719,54 @@
     "contactCta": "Kontaktujte nás",
     "blogCta": "Prečítať blog",
     "visitTitle": "Navštívte našu predajňu",
-    "visitLink": "Kontakt a mapa"
+    "visitLink": "Kontakt a mapa",
+    "viewVersion2": "Zobraziť verziu rozloženia 2"
+  },
+  "About2": {
+    "metaDescription": "Zistite, ako WebAriadne získava, pripravuje a doručuje čerstvé potraviny — náš tím, proces a sľuby.",
+    "title": "O nás",
+    "breadcrumbNav": "Drobečková navigácia",
+    "breadcrumbAbout": "O nás",
+    "viewVersion1": "Zobraziť verziu rozloženia 1",
+    "heroBadge": "Od roku 2018",
+    "heroTitle": "Potraviny so zmyslom",
+    "heroSubtitle": "Sme slovenský trh postavený na krátkych dodávateľských reťazcoch, poctivom pôvode a doručení, na ktoré sa môžete spoľahnúť — od týždenného nákupu po doplnenie v ten istý deň.",
+    "foundedLabel": "Pre domácnosti na celom Slovensku",
+    "shopCta": "Začať nakupovať",
+    "vendorsCta": "Naši predajcovia",
+    "statsEyebrow": "V číslach",
+    "statProducts": "Produktov v katalógu",
+    "statCustomers": "Aktívnych zákazníkov",
+    "statVendors": "Predajcov na trhu",
+    "statSatisfaction": "Odporúčajú nás",
+    "highlightsTitle": "Prečo nakupujú u nás",
+    "highlightsSubtitle": "Štyri zásady riadia každú kategóriu aj každý balík, ktorý zabalíme.",
+    "highlightOrganicTitle": "Bio a jasné označenie",
+    "highlightOrganicDesc": "Bio produkty sú označené v predajni aj online, aby ste vždy vedeli, čo kupujete.",
+    "highlightLocalTitle": "Lokálne, kde to dáva zmysel",
+    "highlightLocalDesc": "Uprednostňujeme slovenských a regionálnych producentov v ovocí, zelenine, mliečnych výrobkoch a pečive.",
+    "highlightWasteTitle": "Menej odpadu, rozumné balenia",
+    "highlightWasteDesc": "Správne veľkosti porcií a chladiaci reťazec znižujú plytvanie ešte pred vašou kuchyňou.",
+    "highlightSpeedTitle": "Doručenie podľa vás",
+    "highlightSpeedDesc": "Vyberte si termín, ktorý vám sedí — so sledovaním od výberu až po dvere.",
+    "processEyebrow": "Ako to funguje",
+    "processTitle": "Od farmy k vášmu stolu",
+    "processDesc": "Každá objednávka prejde rovnakou starostlivou cestou, aby čerstvosť a bezpečnosť boli predvídateľné.",
+    "stepSourceTitle": "Obozretný výber dodávateľov",
+    "stepSourceDesc": "Predajcov overujeme podľa kvality, etiket a spôsobilosti plniť objednávky.",
+    "stepPickTitle": "Čerstvý výber a balenie",
+    "stepPickDesc": "Objednávky kompletujeme v teplotných zónach a kontrolujeme pred odoslaním.",
+    "stepDeliverTitle": "Doručenie so sledovaním",
+    "stepDeliverDesc": "Kuriéri idú optimalizovanými trasami; dostanete aktualizácie až k doručeniu.",
+    "quote": "Dobré jedlo by nemalo byť luxus — malo by byť spoľahlivé, dostupné a blízko domova.",
+    "quoteAttribution": "— Zakladajúci tím WebAriadne",
+    "promise1": "Transparentné ceny na každej stránke produktu",
+    "promise2": "Rýchla podpora pri objednávkach a reklamáciách",
+    "promise3": "Sezónna inšpirácia na blogu a v novinkách",
+    "ctaTitle": "Pripravení nakupovať múdrejšie?",
+    "ctaDesc": "Prehliadajte tisíce základov a špecialít, alebo nás kontaktujte, ak ste producent a chcete sa pridať.",
+    "contactCta": "Kontaktujte nás",
+    "faqCta": "Často kladené otázky"
   },
   "Vendors": {
     "metaDescription": "Prehliadajte dôveryhodných predajcov na našom trhu — čerstvé potraviny, káva, čaj, pečivo a krmivá.",
@@ -522,8 +848,20 @@
     "breadcrumbNav": "Drobečková navigácia",
     "pagesHubBreadcrumb": "Stránky",
     "pagesHubTitle": "Pomocné stránky",
-    "pagesHubSubtitle": "Ukážky chybových a stavových stránok v tejto téme.",
+    "pagesHubSubtitle": "Účet, obsahové stránky a ukážky utility v tejto téme.",
     "pagesHubMeta": "Prehliadka demo pomocných a stavových stránok.",
+    "pageAccountTitle": "Môj účet",
+    "pageAccountDesc": "Prehľad objednávok, obľúbených a profilu",
+    "pageAboutTitle": "O nás",
+    "pageAboutDesc": "Náš príbeh, hodnoty a poslanie",
+    "pageAbout2Title": "O nás (rozloženie 2)",
+    "pageAbout2Desc": "Alternatívne rozloženie stránky O nás",
+    "pageContactTitle": "Kontakt",
+    "pageContactDesc": "Ozvite sa nášmu tímu",
+    "pageFaqTitle": "FAQ",
+    "pageFaqDesc": "Odpovede na časté otázky",
+    "pageRefundPolicyTitle": "Reklamačný poriadok pre zákazníkov",
+    "pageRefundPolicyDesc": "Vrátenie tovaru, refundácie a náhrady",
     "page404Title": "404 — Nenájdené",
     "page404Desc": "Stránka chýba alebo bola presunutá",
     "page500Title": "500 — Chyba servera",
@@ -720,6 +1058,38 @@
     "accountNotFound": "Pre tento e-mail neexistuje účet. Najprv sa zaregistrujte.",
     "loading": "Načítavam…",
     "demoHint": "Demo prihlásenie — údaje sa ukladajú len do prehliadača."
+  },
+  "Account": {
+    "metaDescription": "Spravujte svoj účet WebAriadne — profil, objednávky, obľúbené, poukážky a rýchle odkazy.",
+    "breadcrumb": "Môj účet",
+    "breadcrumbNav": "Drobečková navigácia",
+    "welcome": "Vitajte späť, {name}",
+    "subtitle": "Spravujte nákupy, sledujte objednávky a údaje na jednom mieste.",
+    "sidebarNav": "Navigácia účtu",
+    "navOverview": "Prehľad",
+    "navOrders": "Objednávky",
+    "navWishlist": "Obľúbené",
+    "navVouchers": "Poukážky",
+    "navCart": "Košík",
+    "statOrders": "Nedávne objednávky",
+    "statWishlist": "Položky v obľúbených",
+    "statCart": "Položky v košíku",
+    "trackOrder": "Sledovať objednávku",
+    "viewWishlist": "Zobraziť obľúbené",
+    "viewCart": "Zobraziť košík",
+    "profileTitle": "Údaje profilu",
+    "changePassword": "Zmeniť heslo",
+    "quickActionsTitle": "Rýchle akcie",
+    "actionOrders": "Sledovanie objednávky",
+    "actionWishlist": "Moje obľúbené",
+    "actionVouchers": "Moje poukážky",
+    "actionCart": "Nákupný košík",
+    "promoTitle": "Objavte niečo nové",
+    "promoDesc": "Prehliadajte sezónny výber a týždenné ponuky pre vašu domácnosť.",
+    "promoCta": "Nakupovať",
+    "addressTitle": "Doručovacie adresy",
+    "addressDesc": "Uložené adresy sa zobrazia v budúcej verzii. Kontaktujte nás, ak potrebujete zmeniť doručenie.",
+    "addressCta": "Kontaktovať podporu"
   },
   "ProductQuickView": {
     "close": "Zavrieť dialóg",

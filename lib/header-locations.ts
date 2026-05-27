@@ -1,0 +1,17 @@
+export const HEADER_LOCATION_OPTIONS = [
+  { value: 'bratislava', label: 'Bratislava' },
+  { value: 'kosice', label: 'Košice' },
+  { value: 'presov', label: 'Prešov' },
+  { value: 'zilina', label: 'Žilina' },
+  { value: 'nitra', label: 'Nitra' },
+  { value: 'trnava', label: 'Trnava' },
+  { value: 'trencin', label: 'Trenčín' },
+  { value: 'banska-bystrica', label: 'Banská Bystrica' },
+  { value: 'poprad', label: 'Poprad' },
+  { value: 'martin', label: 'Martin' },
+  { value: 'zvolen', label: 'Zvolen' },
+  { value: 'michalovce', label: 'Michalovce' },
+  { value: 'prievidza', label: 'Prievidza' },
+  { value: 'levoca', label: 'Levoča' },
+  { value: 'ruzomberok', label: 'Ružomberok' },
+] as const;

@@ -12,6 +12,9 @@
     "account": "Account",
     "cart": "Cart",
     "locationPlaceholder": "Your Location",
+    "deliveryCityPlaceholder": "Delivery city",
+    "locationSearchPlaceholder": "Search city…",
+    "locationNotFound": "No city found.",
     "browseCategories": "Categories",
     "deals": "Deals",
     "home": "Home",
@@ -31,7 +34,22 @@
     "blogTag": "Tag archive",
     "blogAuthor": "Author archive",
     "pages": "Pages",
+    "pagesMenuAccount": "My account",
+    "pagesMenuHub": "All pages",
+    "pagesMenuAbout": "About us",
+    "pagesMenuAbout2": "About us (layout 2)",
+    "pagesMenuContact": "Contact",
+    "pagesMenuFaq": "FAQ",
+    "pagesMenuRefundPolicy": "Refund policy",
+    "pagesMenuOrderTracking": "Order tracking",
+    "pagesMenuLogin": "Sign in",
+    "pagesMenuRegister": "Register",
+    "pagesMenu404": "404 — Not found",
+    "pagesMenu500": "500 — Server error",
+    "pagesMenuMaintenance": "Maintenance",
+    "pagesMenuComingSoon": "Coming soon",
     "contact": "Contact",
+    "faq": "FAQ",
     "hotline": "24/7 Support Center",
     "myAccount": "My Account",
     "orderTracking": "Order Tracking",
@@ -61,6 +79,66 @@
     "megaBannerBadge": "25% off",
     "megaMenuTitle": "Browse categories",
     "megaViewAll": "View all categories",
+    "megaAllFrom": "All from {category}",
+    "megaMore": "+ More",
+    "megaSidebarLabels": {
+      "produce": "Fruits & Vegetables",
+      "meatsSeafood": "Meat & Fish",
+      "dairy": "Dairy & Chilled",
+      "bakery": "Bakery & Baking",
+      "drinks": "Drinks",
+      "pets": "Pet Food"
+    },
+    "megaSubLinks": {
+      "citrus": "Citrus fruit",
+      "berries": "Berries",
+      "applesPears": "Apples & pears",
+      "saladGreens": "Salad & leafy greens",
+      "rootVegetables": "Root vegetables",
+      "tomatoesPeppers": "Tomatoes & peppers",
+      "seasonalFruit": "Seasonal fruit",
+      "organicFruit": "Organic fruit",
+      "exoticFruit": "Bananas & exotic fruit",
+      "herbs": "Fresh herbs",
+      "preparedSalads": "Prepared salads",
+      "frozenVegetables": "Frozen vegetables",
+      "poultry": "Poultry",
+      "beefVeal": "Beef & veal",
+      "porkLamb": "Pork & lamb",
+      "fishFillets": "Fish fillets",
+      "shellfish": "Shellfish",
+      "smokedFish": "Smoked fish",
+      "grillMeat": "Grill & BBQ",
+      "mincedMeat": "Minced meat",
+      "coldCuts": "Cold cuts",
+      "organicMeat": "Organic meat & fish",
+      "readyToCook": "Ready to cook",
+      "specialtyCuts": "Specialty cuts",
+      "milk": "Milk",
+      "yogurt": "Yogurt & skyr",
+      "cheese": "Cheese",
+      "butter": "Butter & spreads",
+      "eggs": "Eggs",
+      "plantBasedDairy": "Plant-based alternatives",
+      "breadRolls": "Bread & rolls",
+      "pastries": "Pastries",
+      "bakingIngredients": "Baking ingredients",
+      "cakes": "Cakes & desserts",
+      "crispbread": "Crispbread & crackers",
+      "glutenFreeBakery": "Gluten-free bakery",
+      "groundCoffee": "Ground coffee",
+      "wholeBean": "Whole bean coffee",
+      "instantCoffee": "Instant coffee",
+      "tea": "Tea",
+      "herbalTea": "Herbal & fruit tea",
+      "coldDrinks": "Juices & soft drinks",
+      "dogFood": "Dog food",
+      "catFood": "Cat food",
+      "treats": "Treats & snacks",
+      "wetFood": "Wet food",
+      "petCare": "Pet care",
+      "organicPetFood": "Organic pet food"
+    },
     "mobileCategories": "Categories",
     "topBarPhoneDisplay": "+1910800642",
     "topBarPhoneTel": "+1910800642",
@@ -69,7 +147,7 @@
     "topBarBrandDiscount": "10% off our brands"
   },
   "SearchBar": {
-    "placeholder": "Search for items...",
+    "placeholder": "Search you products",
     "searching": "Searching…",
     "noMatches": "No matching products.",
     "viewAll": "View all results",
@@ -93,6 +171,7 @@
   },
   "Category": {
     "allCategories": "All products",
+    "browseAllShop": "Browse full shop",
     "breadcrumbNav": "Breadcrumb",
     "breadcrumbHome": "Home",
     "breadcrumbShop": "Shop",
@@ -127,6 +206,28 @@
     "securePaymentDesc": "100% secure payment processing",
     "support": "24/7 Support",
     "supportDesc": "Round the clock customer support"
+  },
+  "Home2": {
+    "metaTitle": "Home 2",
+    "metaDescription": "Browse popular groceries by category with a quick category sidebar.",
+    "breadcrumbNav": "Breadcrumb",
+    "heroTitle": "Shop by category",
+    "heroSubtitle": "Pick a category on the right to filter products, or browse everything in one place.",
+    "perkShippingTitle": "Free shipping",
+    "perkShippingDesc": "On orders over €50",
+    "perkSecureTitle": "Secure checkout",
+    "perkSecureDesc": "Protected payments",
+    "perkSupportTitle": "24/7 support",
+    "perkSupportDesc": "We are here to help",
+    "productsAll": "Popular products",
+    "productsInCategory": "{category}",
+    "countOne": "1 product shown",
+    "countMany": "{count} products shown",
+    "clearFilter": "Show all categories",
+    "loading": "Loading products…",
+    "error": "Could not load products. Please refresh the page.",
+    "noProducts": "No products in this category yet.",
+    "shopCategory": "View full category shop"
   },
   "PopularProducts": {
     "title": "Popular Products",
@@ -411,6 +512,184 @@
     "mapTitle": "WebAriadne store location on map",
     "demoHint": "Demo contact form — messages are not sent to a real inbox."
   },
+  "RefundPolicy": {
+    "metaDescription": "WebAriadne customer refund policy — eligibility, timelines, fresh product claims, and how to request a refund or replacement.",
+    "title": "Customer refund policy",
+    "breadcrumb": "Refund policy",
+    "breadcrumbNav": "Breadcrumb",
+    "subtitle": "This policy explains when and how we issue refunds, replacements, or store credit for orders placed on WebAriadne.",
+    "lastUpdated": "Last updated: May 2026",
+    "tocTitle": "On this page",
+    "helpTitle": "Need help with an order?",
+    "helpDesc": "Contact our support team with your order number and photos where applicable.",
+    "contactCta": "Contact support",
+    "faqCta": "View FAQ",
+    "sections": {
+      "overview": {
+        "title": "Overview",
+        "body": "We want you to receive fresh, correct groceries every time. If something goes wrong with your order, we will work with you to resolve it fairly and quickly. This policy applies to purchases made through webariadne.com and our customer support channels."
+      },
+      "eligibility": {
+        "title": "When you may receive a refund",
+        "body": "You may be eligible for a full or partial refund, replacement delivery, or store credit when any of the following apply:",
+        "list": [
+          "An item was missing, damaged, spoiled, or past its use-by date on delivery",
+          "You received the wrong product, size, or quantity",
+          "A substituted item was not approved and the replacement is unsuitable",
+          "Your order was cancelled by us or could not be delivered through no fault of yours",
+          "A duplicate charge or billing error occurred"
+        ]
+      },
+      "freshProducts": {
+        "title": "Fresh, chilled & frozen products",
+        "body": "Because of their nature, fresh and temperature-sensitive goods have additional requirements:",
+        "list": [
+          "Report issues within 24 hours of delivery with your order number and clear photos",
+          "Keep products refrigerated until our team reviews your claim where safe to do so",
+          "We may offer a replacement in your next delivery slot or a refund to your original payment method",
+          "Opened fresh items are only refunded when quality or safety clearly failed on arrival"
+        ]
+      },
+      "nonPerishable": {
+        "title": "Shelf-stable & unopened goods",
+        "body": "For packaged, non-perishable products in resaleable condition:",
+        "list": [
+          "Returns may be accepted within 14 days of delivery with proof of purchase",
+          "Items must be unopened, undamaged, and in original packaging",
+          "Delivery charges are non-refundable unless the return is due to our error",
+          "Refunds are processed after we receive and inspect the returned goods"
+        ]
+      },
+      "damagedItems": {
+        "title": "Damaged or incorrect items",
+        "body": "If your delivery arrives damaged or does not match what you ordered, do not dispose of affected items until we advise you — photos help us improve packing and supplier quality. We may request that you keep or return specific items depending on food-safety rules."
+      },
+      "substitutions": {
+        "title": "Substitutions & out-of-stock items",
+        "body": "If you allowed substitutions at checkout, we may replace unavailable items with products of equal or better quality at the same or lower price. If you declined substitutions, missing items are refunded automatically after delivery. If a substitution is unsuitable, contact us within 24 hours."
+      },
+      "cancellations": {
+        "title": "Cancellations before delivery",
+        "body": "You may cancel free of charge before your order is prepared for dispatch. Once picking has started or the order is out for delivery, cancellation may not be possible; refused delivery may be subject to a restocking fee except where required by law or where the fault is ours."
+      },
+      "refundMethods": {
+        "title": "How refunds are paid",
+        "body": "Approved refunds are issued using one of the following methods:",
+        "list": [
+          "Original payment method (card, wallet, or other method used at checkout)",
+          "Store credit or voucher for a future order, if you prefer or where card refunds are not possible",
+          "Replacement items in a subsequent delivery, by agreement with our support team"
+        ]
+      },
+      "timelines": {
+        "title": "Processing times",
+        "body": "We aim to respond to refund requests within two business days. Once approved, card refunds typically appear within 5–10 business days depending on your bank. Store credit is applied to your account as soon as the claim is closed."
+      },
+      "exclusions": {
+        "title": "What is not covered",
+        "body": "Refunds are generally not provided when:",
+        "list": [
+          "Issues are reported outside the time limits in this policy",
+          "Products were stored incorrectly after delivery (e.g. left unrefrigerated)",
+          "Minor cosmetic imperfections that do not affect safety or intended use",
+          "Promotional or clearance items marked as final sale, unless defective on arrival",
+          "Problems caused by an incorrect delivery address or unavailable recipient"
+        ]
+      },
+      "howToClaim": {
+        "title": "How to request a refund",
+        "body": "To start a claim, please have your order number ready and contact us through one of these channels:",
+        "list": [
+          "Use the Contact page on our website",
+          "Email hello@webariadne.com with photos and a short description",
+          "Call our support line listed in the header during business hours",
+          "Reference Order Tracking if you need status updates while we investigate"
+        ]
+      }
+    }
+  },
+  "FAQ": {
+    "metaDescription": "Answers to common questions about orders, delivery, products, payments, and your WebAriadne account.",
+    "breadcrumbNav": "Breadcrumb",
+    "breadcrumbFaq": "FAQ",
+    "title": "Frequently asked questions",
+    "subtitle": "Quick answers about shopping, delivery, and your account. Can't find what you need? Contact our team.",
+    "contactCta": "Still have questions?",
+    "contactHint": "Our support team is happy to help with orders, products, or account issues.",
+    "contactLink": "Contact us",
+    "sections": {
+      "orders": "Orders & tracking",
+      "delivery": "Delivery",
+      "products": "Products & availability",
+      "account": "Account & payment"
+    },
+    "items": {
+      "trackOrder": {
+        "question": "How do I track my order?",
+        "answer": "After checkout you receive a confirmation email with your order number. Visit Order Tracking in the header menu and enter your order number and email to see the current status. This demo storefront shows sample tracking steps only."
+      },
+      "modifyOrder": {
+        "question": "Can I change my order after placing it?",
+        "answer": "If your order has not yet been packed, contact us as soon as possible and we will try to update items or delivery details. Once picking has started, changes may no longer be possible."
+      },
+      "cancelOrder": {
+        "question": "How do I cancel an order?",
+        "answer": "Open Order Tracking or contact support with your order number. Cancellations are free before the order enters delivery. After dispatch, you may refuse delivery or request a return according to our return policy."
+      },
+      "orderConfirmation": {
+        "question": "I did not receive an order confirmation email.",
+        "answer": "Check your spam folder and verify the email address entered at checkout. You can also sign in to My Account to view recent orders. If you still cannot find it, contact us with your name and delivery address."
+      },
+      "deliveryAreas": {
+        "question": "Which areas do you deliver to?",
+        "answer": "We deliver to selected cities shown in the Delivery city picker in the header. Enter your city to see available slots. We are expanding coverage regularly — contact us if your area is not listed yet."
+      },
+      "deliveryTimes": {
+        "question": "What delivery time slots are available?",
+        "answer": "At checkout you can choose a same-day or next-day window where available. Slots fill up quickly on weekends and holidays, so we recommend booking early. Exact times are confirmed in your order summary."
+      },
+      "deliveryFees": {
+        "question": "Is delivery free?",
+        "answer": "Standard delivery is free above the minimum order value shown in the top bar promotion. Smaller orders may include a flat delivery fee calculated at checkout before you pay."
+      },
+      "missedDelivery": {
+        "question": "What happens if I miss my delivery?",
+        "answer": "The courier will leave a notice and may attempt redelivery or hold chilled items according to local rules. Contact support the same day so we can reschedule or arrange collection from a pickup point."
+      },
+      "organicProducts": {
+        "question": "How are organic products labelled?",
+        "answer": "Products certified or marketed as organic display a green organic badge on the product image and detail page. Filter by category or search for organic items in Fresh Produce and Pantry sections."
+      },
+      "freshness": {
+        "question": "How do you keep fruit and vegetables fresh?",
+        "answer": "Perishable items are picked close to your delivery slot and transported in temperature-controlled vans. We prioritize local suppliers where possible and rotate stock daily to reduce waste."
+      },
+      "outOfStock": {
+        "question": "An item shows as out of stock — will it return?",
+        "answer": "Out-of-stock products cannot be added to the cart. Many seasonal items return within days. Add the product to your wishlist to check back easily, or browse similar products suggested on the product page."
+      },
+      "substitutions": {
+        "question": "Can I allow substitutions for missing items?",
+        "answer": "During checkout you can opt in to allow replacements of equal or better quality at the same or lower price. If you decline substitutions, missing items are refunded after delivery."
+      },
+      "createAccount": {
+        "question": "Do I need an account to shop?",
+        "answer": "You can browse and add items to the cart without signing in, but an account saves your addresses, order history, wishlist, and vouchers. Registration takes less than a minute with email and password."
+      },
+      "paymentMethods": {
+        "question": "Which payment methods do you accept?",
+        "answer": "This demo checkout accepts major card brands shown at payment step. In production, we also support digital wallets and bank transfer where available in your region."
+      },
+      "vouchers": {
+        "question": "How do I use a voucher or promo code?",
+        "answer": "Open My Voucher in the account menu to see active codes, or enter a code at checkout in the voucher field. Each code has its own minimum spend, expiry date, and product restrictions."
+      },
+      "returns": {
+        "question": "What is your return policy?",
+        "answer": "Unopened non-perishable goods can be returned within 14 days with proof of purchase. Fresh and chilled products are refunded only if damaged, incorrect, or past their use-by date on delivery — contact us with photos within 24 hours."
+      }
+    }
+  },
   "About": {
     "metaDescription": "Learn about WebAriadne — our story, values, and commitment to fresh groceries delivered with care.",
     "title": "About us",
@@ -441,7 +720,54 @@
     "contactCta": "Get in touch",
     "blogCta": "Read our blog",
     "visitTitle": "Visit our store",
-    "visitLink": "Contact & directions"
+    "visitLink": "Contact & directions",
+    "viewVersion2": "View layout version 2"
+  },
+  "About2": {
+    "metaDescription": "Discover how WebAriadne sources, picks, and delivers fresh groceries — our team, process, and promises.",
+    "title": "About us",
+    "breadcrumbNav": "Breadcrumb",
+    "breadcrumbAbout": "About",
+    "viewVersion1": "View layout version 1",
+    "heroBadge": "Since 2018",
+    "heroTitle": "Groceries with a conscience",
+    "heroSubtitle": "We are a Slovak marketplace built around short supply chains, honest sourcing, and delivery you can plan around — from weekly shops to same-day top-ups.",
+    "foundedLabel": "Serving households across Slovakia",
+    "shopCta": "Start shopping",
+    "vendorsCta": "Meet our vendors",
+    "statsEyebrow": "By the numbers",
+    "statProducts": "Products in catalog",
+    "statCustomers": "Active customers",
+    "statVendors": "Marketplace vendors",
+    "statSatisfaction": "Would recommend us",
+    "highlightsTitle": "Why shoppers choose us",
+    "highlightsSubtitle": "Four principles guide every category we list and every box we pack.",
+    "highlightOrganicTitle": "Organic & labelled clearly",
+    "highlightOrganicDesc": "Organic lines are marked on-shelf and online so you always know what you are buying.",
+    "highlightLocalTitle": "Local where it matters",
+    "highlightLocalDesc": "We prioritise Slovak and regional producers for produce, dairy, and bakery.",
+    "highlightWasteTitle": "Less waste, smarter packs",
+    "highlightWasteDesc": "Right-sized portions and chilled chain discipline help cut spoilage before it reaches your kitchen.",
+    "highlightSpeedTitle": "Delivery on your schedule",
+    "highlightSpeedDesc": "Choose slots that fit your week — with tracking from pick to doorstep.",
+    "processEyebrow": "How it works",
+    "processTitle": "From farm to your table",
+    "processDesc": "Every order follows the same careful path so freshness and food safety stay predictable.",
+    "stepSourceTitle": "Source with care",
+    "stepSourceDesc": "We onboard vendors against quality, labelling, and fulfilment standards before they list a single SKU.",
+    "stepPickTitle": "Pick & pack fresh",
+    "stepPickDesc": "Orders are picked in temperature-aware zones and checked before they leave our hub.",
+    "stepDeliverTitle": "Deliver with tracking",
+    "stepDeliverDesc": "Couriers follow optimised routes; you get updates until the order is at your door.",
+    "quote": "Good food should not be a luxury — it should be dependable, affordable, and close to home.",
+    "quoteAttribution": "— WebAriadne founding team",
+    "promise1": "Transparent pricing on every product page",
+    "promise2": "Responsive support for orders and refunds",
+    "promise3": "Seasonal inspiration on our blog and newsletters",
+    "ctaTitle": "Ready to shop smarter?",
+    "ctaDesc": "Browse thousands of staples and specialties, or reach out if you are a producer interested in joining the marketplace.",
+    "contactCta": "Contact us",
+    "faqCta": "Read FAQs"
   },
   "Vendors": {
     "metaDescription": "Browse trusted marketplace vendors selling fresh groceries, coffee, tea, bakery, and pet supplies.",
@@ -523,8 +849,20 @@
     "breadcrumbNav": "Breadcrumb",
     "pagesHubBreadcrumb": "Pages",
     "pagesHubTitle": "Utility pages",
-    "pagesHubSubtitle": "Preview error and status layouts included in this theme.",
+    "pagesHubSubtitle": "Account, content pages, and utility layouts included in this theme.",
     "pagesHubMeta": "Browse demo utility and status pages.",
+    "pageAccountTitle": "My account",
+    "pageAccountDesc": "Dashboard for orders, wishlist, and profile",
+    "pageAboutTitle": "About us",
+    "pageAboutDesc": "Our story, values, and mission",
+    "pageAbout2Title": "About us (layout 2)",
+    "pageAbout2Desc": "Alternate about page layout",
+    "pageContactTitle": "Contact",
+    "pageContactDesc": "Get in touch with our team",
+    "pageFaqTitle": "FAQ",
+    "pageFaqDesc": "Answers to common questions",
+    "pageRefundPolicyTitle": "Customer refund policy",
+    "pageRefundPolicyDesc": "Returns, refunds, and replacements",
     "page404Title": "404 — Not found",
     "page404Desc": "Page missing or moved",
     "page500Title": "500 — Server error",
@@ -721,6 +1059,38 @@
     "accountNotFound": "No account found for this email. Register first.",
     "loading": "Loading…",
     "demoHint": "Demo auth — data is stored in your browser only."
+  },
+  "Account": {
+    "metaDescription": "Manage your WebAriadne account — profile, orders, wishlist, vouchers, and quick links.",
+    "breadcrumb": "My account",
+    "breadcrumbNav": "Breadcrumb",
+    "welcome": "Welcome back, {name}",
+    "subtitle": "Manage your shopping, track orders, and update your details from one place.",
+    "sidebarNav": "Account navigation",
+    "navOverview": "Overview",
+    "navOrders": "Orders",
+    "navWishlist": "Wishlist",
+    "navVouchers": "Vouchers",
+    "navCart": "Cart",
+    "statOrders": "Recent orders",
+    "statWishlist": "Wishlist items",
+    "statCart": "Items in cart",
+    "trackOrder": "Track an order",
+    "viewWishlist": "View wishlist",
+    "viewCart": "View cart",
+    "profileTitle": "Profile details",
+    "changePassword": "Change password",
+    "quickActionsTitle": "Quick actions",
+    "actionOrders": "Order tracking",
+    "actionWishlist": "My wishlist",
+    "actionVouchers": "My vouchers",
+    "actionCart": "Shopping cart",
+    "promoTitle": "Discover something new",
+    "promoDesc": "Browse seasonal picks and weekly offers curated for your household.",
+    "promoCta": "Shop now",
+    "addressTitle": "Delivery addresses",
+    "addressDesc": "Saved addresses will appear here in a future update. Contact us if you need to change a delivery location.",
+    "addressCta": "Contact support"
   },
   "ProductQuickView": {
     "close": "Close dialog",

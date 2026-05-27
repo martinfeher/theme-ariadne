@@ -6,12 +6,28 @@ import { Link } from '@/i18n/navigation';
 import {
   AlertTriangle,
   FileQuestion,
+  HelpCircle,
+  Info,
+  Mail,
   Rocket,
+  RotateCcw,
+  User,
   Wrench,
 } from 'lucide-react';
 import Header from '@/app/components/Header';
 
 const PAGES = [
+  { href: '/account', key: 'pageAccount', icon: User, tone: 'text-green-700 bg-green-50' },
+  { href: '/about', key: 'pageAbout', icon: Info, tone: 'text-emerald-600 bg-emerald-50' },
+  { href: '/about-2', key: 'pageAbout2', icon: Info, tone: 'text-teal-600 bg-teal-50' },
+  { href: '/contact', key: 'pageContact', icon: Mail, tone: 'text-blue-600 bg-blue-50' },
+  { href: '/faq', key: 'pageFaq', icon: HelpCircle, tone: 'text-violet-600 bg-violet-50' },
+  {
+    href: '/refund-policy',
+    key: 'pageRefundPolicy',
+    icon: RotateCcw,
+    tone: 'text-rose-600 bg-rose-50',
+  },
   { href: '/404', key: 'page404', icon: FileQuestion, tone: 'text-green-600 bg-green-50' },
   { href: '/500', key: 'page500', icon: AlertTriangle, tone: 'text-red-600 bg-red-50' },
   { href: '/maintenance', key: 'pageMaintenance', icon: Wrench, tone: 'text-amber-600 bg-amber-50' },
@@ -44,7 +60,7 @@ export default function PagesView() {
           <p className="mt-2 text-sm text-gray-600 sm:text-base">{t('pagesHubSubtitle')}</p>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:max-w-3xl">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:max-w-4xl">
           {PAGES.map(({ href, key, icon: Icon, tone }) => (
             <Link
               key={href}

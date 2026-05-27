@@ -15,8 +15,6 @@ import {
   getArchivePosts,
   getBlogAuthorBySlug,
   type BlogArchiveFilter,
-  type BlogCategory,
-  type BlogTag,
 } from '@/lib/mock-blog';
 
 type BlogArchiveViewProps = {

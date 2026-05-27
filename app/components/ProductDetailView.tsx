@@ -12,9 +12,11 @@ import { useWishlist } from '@/app/context/WishlistContext';
 import { useCompare, MAX_COMPARE_PRODUCTS } from '@/app/context/CompareContext';
 import { CATEGORY_SIDEBAR_ICONS } from '@/lib/category-shop';
 import { countProductsWithCategorySlug } from '@/lib/mock-products';
+import { getDiscountPercent } from '@/lib/product-discount';
 import { useProductI18n } from '@/app/hooks/useProductI18n';
 import { vendorHref } from '@/lib/mock-vendors';
 import OrganicBadge from './OrganicBadge';
+import DiscountBadge from './DiscountBadge';
 
 const ACCENT = '#3BB77E';
 
@@ -36,11 +38,6 @@ function buildGalleryImages(product: Product, related: Product[]): string[] {
   }
   while (urls.length < 4) add(product.image);
   return urls.slice(0, 4);
-}
-
-function discountPercent(price: number, oldPrice: number | undefined): number | null {
-  if (!oldPrice || oldPrice <= price) return null;
-  return Math.round((1 - price / oldPrice) * 100);
 }
 
 function StarRow({ rating }: { rating: number }) {
@@ -100,7 +97,7 @@ export default function ProductDetailView({
   const wishlisted = isInWishlist(product.id);
   const compared = isInCompare(product.id);
   const compareDisabled = !canAdd(product.id) && !compared;
-  const pctOff = discountPercent(product.price, product.oldPrice);
+  const pctOff = getDiscountPercent(product.price, product.oldPrice);
   const inStock = product.inStock !== false;
   const stockCount = inStock ? 8 : 0;
   const sku = `NT-${String(product.id).padStart(5, '0')}`;
@@ -160,10 +157,17 @@ export default function ProductDetailView({
                         <OrganicBadge />
                       </div>
                     )}
+                    {pctOff != null && (
+                      <div className="absolute right-3 top-3 z-10 pointer-events-none">
+                        <DiscountBadge percent={pctOff} size="md" />
+                      </div>
+                    )}
                     <button
                       type="button"
                       onClick={() => setZoomOpen(true)}
-                      className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-md backdrop-blur hover:bg-white cursor-pointer"
+                      className={`absolute flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-md backdrop-blur hover:bg-white cursor-pointer ${
+                        pctOff != null ? 'right-3 top-14' : 'right-3 top-3'
+                      }`}
                       aria-label={t('zoomImage')}
                     >
                       <Search className="h-5 w-5" />

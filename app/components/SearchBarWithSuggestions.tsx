@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import { Combobox } from '@/components/ui/combobox';
@@ -52,7 +52,6 @@ export default function SearchBarWithSuggestions({
   const t = useTranslations('SearchBar');
   const tHeader = useTranslations('Header');
   const { getProductName } = useProductI18n();
-  const locale = useLocale();
   const formatPrice = useFormatCurrency();
   const containerRef = useRef<HTMLDivElement>(null);
   const listId = variant === 'desktop' ? 'search-suggestions-desktop' : 'search-suggestions-mobile';
@@ -131,7 +130,7 @@ export default function SearchBarWithSuggestions({
         onSubmit={handleFormSubmit}
         className={
           isDesktop
-            ? 'flex items-center bg-white border border-[#89b178] rounded-sm shadow-sm overflow-visible'
+            ? 'flex items-center bg-white border border-[#89b178] rounded-md shadow-sm overflow-visible'
             : 'flex rounded-lg overflow-visible border border-gray-300'
         }
       >
@@ -175,7 +174,7 @@ export default function SearchBarWithSuggestions({
         <button
           type="submit"
           className={ isDesktop
-              ? 'bg-green-500 text-white px-6 py-3 hover:bg-green-600 transition-colors flex items-center justify-center shrink-0'
+              ? 'bg-green-500 text-white px-6 py-3 hover:bg-green-600 transition-colors flex items-center justify-center shrink-0 rounded-r-sm'
               : 'bg-green-500 text-white px-4 py-2 rounded-r-lg shrink-0'
           }
           aria-label={tHeader('searchProducts')}

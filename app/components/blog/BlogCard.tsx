@@ -23,7 +23,7 @@ type BlogCardProps = {
 export default function BlogCard({ post }: BlogCardProps) {
   const t = useTranslations('Blog');
   const locale = useLocale();
-  const { getBlogTitle, getBlogExcerpt, getBlogCategoryLabel, getBlogAuthorName } = useBlogI18n();
+  const { getBlogTitle, getBlogExcerpt, getBlogCategoryLabel } = useBlogI18n();
 
   return (
     <article className="group overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-shadow hover:shadow-md">

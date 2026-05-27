@@ -18,6 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { useHydrated } from "@/app/hooks/useHydrated"
 
 export interface ComboboxOption {
   value: string
@@ -51,42 +52,50 @@ export function Combobox({
   leadingIcon,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false)
+  const hydrated = useHydrated()
 
   const selectedOption = options.find((option) => option.value === value)
 
+  const triggerButton = (
+    <Button
+      variant="ghost"
+      role="combobox"
+      aria-expanded={open}
+      aria-haspopup="listbox"
+      className={cn(
+        "w-[150px] justify-between gap-2 truncate border-0 px-4 py-2 hover:bg-transparent",
+        leadingIcon ? "rounded-lg" : "rounded-none pr-4 hover:bg-transparent",
+        className
+      )}
+      disabled={disabled}
+    >
+      <span className="flex min-w-0 flex-1 items-center gap-2">
+        {leadingIcon}
+        <span
+          className={cn(
+            "min-w-0 truncate text-left",
+            leadingIcon && !selectedOption && "text-green-600",
+            leadingIcon && selectedOption && "text-green-700"
+          )}
+        >
+          {selectedOption ? selectedOption.label : placeholder}
+        </span>
+      </span>
+      {leadingIcon ? (
+        <ChevronDown className="h-4 w-4 shrink-0 text-gray-400" aria-hidden />
+      ) : (
+        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+      )}
+    </Button>
+  )
+
+  if (!hydrated) {
+    return triggerButton
+  }
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          role="combobox"
-          aria-expanded={open}
-          className={cn(
-            "w-[150px] justify-between gap-2 truncate border-0 px-4 py-2 hover:bg-transparent",
-            leadingIcon ? "rounded-lg" : "rounded-none pr-4 hover:bg-transparent",
-            className
-          )}
-          disabled={disabled}
-        >
-          <span className="flex min-w-0 flex-1 items-center gap-2">
-            {leadingIcon}
-            <span
-              className={cn(
-                "min-w-0 truncate text-left",
-                leadingIcon && !selectedOption && "text-green-600",
-                leadingIcon && selectedOption && "text-green-700"
-              )}
-            >
-              {selectedOption ? selectedOption.label : placeholder}
-            </span>
-          </span>
-          {leadingIcon ? (
-            <ChevronDown className="h-4 w-4 shrink-0 text-gray-400" aria-hidden />
-          ) : (
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          )}
-        </Button>
-      </PopoverTrigger>
+      <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
       <PopoverContent className={cn("p-0", boxClassName)}>
         <Command>
           <CommandInput placeholder={searchPlaceholder} />

@@ -134,6 +134,7 @@ export default function SearchResults() {
                     product={product}
                     allProducts={allCatalog}
                     size="medium"
+                    linkToProductPage
                   />
                 ))}
               </div>
