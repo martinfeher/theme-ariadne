@@ -118,3 +118,38 @@ export function hasResetToken(email: string): boolean {
   const normalized = email.trim().toLowerCase();
   return Boolean(readResetTokens()[normalized]);
 }
+
+export function updateUserProfile(input: {
+  email: string;
+  name: string;
+}): { ok: true; user: AuthSession } | { ok: false; error: 'notFound' } {
+  const email = input.email.trim().toLowerCase();
+  const name = input.name.trim();
+  const users = readUsers();
+  const index = users.findIndex((u) => u.email === email);
+  if (index === -1) return { ok: false, error: 'notFound' };
+
+  users[index] = { ...users[index], name };
+  writeUsers(users);
+  const session = { email, name };
+  setSession(session);
+  return { ok: true, user: session };
+}
+
+export function changeUserPassword(input: {
+  email: string;
+  currentPassword: string;
+  newPassword: string;
+}): { ok: true } | { ok: false; error: 'notFound' | 'invalidPassword' } {
+  const email = input.email.trim().toLowerCase();
+  const users = readUsers();
+  const index = users.findIndex((u) => u.email === email);
+  if (index === -1) return { ok: false, error: 'notFound' };
+  if (users[index].password !== input.currentPassword) {
+    return { ok: false, error: 'invalidPassword' };
+  }
+
+  users[index] = { ...users[index], password: input.newPassword };
+  writeUsers(users);
+  return { ok: true };
+}

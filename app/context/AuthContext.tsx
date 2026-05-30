@@ -10,12 +10,14 @@ import React, {
 } from 'react';
 import type { AuthSession } from '@/lib/auth-demo';
 import {
+  changeUserPassword,
   getSession,
   loginUser,
   registerUser,
   requestPasswordReset,
   resetPassword,
   setSession,
+  updateUserProfile,
 } from '@/lib/auth-demo';
 
 type AuthContextValue = {
@@ -33,6 +35,11 @@ type AuthContextValue = {
     email: string,
     password: string
   ) => Promise<'notFound' | 'ok'>;
+  updateProfile: (name: string) => Promise<'notFound' | 'ok'>;
+  changePassword: (
+    currentPassword: string,
+    newPassword: string
+  ) => Promise<'notFound' | 'invalid' | 'ok'>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -77,6 +84,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return result.ok ? 'ok' : 'notFound';
   }, []);
 
+  const updateProfile = useCallback(async (name: string) => {
+    const session = getSession();
+    if (!session) return 'notFound';
+    const result = updateUserProfile({ email: session.email, name });
+    if (!result.ok) return 'notFound';
+    setUser(result.user);
+    return 'ok';
+  }, []);
+
+  const changePassword = useCallback(
+    async (currentPassword: string, newPassword: string) => {
+      const session = getSession();
+      if (!session) return 'notFound';
+      const result = changeUserPassword({
+        email: session.email,
+        currentPassword,
+        newPassword,
+      });
+      if (!result.ok) {
+        return result.error === 'invalidPassword' ? 'invalid' : 'notFound';
+      }
+      return 'ok';
+    },
+    []
+  );
+
   const value = useMemo(
     () => ({
       user,
@@ -86,8 +119,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       logout,
       sendPasswordReset,
       updatePassword,
+      updateProfile,
+      changePassword,
     }),
-    [user, isReady, login, register, logout, sendPasswordReset, updatePassword]
+    [
+      user,
+      isReady,
+      login,
+      register,
+      logout,
+      sendPasswordReset,
+      updatePassword,
+      updateProfile,
+      changePassword,
+    ]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

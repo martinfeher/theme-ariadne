@@ -6,11 +6,16 @@ import { Link } from '@/i18n/navigation';
 import {
   AlertTriangle,
   FileQuestion,
+  Flame,
   HelpCircle,
   Info,
   Mail,
+  Package,
   Rocket,
   RotateCcw,
+  Scale,
+  Shield,
+  Settings,
   User,
   Wrench,
 } from 'lucide-react';
@@ -18,7 +23,15 @@ import Header from '@/app/components/Header';
 
 const PAGES = [
   { href: '/account', key: 'pageAccount', icon: User, tone: 'text-green-700 bg-green-50' },
+  {
+    href: '/account/settings',
+    key: 'pageAccountSettings',
+    icon: Settings,
+    tone: 'text-slate-600 bg-slate-50',
+  },
+  { href: '/order-history', key: 'pageOrderHistory', icon: Package, tone: 'text-orange-600 bg-orange-50' },
   { href: '/about', key: 'pageAbout', icon: Info, tone: 'text-emerald-600 bg-emerald-50' },
+  { href: '/deals', key: 'pageDeals', icon: Flame, tone: 'text-orange-600 bg-orange-50' },
   { href: '/about-2', key: 'pageAbout2', icon: Info, tone: 'text-teal-600 bg-teal-50' },
   { href: '/contact', key: 'pageContact', icon: Mail, tone: 'text-blue-600 bg-blue-50' },
   { href: '/faq', key: 'pageFaq', icon: HelpCircle, tone: 'text-violet-600 bg-violet-50' },
@@ -27,6 +40,18 @@ const PAGES = [
     key: 'pageRefundPolicy',
     icon: RotateCcw,
     tone: 'text-rose-600 bg-rose-50',
+  },
+  {
+    href: '/privacy',
+    key: 'pagePrivacy',
+    icon: Shield,
+    tone: 'text-indigo-600 bg-indigo-50',
+  },
+  {
+    href: '/terms',
+    key: 'pageTerms',
+    icon: Scale,
+    tone: 'text-slate-600 bg-slate-50',
   },
   { href: '/404', key: 'page404', icon: FileQuestion, tone: 'text-green-600 bg-green-50' },
   { href: '/500', key: 'page500', icon: AlertTriangle, tone: 'text-red-600 bg-red-50' },

@@ -17,6 +17,7 @@
     "locationNotFound": "No city found.",
     "browseCategories": "Categories",
     "deals": "Deals",
+    "pagesMenuDeals": "Deals",
     "home": "Home",
     "homeMenu1": "Home 1",
     "homeMenu2": "Home 2",
@@ -35,13 +36,17 @@
     "blogAuthor": "Author archive",
     "pages": "Pages",
     "pagesMenuAccount": "My account",
+    "pagesMenuAccountSettings": "Account settings",
     "pagesMenuHub": "All pages",
     "pagesMenuAbout": "About us",
     "pagesMenuAbout2": "About us (layout 2)",
     "pagesMenuContact": "Contact",
     "pagesMenuFaq": "FAQ",
     "pagesMenuRefundPolicy": "Refund policy",
+    "pagesMenuPrivacy": "Privacy policy",
+    "pagesMenuTerms": "Terms & conditions",
     "pagesMenuOrderTracking": "Order tracking",
+    "pagesMenuOrderHistory": "Order history",
     "pagesMenuLogin": "Sign in",
     "pagesMenuRegister": "Register",
     "pagesMenu404": "404 — Not found",
@@ -53,6 +58,7 @@
     "hotline": "24/7 Support Center",
     "myAccount": "My Account",
     "orderTracking": "Order Tracking",
+    "orderHistory": "Order history",
     "myVoucher": "My Voucher",
     "myWishlist": "My Wishlist",
     "settings": "Settings",
@@ -77,17 +83,23 @@
     "megaBannerSave": "Save up to 50%",
     "megaBannerCta": "Shop now",
     "megaBannerBadge": "25% off",
-    "megaMenuTitle": "Browse categories",
+    "megaMenuTitle": "Browse Categories",
+    "megaEmptyHint": "Hover over a category to browse products and find the best deals",
     "megaViewAll": "View all categories",
     "megaAllFrom": "All from {category}",
     "megaMore": "+ More",
     "megaSidebarLabels": {
-      "produce": "Fruits & Vegetables",
-      "meatsSeafood": "Meat & Fish",
-      "dairy": "Dairy & Chilled",
-      "bakery": "Bakery & Baking",
+      "fishMeat": "Fish & Meat",
+      "fruitsVegetable": "Fruits & Vegetable",
+      "cookingEssentials": "Cooking Essentials",
+      "biscuitsCakes": "Biscuits & Cakes",
+      "householdTools": "Household Tools",
+      "petCare": "Pet Care",
+      "beautyHealth": "Beauty & Health",
+      "jamJelly": "Jam & Jelly",
+      "milkDairy": "Milk & Dairy",
       "drinks": "Drinks",
-      "pets": "Pet Food"
+      "breakfast": "Breakfast"
     },
     "megaSubLinks": {
       "citrus": "Citrus fruit",
@@ -229,6 +241,34 @@
     "noProducts": "No products in this category yet.",
     "shopCategory": "View full category shop"
   },
+  "Home3": {
+    "metaTitle": "Home 3",
+    "metaDescription": "Browse groceries with categories on the left — filter products, spot deals, and shop by department.",
+    "breadcrumbNav": "Breadcrumb",
+    "heroTitle": "Shop with categories on the left",
+    "heroSubtitle": "Pick a department from the sidebar to filter products. Promotions and fresh picks update throughout the week.",
+    "dealsCta": "View deals",
+    "shopAllCta": "Shop all",
+    "bannerFresh": "Everyday fresh produce",
+    "bannerBreakfast": "Breakfast & dairy picks",
+    "bannerOrganic": "Organic favourites",
+    "bannerShopNow": "Shop now",
+    "perkBanner": "Free delivery on orders over €50 in selected cities.",
+    "productsAll": "Popular products",
+    "productsInCategory": "{category}",
+    "countOne": "1 product shown",
+    "countMany": "{count} products shown",
+    "clearFilter": "Show all categories",
+    "sortLabel": "Sort products",
+    "sortFeatured": "Featured",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "sortRating": "Top rated",
+    "loading": "Loading products…",
+    "error": "Could not load products. Please refresh the page.",
+    "noProducts": "No products in this category yet.",
+    "shopCategory": "View full category shop"
+  },
   "PopularProducts": {
     "title": "Popular Products",
     "loading": "Loading products…",
@@ -348,6 +388,54 @@
       "delivered": "Delivered",
       "cancelled": "Cancelled"
     }
+  },
+  "OrderHistory": {
+    "metaDescription": "View your WebAriadne order history — past purchases, status, and links to track delivery.",
+    "title": "Order history",
+    "breadcrumb": "Order history",
+    "accountBreadcrumb": "My account",
+    "breadcrumbNav": "Breadcrumb",
+    "subtitle": "Review past orders and open tracking details for any shipment.",
+    "orderNumber": "Order number",
+    "placedOn": "Placed on {date}",
+    "itemCount": "{count, plural, one {# item} other {# items}}",
+    "qtyLabel": "Qty {qty}",
+    "moreItems": "+ {count} more",
+    "viewDetails": "View details",
+    "emptyTitle": "No orders yet",
+    "emptyDesc": "When you place an order while signed in, it will appear here.",
+    "shopCta": "Start shopping",
+    "demoHint": "Demo: register with demo@example.com to see sample orders, or complete checkout while signed in."
+  },
+  "Deals": {
+    "metaDescription": "Save on groceries and household essentials — browse weekly deals, discounts, and limited-time offers at WebAriadne.",
+    "title": "Deals & offers",
+    "breadcrumb": "Deals",
+    "breadcrumbNav": "Breadcrumb",
+    "eyebrow": "Limited time",
+    "subtitle": "Fresh savings on pantry staples, produce, dairy, and more — updated every week.",
+    "dealCountOne": "1 product on sale right now",
+    "dealCountMany": "{count} products on sale right now",
+    "countdownLabel": "Offers end in",
+    "countdownDays": "Days",
+    "countdownHours": "Hours",
+    "countdownMinutes": "Min",
+    "countdownSeconds": "Sec",
+    "featuredLabel": "Deal of the week",
+    "saveAmount": "Save {amount}",
+    "shopFeatured": "Shop this deal",
+    "gridTitle": "All deals",
+    "resultsOne": "1 deal",
+    "resultsMany": "{count} deals",
+    "sortLabel": "Sort by",
+    "sortDiscount": "Biggest discount",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "tabAll": "All deals",
+    "loading": "Loading deals…",
+    "error": "Could not load deals. Please try again.",
+    "noDeals": "No deals match this filter. Check back soon or browse the full shop.",
+    "browseShop": "Browse shop"
   },
   "Compare": {
     "breadcrumbShop": "Shop",
@@ -608,6 +696,223 @@
       }
     }
   },
+  "Terms": {
+    "metaDescription": "WebAriadne terms and conditions — using our online grocery store, placing orders, payments, delivery, and your legal rights.",
+    "title": "Terms & conditions",
+    "breadcrumb": "Terms & conditions",
+    "breadcrumbNav": "Breadcrumb",
+    "subtitle": "These terms govern your use of webariadne.com and purchases from WebAriadne. Please read them before placing an order.",
+    "lastUpdated": "Last updated: May 2026",
+    "tocTitle": "On this page",
+    "relatedTitle": "Related policies",
+    "refundPolicyLink": "Customer refund policy",
+    "privacyPolicyLink": "Privacy policy",
+    "faqLink": "FAQ",
+    "helpDesc": "Questions about these terms or your order?",
+    "contactCta": "Contact support",
+    "sections": {
+      "overview": {
+        "title": "Overview",
+        "body": "WebAriadne operates an online grocery and household essentials store. By browsing our website, creating an account, or placing an order, you agree to these Terms & Conditions together with any policies referenced here (including our refund policy and privacy policy)."
+      },
+      "acceptance": {
+        "title": "Acceptance of terms",
+        "body": "If you do not agree with these terms, do not use our services. We may update these terms from time to time; the version in effect when you place an order applies to that transaction. Continued use after changes are posted constitutes acceptance of the revised terms where permitted by law."
+      },
+      "account": {
+        "title": "Your account",
+        "body": "When you register, you agree to:",
+        "list": [
+          "Provide accurate, current contact and delivery information",
+          "Keep your password confidential and notify us of suspected unauthorised access",
+          "Be at least 18 years old or have permission from a parent or guardian",
+          "Use one account per household unless we approve otherwise",
+          "Accept that we may suspend or close accounts used for fraud, abuse, or breach of these terms"
+        ]
+      },
+      "orders": {
+        "title": "Orders & contract formation",
+        "body": "Placing an order is an offer to buy. A contract is formed when we confirm acceptance (e.g. order confirmation email). We may refuse or cancel orders because of stock limits, pricing errors, delivery restrictions, suspected fraud, or legal requirements. Order details, including substitutions preferences, are shown at checkout."
+      },
+      "pricing": {
+        "title": "Prices, promotions & errors",
+        "body": "Prices and offers are shown in the currency selected at checkout and include applicable taxes where stated. We strive for accuracy but may correct obvious errors before or after acceptance. Promotional codes are subject to stated conditions and cannot be combined unless we allow it."
+      },
+      "payment": {
+        "title": "Payment",
+        "body": "You authorise us to charge your chosen payment method for the order total, including delivery fees and applicable taxes. We use secure payment processors; we do not store full card details on our servers. Failed or reversed payments may result in cancellation or suspension of delivery."
+      },
+      "delivery": {
+        "title": "Delivery & risk",
+        "body": "Delivery windows, fees, and minimum order values are shown at checkout and may vary by area. You must provide safe access for our courier. Risk in goods passes to you on delivery to your address or collection point. Temperature-sensitive items should be stored promptly; we are not responsible for spoilage caused by delayed unpacking after a successful delivery."
+      },
+      "returns": {
+        "title": "Returns & refunds",
+        "body": "Your statutory rights are not affected. Product-specific return and refund rules are set out in our Customer refund policy, including time limits for fresh goods and procedures for damaged or missing items."
+      },
+      "conduct": {
+        "title": "Acceptable use",
+        "body": "You must not:",
+        "list": [
+          "Use the site for unlawful purposes or to harm others",
+          "Attempt to interfere with security, scrape content at scale, or overload our systems",
+          "Resell products purchased for personal consumption without our written consent",
+          "Submit false claims, reviews, or chargebacks",
+          "Harass our staff, couriers, or other customers"
+        ]
+      },
+      "intellectualProperty": {
+        "title": "Intellectual property",
+        "body": "All content on webariadne.com — including text, logos, images, and software — is owned by WebAriadne or its licensors and protected by copyright and trademark laws. You may view and print pages for personal shopping only. Commercial reproduction or redistribution without permission is prohibited."
+      },
+      "liability": {
+        "title": "Limitation of liability",
+        "body": "To the fullest extent permitted by law:",
+        "list": [
+          "Our services are provided on an \"as is\" basis; we do not guarantee uninterrupted access",
+          "We are not liable for indirect or consequential loss (e.g. lost profits) arising from use of the site",
+          "Our total liability for any order is limited to the amount you paid for that order",
+          "Nothing in these terms excludes liability for death or personal injury caused by negligence, fraud, or other rights that cannot be limited by law"
+        ]
+      },
+      "privacy": {
+        "title": "Privacy & data",
+        "body": "We process personal data to fulfil orders, provide support, and improve our services in line with applicable data protection law. Our privacy policy describes what we collect, how we use it, cookies, retention, and your rights in detail. For requests about your data, contact us using the details below."
+      },
+      "changes": {
+        "title": "Changes to services",
+        "body": "We may modify product ranges, delivery areas, fees, or website features without notice. If a change materially affects an order you already paid for, we will contact you with options such as a refund or alternative delivery."
+      },
+      "governingLaw": {
+        "title": "Governing law & disputes",
+        "body": "These terms are governed by the laws of the Slovak Republic unless mandatory consumer protection rules in your country require otherwise. Disputes should first be raised with our support team. Consumers in the EU may also use online dispute resolution platforms made available by their member state."
+      },
+      "contact": {
+        "title": "Contact",
+        "body": "For questions about these terms, billing, or your account, reach us via the Contact page, at hello@webariadne.com, or through the support channels listed in the site header."
+      }
+    }
+  },
+  "Privacy": {
+    "metaDescription": "WebAriadne privacy policy — how we collect, use, store, and protect your personal data when you shop on webariadne.com.",
+    "title": "Privacy policy",
+    "breadcrumb": "Privacy policy",
+    "breadcrumbNav": "Breadcrumb",
+    "subtitle": "This policy explains how WebAriadne handles your personal data when you use webariadne.com, create an account, or place an order.",
+    "lastUpdated": "Last updated: May 2026",
+    "tocTitle": "On this page",
+    "relatedTitle": "Related policies",
+    "termsLink": "Terms & conditions",
+    "refundPolicyLink": "Customer refund policy",
+    "faqLink": "FAQ",
+    "helpDesc": "Questions about your data or this policy?",
+    "contactCta": "Contact support",
+    "sections": {
+      "overview": {
+        "title": "Overview",
+        "body": "We respect your privacy and process personal data in accordance with the General Data Protection Regulation (GDPR) and applicable Slovak law. This policy applies to visitors, registered customers, and anyone who contacts us through our website or support channels."
+      },
+      "controller": {
+        "title": "Who is responsible",
+        "body": "The data controller is WebAriadne, Hlavná 123, 811 01 Bratislava, Slovakia. For privacy-related requests, email hello@webariadne.com or use the Contact page. We have not appointed a data protection officer; general enquiries can be sent to the same address."
+      },
+      "dataWeCollect": {
+        "title": "Data we collect",
+        "body": "Depending on how you use our store, we may process:",
+        "list": [
+          "Identity and contact details (name, email, phone, delivery address)",
+          "Account credentials and preferences (login, wishlist, substitution choices)",
+          "Order and payment information (items purchased, amounts, transaction references — we do not store full card numbers)",
+          "Delivery and communication records (courier notes, support tickets, emails)",
+          "Technical data (IP address, browser type, device identifiers, pages viewed)",
+          "Marketing preferences and, where you opt in, newsletter subscription data",
+          "Reviews, ratings, or other content you submit voluntarily"
+        ]
+      },
+      "howWeUse": {
+        "title": "How we use your data",
+        "body": "We use personal data to:",
+        "list": [
+          "Create and manage your account and process orders",
+          "Deliver products, send order updates, and handle returns or refunds",
+          "Take payment and prevent fraud",
+          "Provide customer support and respond to enquiries",
+          "Improve our website, product range, and delivery experience",
+          "Send service messages (e.g. order confirmations) and, with consent, marketing",
+          "Comply with legal, tax, and accounting obligations",
+          "Establish, exercise, or defend legal claims where necessary"
+        ]
+      },
+      "legalBasis": {
+        "title": "Legal bases",
+        "body": "Under GDPR we rely on one or more of the following, depending on the activity:",
+        "list": [
+          "Contract — to fulfil your order and provide account services",
+          "Legitimate interests — to improve our store, secure our systems, and prevent abuse (balanced against your rights)",
+          "Legal obligation — for tax, accounting, and regulatory requirements",
+          "Consent — for optional cookies, marketing emails, or other choices where required"
+        ]
+      },
+      "cookies": {
+        "title": "Cookies & similar technologies",
+        "body": "Our site uses cookies and similar tools to:",
+        "list": [
+          "Keep you signed in and remember your basket or locale preferences",
+          "Measure traffic and understand how pages are used",
+          "Support security and fraud prevention",
+          "Deliver relevant offers where you have agreed to marketing cookies"
+        ]
+      },
+      "sharing": {
+        "title": "Who we share data with",
+        "body": "We do not sell your personal data. We share it only when needed to run our business:",
+        "list": [
+          "Payment processors to authorise and settle transactions",
+          "Delivery partners and couriers to fulfil orders",
+          "IT, hosting, email, and analytics providers under contract",
+          "Professional advisers (e.g. accountants or lawyers) when required",
+          "Public authorities if the law requires us to do so"
+        ]
+      },
+      "retention": {
+        "title": "How long we keep data",
+        "body": "We retain personal data only as long as necessary for the purposes above. Order and billing records are typically kept for the period required by Slovak tax and commercial law (generally up to 10 years). Account data is kept while your account is active and for a reasonable period afterwards. Marketing data is kept until you unsubscribe or withdraw consent. Technical logs may be kept for shorter periods for security and troubleshooting."
+      },
+      "security": {
+        "title": "Security",
+        "body": "We use appropriate technical and organisational measures — including encryption in transit, access controls, and secure payment processing — to protect your data. No online service is completely secure; please use a strong password and contact us promptly if you suspect unauthorised access to your account."
+      },
+      "yourRights": {
+        "title": "Your rights",
+        "body": "If you are in the EEA or UK, you may have the right to:",
+        "list": [
+          "Access a copy of the personal data we hold about you",
+          "Correct inaccurate or incomplete data",
+          "Request erasure in certain circumstances",
+          "Restrict or object to processing in certain circumstances",
+          "Receive your data in a portable format where applicable",
+          "Withdraw consent at any time for processing based on consent",
+          "Lodge a complaint with the Slovak Office for Personal Data Protection (Úrad na ochranu osobných údajov SR) or your local supervisory authority"
+        ]
+      },
+      "internationalTransfers": {
+        "title": "International transfers",
+        "body": "Your data is primarily processed within the European Economic Area. If a service provider processes data outside the EEA, we ensure appropriate safeguards such as EU Standard Contractual Clauses or an adequacy decision apply before the transfer."
+      },
+      "children": {
+        "title": "Children",
+        "body": "Our services are not directed at children under 16. We do not knowingly collect personal data from children. If you believe a child has provided us with data, contact us and we will delete it where required."
+      },
+      "changes": {
+        "title": "Changes to this policy",
+        "body": "We may update this privacy policy from time to time. The \"Last updated\" date at the top shows when it was revised. Material changes will be highlighted on the website where appropriate. Continued use after changes are posted means you acknowledge the updated policy where permitted by law."
+      },
+      "contact": {
+        "title": "Contact",
+        "body": "For privacy requests, questions about this policy, or to exercise your rights, contact us via the Contact page, at hello@webariadne.com, or through the support channels listed in the site header. We aim to respond within one month as required by GDPR."
+      }
+    }
+  },
   "FAQ": {
     "metaDescription": "Answers to common questions about orders, delivery, products, payments, and your WebAriadne account.",
     "breadcrumbNav": "Breadcrumb",
@@ -853,6 +1158,12 @@
     "pagesHubMeta": "Browse demo utility and status pages.",
     "pageAccountTitle": "My account",
     "pageAccountDesc": "Dashboard for orders, wishlist, and profile",
+    "pageAccountSettingsTitle": "Account settings",
+    "pageAccountSettingsDesc": "Profile, password, and notifications",
+    "pageDealsTitle": "Deals & offers",
+    "pageDealsDesc": "Discounts and limited-time savings",
+    "pageOrderHistoryTitle": "Order history",
+    "pageOrderHistoryDesc": "Past orders and delivery status",
     "pageAboutTitle": "About us",
     "pageAboutDesc": "Our story, values, and mission",
     "pageAbout2Title": "About us (layout 2)",
@@ -863,6 +1174,10 @@
     "pageFaqDesc": "Answers to common questions",
     "pageRefundPolicyTitle": "Customer refund policy",
     "pageRefundPolicyDesc": "Returns, refunds, and replacements",
+    "pagePrivacyTitle": "Privacy policy",
+    "pagePrivacyDesc": "How we collect and use your data",
+    "pageTermsTitle": "Terms & conditions",
+    "pageTermsDesc": "Legal terms for using the store",
     "page404Title": "404 — Not found",
     "page404Desc": "Page missing or moved",
     "page500Title": "500 — Server error",
@@ -1072,16 +1387,18 @@
     "navWishlist": "Wishlist",
     "navVouchers": "Vouchers",
     "navCart": "Cart",
+    "navSettings": "Settings",
     "statOrders": "Recent orders",
     "statWishlist": "Wishlist items",
     "statCart": "Items in cart",
+    "viewOrders": "View order history",
     "trackOrder": "Track an order",
     "viewWishlist": "View wishlist",
     "viewCart": "View cart",
     "profileTitle": "Profile details",
     "changePassword": "Change password",
     "quickActionsTitle": "Quick actions",
-    "actionOrders": "Order tracking",
+    "actionOrders": "Order history",
     "actionWishlist": "My wishlist",
     "actionVouchers": "My vouchers",
     "actionCart": "Shopping cart",
@@ -1091,6 +1408,35 @@
     "addressTitle": "Delivery addresses",
     "addressDesc": "Saved addresses will appear here in a future update. Contact us if you need to change a delivery location.",
     "addressCta": "Contact support"
+  },
+  "AccountSettings": {
+    "metaDescription": "Update your WebAriadne profile, password, and notification preferences.",
+    "title": "Account settings",
+    "breadcrumb": "Settings",
+    "accountBreadcrumb": "My account",
+    "breadcrumbNav": "Breadcrumb",
+    "subtitle": "Manage your profile, security, and email preferences.",
+    "profileTitle": "Profile",
+    "profileDesc": "Update the name shown on your account and orders.",
+    "emailReadonlyHint": "Email cannot be changed in this demo storefront.",
+    "nameRequired": "Please enter your name.",
+    "saveProfile": "Save profile",
+    "profileSaved": "Profile updated successfully.",
+    "passwordTitle": "Password",
+    "passwordDesc": "Choose a strong password you do not use elsewhere.",
+    "currentPassword": "Current password",
+    "currentPasswordInvalid": "Current password is incorrect.",
+    "updatePassword": "Update password",
+    "passwordSaved": "Password updated successfully.",
+    "preferencesTitle": "Notifications",
+    "preferencesDesc": "Choose which emails you want to receive from WebAriadne.",
+    "orderUpdatesLabel": "Order updates",
+    "orderUpdatesHint": "Shipping confirmations, delivery status, and receipts.",
+    "marketingLabel": "Offers and news",
+    "marketingHint": "Promotions, seasonal picks, and product recommendations.",
+    "savePreferences": "Save preferences",
+    "preferencesSaved": "Notification preferences saved.",
+    "saving": "Saving…"
   },
   "ProductQuickView": {
     "close": "Close dialog",

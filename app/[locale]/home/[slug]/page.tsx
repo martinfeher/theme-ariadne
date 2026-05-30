@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
 import Header from '@/app/components/Header';
 import Home2View from '../Home2View';
+import Home3View from '../Home3View';
 
 const HOME_SLUGS = ['home-1', 'home-2', 'home-3', 'home-4'] as const;
 type HomeSlug = (typeof HOME_SLUGS)[number];
@@ -22,6 +23,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   if (slug === 'home-2') {
     const t = await getTranslations('Home2');
+    return {
+      title: `${t('metaTitle')} | WebAriadne`,
+      description: t('metaDescription'),
+    };
+  }
+  if (slug === 'home-3') {
+    const t = await getTranslations('Home3');
     return {
       title: `${t('metaTitle')} | WebAriadne`,
       description: t('metaDescription'),
@@ -47,6 +55,10 @@ export default async function HomeVariantPage({ params }: Props) {
 
   if (slug === 'home-2') {
     return <Home2View />;
+  }
+
+  if (slug === 'home-3') {
+    return <Home3View />;
   }
 
   const t = await getTranslations('Header');

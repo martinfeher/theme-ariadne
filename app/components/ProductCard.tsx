@@ -194,7 +194,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                   type="button"
                   className={`flex items-center justify-center bg-green-500 text-white transition-colors z-40 cursor-pointer rounded-full ${
                     isSmall
-                      ? 'mr-1 mb-1 p-1.5'
+                      ? 'mr-1 mb-[7px] p-1.5'
                       : 'mr-[7px] mb-[8px] space-x-1 px-1.5 py-1.5 text-sm'
                   }`}
                   onClick={() => addToCart()}

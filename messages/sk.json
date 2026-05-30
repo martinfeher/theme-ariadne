@@ -17,6 +17,7 @@
     "locationNotFound": "Mesto sa nenašlo.",
     "browseCategories": "Kategórie",
     "deals": "Akcie",
+    "pagesMenuDeals": "Akcie",
     "home": "Domov",
     "homeMenu1": "Domov 1",
     "homeMenu2": "Domov 2",
@@ -35,13 +36,17 @@
     "blogAuthor": "Archív autora",
     "pages": "Stránky",
     "pagesMenuAccount": "Môj účet",
+    "pagesMenuAccountSettings": "Nastavenia účtu",
     "pagesMenuHub": "Všetky stránky",
     "pagesMenuAbout": "O nás",
     "pagesMenuAbout2": "O nás (rozloženie 2)",
     "pagesMenuContact": "Kontakt",
     "pagesMenuFaq": "FAQ",
     "pagesMenuRefundPolicy": "Reklamačný poriadok",
+    "pagesMenuPrivacy": "Zásady ochrany súkromia",
+    "pagesMenuTerms": "Obchodné podmienky",
     "pagesMenuOrderTracking": "Sledovanie objednávky",
+    "pagesMenuOrderHistory": "História objednávok",
     "pagesMenuLogin": "Prihlásenie",
     "pagesMenuRegister": "Registrácia",
     "pagesMenu404": "404 — Nenájdené",
@@ -53,6 +58,7 @@
     "hotline": "Podpora 24/7",
     "myAccount": "Môj účet",
     "orderTracking": "Sledovanie objednávky",
+    "orderHistory": "História objednávok",
     "myVoucher": "Moje poukážky",
     "myWishlist": "Moje obľúbené",
     "settings": "Nastavenia",
@@ -78,16 +84,22 @@
     "megaBannerCta": "Nakupovať",
     "megaBannerBadge": "−25 %",
     "megaMenuTitle": "Prehliadať kategórie",
+    "megaEmptyHint": "Prejdite kurzorom nad kategóriu a prehliadajte produkty a najlepšie ponuky",
     "megaViewAll": "Všetky kategórie",
     "megaAllFrom": "Všetko z {category}",
     "megaMore": "+ Viac",
     "megaSidebarLabels": {
-      "produce": "Ovocie a zelenina",
-      "meatsSeafood": "Mäso a ryby",
-      "dairy": "Mliečne a chladené",
-      "bakery": "Pekáreň a pečenie",
+      "fishMeat": "Ryby a mäso",
+      "fruitsVegetable": "Ovocie a zelenina",
+      "cookingEssentials": "Základné potraviny",
+      "biscuitsCakes": "Sušienky a koláče",
+      "householdTools": "Domácnosť a náradie",
+      "petCare": "Starostlivosť o zvieratá",
+      "beautyHealth": "Krása a zdravie",
+      "jamJelly": "Džemy a želé",
+      "milkDairy": "Mlieko a mliečne výrobky",
       "drinks": "Nápoje",
-      "pets": "Krmivo pre zvieratá"
+      "breakfast": "Raňajky"
     },
     "megaSubLinks": {
       "citrus": "Citrusy",
@@ -228,6 +240,34 @@
     "noProducts": "V tejto kategórii zatiaľ nie sú produkty.",
     "shopCategory": "Celý obchod kategórie"
   },
+  "Home3": {
+    "metaTitle": "Domov 3",
+    "metaDescription": "Nakupujte potraviny s kategóriami vľavo — filtrujte produkty, akcie a nákup podľa oddelení.",
+    "breadcrumbNav": "Drobečková navigácia",
+    "heroTitle": "Nákup s kategóriami vľavo",
+    "heroSubtitle": "Vyberte oddelenie v bočnom paneli a filtrujte produkty. Akcie a čerstvý výber sa aktualizujú každý týždeň.",
+    "dealsCta": "Zobraziť akcie",
+    "shopAllCta": "Celý obchod",
+    "bannerFresh": "Každodenná čerstvá zelenina",
+    "bannerBreakfast": "Raňajky a mliečne výrobky",
+    "bannerOrganic": "Bio obľúbené",
+    "bannerShopNow": "Nakupovať",
+    "perkBanner": "Doprava zdarma pri objednávkach nad 50 € vo vybraných mestách.",
+    "productsAll": "Obľúbené produkty",
+    "productsInCategory": "{category}",
+    "countOne": "Zobrazený 1 produkt",
+    "countMany": "Zobrazených {count} produktov",
+    "clearFilter": "Všetky kategórie",
+    "sortLabel": "Zoradiť produkty",
+    "sortFeatured": "Odporúčané",
+    "sortPriceAsc": "Cena: od najnižšej",
+    "sortPriceDesc": "Cena: od najvyššej",
+    "sortRating": "Najlepšie hodnotené",
+    "loading": "Načítavam produkty…",
+    "error": "Produkty sa nepodarilo načítať. Obnovte stránku.",
+    "noProducts": "V tejto kategórii zatiaľ nie sú produkty.",
+    "shopCategory": "Celý obchod kategórie"
+  },
   "PopularProducts": {
     "title": "Obľúbené produkty",
     "loading": "Načítavam produkty…",
@@ -347,6 +387,54 @@
       "delivered": "Doručené",
       "cancelled": "Zrušené"
     }
+  },
+  "OrderHistory": {
+    "metaDescription": "História objednávok WebAriadne — minulé nákupy, stav a odkazy na sledovanie doručenia.",
+    "title": "História objednávok",
+    "breadcrumb": "História objednávok",
+    "accountBreadcrumb": "Môj účet",
+    "breadcrumbNav": "Drobečková navigácia",
+    "subtitle": "Prehliadajte minulé objednávky a otvorte detaily sledovania doručenia.",
+    "orderNumber": "Číslo objednávky",
+    "placedOn": "Objednané {date}",
+    "itemCount": "{count, plural, one {# položka} few {# položky} other {# položiek}}",
+    "qtyLabel": "Množstvo {qty}",
+    "moreItems": "+ ešte {count}",
+    "viewDetails": "Zobraziť detaily",
+    "emptyTitle": "Zatiaľ žiadne objednávky",
+    "emptyDesc": "Po zadaní objednávky prihlásený sa zobrazí tu.",
+    "shopCta": "Začať nakupovať",
+    "demoHint": "Demo: zaregistrujte sa s demo@example.com pre ukážkové objednávky alebo dokončite nákup prihlásený."
+  },
+  "Deals": {
+    "metaDescription": "Ušetrite na potravinách a domácich potrebách — prehliadajte týždenné akcie a zľavy v WebAriadne.",
+    "title": "Akcie a ponuky",
+    "breadcrumb": "Akcie",
+    "breadcrumbNav": "Drobečková navigácia",
+    "eyebrow": "Obmedzená doba",
+    "subtitle": "Čerstvé úspory na špajzu, ovocí, mliečnych výrobkoch a ďalšom — aktualizované každý týždeň.",
+    "dealCountOne": "Práve 1 produkt v akcii",
+    "dealCountMany": "Práve {count} produktov v akcii",
+    "countdownLabel": "Ponuky končia o",
+    "countdownDays": "Dní",
+    "countdownHours": "Hod",
+    "countdownMinutes": "Min",
+    "countdownSeconds": "Sek",
+    "featuredLabel": "Akcia týždňa",
+    "saveAmount": "Ušetríte {amount}",
+    "shopFeatured": "Kúpiť v akcii",
+    "gridTitle": "Všetky akcie",
+    "resultsOne": "1 akcia",
+    "resultsMany": "{count} akcií",
+    "sortLabel": "Zoradiť podľa",
+    "sortDiscount": "Najväčšia zľava",
+    "sortPriceAsc": "Cena: od najnižšej",
+    "sortPriceDesc": "Cena: od najvyššej",
+    "tabAll": "Všetky akcie",
+    "loading": "Načítavam akcie…",
+    "error": "Akcie sa nepodarilo načítať. Skúste to znova.",
+    "noDeals": "Pre tento filter nie sú akcie. Skúste neskôr alebo prehliadajte celý obchod.",
+    "browseShop": "Prehliadať obchod"
   },
   "Compare": {
     "breadcrumbShop": "Obchod",
@@ -607,6 +695,223 @@
       }
     }
   },
+  "Terms": {
+    "metaDescription": "Obchodné podmienky WebAriadne — používanie online potravín, objednávky, platby, doručenie a vaše práva.",
+    "title": "Obchodné podmienky",
+    "breadcrumb": "Obchodné podmienky",
+    "breadcrumbNav": "Navigácia",
+    "subtitle": "Tieto podmienky upravujú používanie webariadne.com a nákupy v obchode WebAriadne. Prečítajte si ich pred zadaním objednávky.",
+    "lastUpdated": "Posledná aktualizácia: máj 2026",
+    "tocTitle": "Na tejto stránke",
+    "relatedTitle": "Súvisiace dokumenty",
+    "refundPolicyLink": "Reklamačný poriadok",
+    "privacyPolicyLink": "Zásady ochrany súkromia",
+    "faqLink": "FAQ",
+    "helpDesc": "Máte otázky k týmto podmienkam alebo objednávke?",
+    "contactCta": "Kontaktovať podporu",
+    "sections": {
+      "overview": {
+        "title": "Prehľad",
+        "body": "WebAriadne prevádzkuje online obchod s potravinami a domácimi potrebami. Prehliadaním webu, vytvorením účtu alebo zadaním objednávky súhlasíte s týmito obchodnými podmienkami spolu s odkazovanými pravidlami (vrátane reklamačného poriadku a zásad ochrany súkromia)."
+      },
+      "acceptance": {
+        "title": "Súhlas s podmienkami",
+        "body": "Ak s podmienkami nesúhlasíte, nepoužívajte naše služby. Podmienky môžeme občas aktualizovať; na danú transakciu platí verzia účinná v čase objednávky. Pokračovanie v používaní po zverejnení zmien znamená súhlas s upravenými podmienkami, ak to zákon povoľuje."
+      },
+      "account": {
+        "title": "Váš účet",
+        "body": "Pri registrácii súhlasíte, že:",
+        "list": [
+          "Uvediete pravdivé a aktuálne kontaktné a doručovacie údaje",
+          "Budete chrániť heslo a nahlásite podozrenie na neoprávnený prístup",
+          "Máte aspoň 18 rokov alebo súhlas zákonného zástupcu",
+          "Používate jeden účet na domácnosť, pokiaľ neurčíme inak",
+          "Akceptujete, že účet môžeme pozastaviť alebo zrušiť pri podvode, zneužití alebo porušení podmienok"
+        ]
+      },
+      "orders": {
+        "title": "Objednávky a vznik zmluvy",
+        "body": "Odoslanie objednávky je návrh na kúpu. Zmluva vzniká naším potvrdením (napr. e-mailom o prijatí objednávky). Objednávku môžeme odmietnuť alebo zrušiť z dôvodu nedostupnosti zásob, chyby ceny, obmedzenia doručenia, podozrenia z podvodu alebo zákonných požiadaviek. Detaily vrátane preferencií náhrad sú uvedené pri pokladni."
+      },
+      "pricing": {
+        "title": "Ceny, akcie a chyby",
+        "body": "Ceny a ponuky sú v mene zvolenej pri pokladni a zahŕňajú dane, ak sú uvedené. Usilujeme sa o správnosť, no zjavné chyby môžeme opraviť pred alebo po prijatí objednávky. Zľavové kódy platia podľa uvedených podmienok a nemožno ich kombinovať, pokiaľ to nepovolíme."
+      },
+      "payment": {
+        "title": "Platba",
+        "body": "Súhlasíte so strhnutím sumy objednávky vrátane doručenia a daní zvoleným spôsobom platby. Používame bezpečných platobných partnerov; úplné údaje karty na našich serveroch neukladáme. Neúspešná alebo vrátená platba môže viesť k zrušeniu alebo pozastaveniu doručenia."
+      },
+      "delivery": {
+        "title": "Doručenie a nebezpečenstvo škody",
+        "body": "Termíny, poplatky a minimálna hodnota objednávky sú pri pokladni a môžu sa líšiť podľa oblasti. Zabezpečíte bezpečný prístup kuriérovi. Nebezpečenstvo škody na tovare prechádza na vás pri doručení na vašu adresu alebo odberné miesto. Chladené a mrazené výrobky skladujte ihneď; za skazu spôsobenú oneskoreným uskladnením po úspešnom doručení nenesieme zodpovednosť."
+      },
+      "returns": {
+        "title": "Vrátenie a refundácie",
+        "body": "Vaše zákonné práva tým nie sú dotknuté. Pravidlá vrátenia a refundácií sú v Reklamačnom poriadku vrátane lehôt pre čerstvý tovar a postupu pri poškodenom alebo chýbajúcom tovare."
+      },
+      "conduct": {
+        "title": "Prípustné správanie",
+        "body": "Nesmiete:",
+        "list": [
+          "Používať stránku na nezákonné účely alebo poškodzovanie iných",
+          "Narúšať bezpečnosť, hromadne sťahovať obsah alebo preťažovať systémy",
+          "Predávať tovar zakúpený na osobnú spotrebu bez nášho písomného súhlasu",
+          "Podávať nepravdivé reklamácie, recenzie alebo chargebacky",
+          "Obťažovať zamestnancov, kuriérov alebo iných zákazníkov"
+        ]
+      },
+      "intellectualProperty": {
+        "title": "Duševné vlastníctvo",
+        "body": "Obsah na webariadne.com — texty, logá, obrázky a softvér — patrí WebAriadne alebo poskytovateľom licencií a je chránený autorským právom a ochrannými známkami. Môžete si stránky prehliadať a tlačiť pre osobný nákup. Komerčné kopírovanie alebo šírenie bez súhlasu je zakázané."
+      },
+      "liability": {
+        "title": "Obmedzenie zodpovednosti",
+        "body": "V rozsahu povolenom zákonom:",
+        "list": [
+          "Služby poskytujeme „tak, ako sú“; nezaručujeme nepretržitý prístup",
+          "Nezodpovedáme za nepriamu alebo následnú škodu (napr. ušlý zisk)",
+          "Celková zodpovednosť za objednávku je obmedzená na sumu, ktorú ste za ňu zaplatili",
+          "Nič v týchto podmienkach nevylučuje zodpovednosť za smrť alebo úraz z nedbanlivosti, podvod alebo iné práva, ktoré zákon obmedziť nedovoľuje"
+        ]
+      },
+      "privacy": {
+        "title": "Súkromie a údaje",
+        "body": "Spracúvame osobné údaje na plnenie objednávok, podporu a zlepšovanie služieb v súlade s platnými predpismi. Zásady ochrany súkromia popisujú, čo zhromažďujeme, ako to používame, cookies, uchovávanie a vaše práva. Žiadosti týkajúce sa údajov smerujte na kontakty nižšie."
+      },
+      "changes": {
+        "title": "Zmeny služieb",
+        "body": "Môžeme meniť sortiment, oblasti doručenia, poplatky alebo funkcie webu bez predchádzajúceho upozornenia. Ak zmena podstatne ovplyvní už zaplatenú objednávku, kontaktujeme vás s možnosťou refundácie alebo náhradného doručenia."
+      },
+      "governingLaw": {
+        "title": "Právne predpisy a spory",
+        "body": "Tieto podmienky sa riadia právnym poriadkom Slovenskej republiky, pokiaľ záväzné pravidlá ochrany spotrebiteľa vo vašej krajine nestanovia inak. Spory najprv riešte s našou podporou. Spotrebitelia v EÚ môžu využiť aj platformy online riešenia sporov dostupné v členskom štáte."
+      },
+      "contact": {
+        "title": "Kontakt",
+        "body": "Otázky k podmienkam, fakturácii alebo účtu riešte cez stránku Kontakt, na hello@webariadne.com alebo kanálmi podpory uvedenými v hlavičke webu."
+      }
+    }
+  },
+  "Privacy": {
+    "metaDescription": "Zásady ochrany súkromia WebAriadne — ako zhromažďujeme, používame, uchovávame a chránime vaše osobné údaje pri nákupe na webariadne.com.",
+    "title": "Zásady ochrany súkromia",
+    "breadcrumb": "Zásady ochrany súkromia",
+    "breadcrumbNav": "Navigácia",
+    "subtitle": "Tieto zásady vysvetľujú, ako WebAriadne nakladá s vašimi osobnými údajmi pri používaní webariadne.com, vytváraní účtu alebo zadávaní objednávky.",
+    "lastUpdated": "Posledná aktualizácia: máj 2026",
+    "tocTitle": "Na tejto stránke",
+    "relatedTitle": "Súvisiace dokumenty",
+    "termsLink": "Obchodné podmienky",
+    "refundPolicyLink": "Reklamačný poriadok",
+    "faqLink": "FAQ",
+    "helpDesc": "Máte otázky k svojim údajom alebo týmto zásadám?",
+    "contactCta": "Kontaktovať podporu",
+    "sections": {
+      "overview": {
+        "title": "Prehľad",
+        "body": "Rešpektujeme vaše súkromie a spracúvame osobné údaje v súlade s nariadením GDPR a platnými slovenskými predpismi. Tieto zásady sa vzťahujú na návštevníkov, registrovaných zákazníkov a každého, kto nás kontaktuje cez web alebo kanály podpory."
+      },
+      "controller": {
+        "title": "Kto je zodpovedný",
+        "body": "Prevádzkovateľom údajov je WebAriadne, Hlavná 123, 811 01 Bratislava, Slovensko. Žiadosti týkajúce sa ochrany súkromia posielajte na hello@webariadne.com alebo cez stránku Kontakt. Poverenca na ochranu osobných údajov sme nemenovali; všeobecné otázky môžete poslať na rovnakú adresu."
+      },
+      "dataWeCollect": {
+        "title": "Aké údaje zhromažďujeme",
+        "body": "V závislosti od toho, ako obchod používate, môžeme spracúvať:",
+        "list": [
+          "Identifikačné a kontaktné údaje (meno, e-mail, telefón, doručovacia adresa)",
+          "Prihlasovacie údaje a preferencie (prihlásenie, obľúbené, voľby náhrad)",
+          "Informácie o objednávkach a platbách (zakúpené položky, sumy, referencie transakcií — neukladáme celé čísla kariet)",
+          "Záznamy o doručení a komunikácii (poznámky kuriéra, tikety podpory, e-maily)",
+          "Technické údaje (IP adresa, typ prehliadača, identifikátory zariadenia, zobrazené stránky)",
+          "Marketingové preferencie a pri súhlase údaje o odberi noviniek",
+          "Recenzie, hodnotenia alebo iný obsah, ktorý dobrovoľne odošlete"
+        ]
+      },
+      "howWeUse": {
+        "title": "Ako údaje používame",
+        "body": "Osobné údaje používame na:",
+        "list": [
+          "Vytvorenie a správu účtu a spracovanie objednávok",
+          "Doručenie produktov, zasielanie aktualizácií objednávok a riešenie vrátení alebo refundácií",
+          "Prijatie platby a prevenciu podvodov",
+          "Poskytovanie zákazníckej podpory a odpovede na otázky",
+          "Zlepšovanie webu, sortimentu a skúsenosti s doručením",
+          "Zasielanie servisných správ (napr. potvrdenia objednávky) a pri súhlase marketingu",
+          "Plnenie zákonných, daňových a účtovných povinností",
+          "Uplatňovanie alebo obhajobu právnych nárokov, ak je to potrebné"
+        ]
+      },
+      "legalBasis": {
+        "title": "Právne základy",
+        "body": "Podľa GDPR sa pri jednotlivých činnostiach opierame o jeden alebo viac z týchto základov:",
+        "list": [
+          "Zmluva — na plnenie objednávky a poskytovanie služieb účtu",
+          "Oprávnený záujem — na zlepšovanie obchodu, zabezpečenie systémov a prevenciu zneužitia (v rovnováhe s vašimi právami)",
+          "Zákonná povinnosť — pre daňové, účtovné a regulačné požiadavky",
+          "Súhlas — pre voliteľné cookies, marketingové e-maily alebo iné voľby, kde je vyžadovaný"
+        ]
+      },
+      "cookies": {
+        "title": "Cookies a podobné technológie",
+        "body": "Náš web používa cookies a podobné nástroje na:",
+        "list": [
+          "Udržanie prihlásenia a zapamätanie košíka alebo jazykových preferencií",
+          "Meranie návštevnosti a pochopenie používania stránok",
+          "Podporu bezpečnosti a prevencie podvodov",
+          "Zobrazovanie relevantných ponúk, ak ste súhlasili s marketingovými cookies"
+        ]
+      },
+      "sharing": {
+        "title": "Komu údaje poskytujeme",
+        "body": "Vaše osobné údaje nepredávame. Zdieľame ich len v rozsahu potrebnom na prevádzku:",
+        "list": [
+          "Spracovateľom platieb na autorizáciu a zúčtovanie transakcií",
+          "Doručovateľom a kuriérom na splnenie objednávok",
+          "Poskytovateľom IT, hostingu, e-mailu a analytiky na základe zmluvy",
+          "Odborným poradcom (napr. účtovníkom alebo právnikom), ak je to potrebné",
+          "Verejným orgánom, ak to vyžaduje zákon"
+        ]
+      },
+      "retention": {
+        "title": "Ako dlho údaje uchovávame",
+        "body": "Osobné údaje uchovávame len po dobu potrebnú na uvedené účely. Záznamy o objednávkach a fakturácii zvyčajne držíme po dobu vyžadovanú slovenským daňovým a obchodným právom (spravidla až 10 rokov). Údaje účtu uchovávame, kým je účet aktívny, a primeranú dobu potom. Marketingové údaje držíme do odhlásenia alebo odvolania súhlasu. Technické logy môžu byť uchované kratšie kvôli bezpečnosti a riešeniu problémov."
+      },
+      "security": {
+        "title": "Bezpečnosť",
+        "body": "Používame primerané technické a organizačné opatrenia — vrátane šifrovania pri prenose, riadenia prístupu a bezpečného spracovania platieb — na ochranu vašich údajov. Žiadna online služba nie je úplne bezpečná; používajte silné heslo a pri podozrení na neoprávnený prístup nás ihneď kontaktujte."
+      },
+      "yourRights": {
+        "title": "Vaše práva",
+        "body": "Ak ste v EHP alebo Spojenom kráľovstve, môžete mať právo:",
+        "list": [
+          "Požiadať o kópiu osobných údajov, ktoré o vás uchovávame",
+          "Opraviť nepresné alebo neúplné údaje",
+          "Požiadať o vymazanie za určitých okolností",
+          "Obmedziť alebo namietať proti spracúvaniu za určitých okolností",
+          "Získať údaje v prenosnom formáte, ak je to uplatniteľné",
+          "Kedykoľvek odvolať súhlas so spracúvaním založeným na súhlase",
+          "Podávať sťažnosť Úradu na ochranu osobných údajov SR alebo miestnemu dozornému orgánu"
+        ]
+      },
+      "internationalTransfers": {
+        "title": "Medzinárodné prenosy",
+        "body": "Vaše údaje sa spracúvajú predovšetkým v rámci Európskeho hospodárskeho priestoru. Ak poskytovateľ služieb spracúva údaje mimo EHP, zabezpečíme primerané záruky, napríklad štandardné zmluvné doložky EÚ alebo rozhodnutie o primeranosti, pred prenosom."
+      },
+      "children": {
+        "title": "Deti",
+        "body": "Naše služby nie sú určené deťom mladším ako 16 rokov. Vedome nezhromažďujeme osobné údaje detí. Ak sa domnievate, že dieťa nám poskytlo údaje, kontaktujte nás a v prípade potreby ich vymažeme."
+      },
+      "changes": {
+        "title": "Zmeny týchto zásad",
+        "body": "Tieto zásady môžeme občas aktualizovať. Dátum „Posledná aktualizácia“ hore uvádza poslednú revíziu. Podstatné zmeny vhodne zvýrazníme na webe. Pokračovanie v používaní po zverejnení zmien znamená, že beriete aktualizované zásady na vedomie, ak to zákon povoľuje."
+      },
+      "contact": {
+        "title": "Kontakt",
+        "body": "Na žiadosti týkajúce sa ochrany súkromia, otázky k týmto zásadám alebo uplatnenie práv nás kontaktujte cez stránku Kontakt, na hello@webariadne.com alebo kanálmi podpory uvedenými v hlavičke webu. Odpovedáme zvyčajne do jedného mesiaca podľa GDPR."
+      }
+    }
+  },
   "FAQ": {
     "metaDescription": "Odpovede na bežné otázky o objednávkach, doručení, produktoch, platbách a vašom účte WebAriadne.",
     "breadcrumbNav": "Navigácia",
@@ -852,6 +1157,12 @@
     "pagesHubMeta": "Prehliadka demo pomocných a stavových stránok.",
     "pageAccountTitle": "Môj účet",
     "pageAccountDesc": "Prehľad objednávok, obľúbených a profilu",
+    "pageAccountSettingsTitle": "Nastavenia účtu",
+    "pageAccountSettingsDesc": "Profil, heslo a notifikácie",
+    "pageDealsTitle": "Akcie a ponuky",
+    "pageDealsDesc": "Zľavy a časovo obmedzené úspory",
+    "pageOrderHistoryTitle": "História objednávok",
+    "pageOrderHistoryDesc": "Minulé objednávky a stav doručenia",
     "pageAboutTitle": "O nás",
     "pageAboutDesc": "Náš príbeh, hodnoty a poslanie",
     "pageAbout2Title": "O nás (rozloženie 2)",
@@ -862,6 +1173,10 @@
     "pageFaqDesc": "Odpovede na časté otázky",
     "pageRefundPolicyTitle": "Reklamačný poriadok pre zákazníkov",
     "pageRefundPolicyDesc": "Vrátenie tovaru, refundácie a náhrady",
+    "pagePrivacyTitle": "Zásady ochrany súkromia",
+    "pagePrivacyDesc": "Ako zhromažďujeme a používame vaše údaje",
+    "pageTermsTitle": "Obchodné podmienky",
+    "pageTermsDesc": "Právne podmienky používania obchodu",
     "page404Title": "404 — Nenájdené",
     "page404Desc": "Stránka chýba alebo bola presunutá",
     "page500Title": "500 — Chyba servera",
@@ -1071,16 +1386,18 @@
     "navWishlist": "Obľúbené",
     "navVouchers": "Poukážky",
     "navCart": "Košík",
+    "navSettings": "Nastavenia",
     "statOrders": "Nedávne objednávky",
     "statWishlist": "Položky v obľúbených",
     "statCart": "Položky v košíku",
+    "viewOrders": "Zobraziť históriu objednávok",
     "trackOrder": "Sledovať objednávku",
     "viewWishlist": "Zobraziť obľúbené",
     "viewCart": "Zobraziť košík",
     "profileTitle": "Údaje profilu",
     "changePassword": "Zmeniť heslo",
     "quickActionsTitle": "Rýchle akcie",
-    "actionOrders": "Sledovanie objednávky",
+    "actionOrders": "História objednávok",
     "actionWishlist": "Moje obľúbené",
     "actionVouchers": "Moje poukážky",
     "actionCart": "Nákupný košík",
@@ -1090,6 +1407,35 @@
     "addressTitle": "Doručovacie adresy",
     "addressDesc": "Uložené adresy sa zobrazia v budúcej verzii. Kontaktujte nás, ak potrebujete zmeniť doručenie.",
     "addressCta": "Kontaktovať podporu"
+  },
+  "AccountSettings": {
+    "metaDescription": "Upravte profil, heslo a preferencie notifikácií vo WebAriadne.",
+    "title": "Nastavenia účtu",
+    "breadcrumb": "Nastavenia",
+    "accountBreadcrumb": "Môj účet",
+    "breadcrumbNav": "Drobečková navigácia",
+    "subtitle": "Spravujte profil, zabezpečenie a e-mailové preferencie.",
+    "profileTitle": "Profil",
+    "profileDesc": "Upravte meno zobrazené v účte a na objednávkach.",
+    "emailReadonlyHint": "E-mail nie je možné v tomto demo obchode zmeniť.",
+    "nameRequired": "Zadajte prosím svoje meno.",
+    "saveProfile": "Uložiť profil",
+    "profileSaved": "Profil bol úspešne aktualizovaný.",
+    "passwordTitle": "Heslo",
+    "passwordDesc": "Zvoľte silné heslo, ktoré nepoužívate inde.",
+    "currentPassword": "Súčasné heslo",
+    "currentPasswordInvalid": "Súčasné heslo nie je správne.",
+    "updatePassword": "Aktualizovať heslo",
+    "passwordSaved": "Heslo bolo úspešne aktualizované.",
+    "preferencesTitle": "Notifikácie",
+    "preferencesDesc": "Vyberte, aké e-maily chcete od WebAriadne dostávať.",
+    "orderUpdatesLabel": "Aktualizácie objednávok",
+    "orderUpdatesHint": "Potvrdenia odoslania, stav doručenia a účtenky.",
+    "marketingLabel": "Ponuky a novinky",
+    "marketingHint": "Akcie, sezónny výber a odporúčania produktov.",
+    "savePreferences": "Uložiť preferencie",
+    "preferencesSaved": "Preferencie notifikácií boli uložené.",
+    "saving": "Ukladám…"
   },
   "ProductQuickView": {
     "close": "Zavrieť dialóg",

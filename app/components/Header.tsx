@@ -7,11 +7,14 @@ import { Link, useRouter } from '@/i18n/navigation';
 import {
   ArrowLeftRight,
   ChevronDown,
+  Flame,
   Heart,
   LayoutGrid,
   LogIn,
   LogOut,
   MapPin,
+  Package,
+  Settings,
   ShoppingCart,
   Ticket,
   User,
@@ -103,12 +106,17 @@ function PagesMenuNav() {
 
   const links = [
     { href: '/account', label: t('pagesMenuAccount') },
+    { href: '/account/settings', label: t('pagesMenuAccountSettings') },
     { href: '/pages', label: t('pagesMenuHub') },
     { href: '/about', label: t('pagesMenuAbout') },
     { href: '/about-2', label: t('pagesMenuAbout2') },
+    { href: '/deals', label: t('pagesMenuDeals') },
     { href: '/contact', label: t('pagesMenuContact') },
     { href: '/faq', label: t('pagesMenuFaq') },
     { href: '/refund-policy', label: t('pagesMenuRefundPolicy') },
+    { href: '/privacy', label: t('pagesMenuPrivacy') },
+    { href: '/terms', label: t('pagesMenuTerms') },
+    { href: '/order-history', label: t('pagesMenuOrderHistory') },
     { href: '/order-tracking', label: t('pagesMenuOrderTracking') },
     { href: '/login', label: t('pagesMenuLogin') },
     { href: '/register', label: t('pagesMenuRegister') },
@@ -339,7 +347,7 @@ const Header = () => {
                     showMenu={false}
                   />
                   {isCategoriesOpen && (
-                    <div className="absolute left-0 top-full z-[100] -mt-px w-screen max-w-none before:absolute before:inset-x-0 before:bottom-full before:h-2 before:content-['']">
+                    <div className="absolute left-0 top-full z-[100] -mt-px w-[min(56rem,calc(100vw-2rem))] before:absolute before:inset-x-0 before:bottom-full before:h-2 before:content-['']">
                       <CategoriesMegaMenu variant="full" onClose={closeCategories} />
                     </div>
                   )}
@@ -516,6 +524,24 @@ const Header = () => {
                           {t('myAccount')}
                         </Link>
                         <Link
+                          href="/account/settings"
+                          role="menuitem"
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsAccountOpen(false)}
+                        >
+                          <Settings className={MENU_ICON} strokeWidth={ICON_STROKE} aria-hidden />
+                          {t('settings')}
+                        </Link>
+                        <Link
+                          href="/order-history"
+                          role="menuitem"
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsAccountOpen(false)}
+                        >
+                          <Package className={MENU_ICON} strokeWidth={ICON_STROKE} aria-hidden />
+                          {t('orderHistory')}
+                        </Link>
+                        <Link
                           href="/order-tracking"
                           role="menuitem"
                           className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -635,7 +661,7 @@ const Header = () => {
                     showMenu={false}
                   />
                   {isCategoriesOpen && (
-                    <div className="absolute left-0 top-full z-[100] -mt-px w-screen max-w-none before:absolute before:inset-x-0 before:bottom-full before:h-2 before:content-['']">
+                    <div className="absolute left-0 top-full z-[100] -mt-px w-[min(56rem,calc(100vw-2rem))] before:absolute before:inset-x-0 before:bottom-full before:h-2 before:content-['']">
                       <CategoriesMegaMenu variant="full" onClose={closeCategories} />
                     </div>
                   )}
@@ -646,6 +672,14 @@ const Header = () => {
               <nav className="flex items-center space-x-8">
                 <HomeMenuNav />
                 <Link href="/about" className="text-gray-700 hover:text-green-500 font-medium">{t('about')}</Link>
+
+                <Link
+                  href="/deals"
+                  className="flex items-center gap-1.5 font-medium text-orange-600 transition-colors hover:text-orange-700"
+                >
+                  <Flame className="h-4 w-4" aria-hidden />
+                  {t('deals')}
+                </Link>
 
                 <Link href="/vendors" className="flex items-center gap-1 font-medium text-gray-700 transition-colors hover:text-green-600">
                   <span>{t('vendors')}</span>
@@ -772,6 +806,10 @@ const Header = () => {
                   </ul>
                 </div>
                 <Link href="/about" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('about')}</Link>
+                <Link href="/deals" className="flex items-center gap-1.5 py-2 font-medium text-orange-600 hover:text-orange-700">
+                  <Flame className="h-4 w-4" aria-hidden />
+                  {t('deals')}
+                </Link>
                 <Link href="/vendors" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('vendors')}</Link>
                 <div>
                   <Link
@@ -814,12 +852,17 @@ const Header = () => {
                   <ul className="mt-1 max-h-48 space-y-1 overflow-y-auto border-l border-gray-200 pl-3">
                     {[
                       { href: '/account', label: t('pagesMenuAccount') },
+                      { href: '/account/settings', label: t('pagesMenuAccountSettings') },
                       { href: '/pages', label: t('pagesMenuHub') },
                       { href: '/about', label: t('pagesMenuAbout') },
                       { href: '/about-2', label: t('pagesMenuAbout2') },
+                      { href: '/deals', label: t('pagesMenuDeals') },
                       { href: '/contact', label: t('pagesMenuContact') },
                       { href: '/faq', label: t('pagesMenuFaq') },
                       { href: '/refund-policy', label: t('pagesMenuRefundPolicy') },
+                      { href: '/privacy', label: t('pagesMenuPrivacy') },
+                      { href: '/terms', label: t('pagesMenuTerms') },
+                      { href: '/order-history', label: t('pagesMenuOrderHistory') },
                       { href: '/order-tracking', label: t('pagesMenuOrderTracking') },
                       { href: '/login', label: t('pagesMenuLogin') },
                       { href: '/register', label: t('pagesMenuRegister') },

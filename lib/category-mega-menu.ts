@@ -19,47 +19,20 @@ export type MegaMenuSubGroup = {
 
 export type MegaMenuSidebarItem = {
   categorySlug: CategoryShopSlug;
-  /** Optional label override under Header.megaSidebarLabels */
-  labelKey?: string;
-  sidebarImage: string;
+  /** Label under Header.megaSidebarLabels */
+  labelKey: string;
+  icon: string;
   subgroups: MegaMenuSubGroup[];
 };
 
 const IMG = '/images/products/mock';
 
-/** Sidebar entries for the desktop hover mega menu. */
+/** Sidebar entries — order matches the desktop mega menu layout. */
 export const MEGA_MENU_SIDEBAR: MegaMenuSidebarItem[] = [
   {
-    categorySlug: 'fruits',
-    labelKey: 'produce',
-    sidebarImage: `${IMG}/bananas.jpeg`,
-    subgroups: [
-      {
-        slug: 'fruits',
-        image: `${IMG}/strawberry_fruit.jpg`,
-        sampleLinkKeys: ['citrus', 'berries', 'applesPears'],
-      },
-      {
-        slug: 'vegetables',
-        image: `${IMG}/fresh_broccoli.jpg`,
-        sampleLinkKeys: ['saladGreens', 'rootVegetables', 'tomatoesPeppers'],
-      },
-      {
-        slug: 'fruits',
-        image: `${IMG}/valencia_oranges.jpeg`,
-        sampleLinkKeys: ['seasonalFruit', 'organicFruit', 'exoticFruit'],
-      },
-      {
-        slug: 'vegetables',
-        image: `${IMG}/organic_carrots.jpeg`,
-        sampleLinkKeys: ['herbs', 'preparedSalads', 'frozenVegetables'],
-      },
-    ],
-  },
-  {
     categorySlug: 'meats',
-    labelKey: 'meatsSeafood',
-    sidebarImage: `${IMG}/vegetables-b.jpg`,
+    labelKey: 'fishMeat',
+    icon: '/icons/category-7.svg',
     subgroups: [
       {
         slug: 'meats',
@@ -84,9 +57,138 @@ export const MEGA_MENU_SIDEBAR: MegaMenuSidebarItem[] = [
     ],
   },
   {
+    categorySlug: 'fruits',
+    labelKey: 'fruitsVegetable',
+    icon: '/icons/category-5.svg',
+    subgroups: [
+      {
+        slug: 'fruits',
+        image: `${IMG}/strawberry_fruit.jpg`,
+        sampleLinkKeys: ['citrus', 'berries', 'applesPears'],
+      },
+      {
+        slug: 'vegetables',
+        image: `${IMG}/fresh_broccoli.jpg`,
+        sampleLinkKeys: ['saladGreens', 'rootVegetables', 'tomatoesPeppers'],
+      },
+      {
+        slug: 'fruits',
+        image: `${IMG}/valencia_oranges.jpeg`,
+        sampleLinkKeys: ['seasonalFruit', 'organicFruit', 'exoticFruit'],
+      },
+      {
+        slug: 'vegetables',
+        image: `${IMG}/organic_carrots.jpeg`,
+        sampleLinkKeys: ['herbs', 'preparedSalads', 'frozenVegetables'],
+      },
+    ],
+  },
+  {
+    categorySlug: 'baking-material',
+    labelKey: 'cookingEssentials',
+    icon: '/icons/category-4.svg',
+    subgroups: [
+      {
+        slug: 'baking-material',
+        image: `${IMG}/organic_quinoa.jpeg`,
+        sampleLinkKeys: ['bakingIngredients', 'breadRolls', 'crispbread'],
+      },
+      {
+        slug: 'vegetables',
+        image: `${IMG}/cherry_tomatoes.jpeg`,
+        sampleLinkKeys: ['rootVegetables', 'herbs', 'tomatoesPeppers'],
+      },
+    ],
+  },
+  {
+    categorySlug: 'baking-material',
+    labelKey: 'biscuitsCakes',
+    icon: '/icons/category-10.svg',
+    subgroups: [
+      {
+        slug: 'baking-material',
+        image: `${IMG}/white_bread.jpeg`,
+        sampleLinkKeys: ['breadRolls', 'pastries', 'cakes'],
+      },
+      {
+        slug: 'baking-material',
+        image: `${IMG}/organic_quinoa.jpeg`,
+        sampleLinkKeys: ['crispbread', 'glutenFreeBakery', 'bakingIngredients'],
+      },
+    ],
+  },
+  {
+    categorySlug: 'vegetables',
+    labelKey: 'householdTools',
+    icon: '/icons/category-9.svg',
+    subgroups: [
+      {
+        slug: 'vegetables',
+        image: `${IMG}/fresh_broccoli.jpg`,
+        sampleLinkKeys: ['saladGreens', 'rootVegetables', 'herbs'],
+      },
+      {
+        slug: 'baking-material',
+        image: `${IMG}/white_bread.jpeg`,
+        sampleLinkKeys: ['breadRolls', 'crispbread', 'bakingIngredients'],
+      },
+    ],
+  },
+  {
+    categorySlug: 'pet-foods',
+    labelKey: 'petCare',
+    icon: '/icons/category-3.svg',
+    subgroups: [
+      {
+        slug: 'pet-foods',
+        image: `${IMG}/dry_dog_food.jpeg`,
+        sampleLinkKeys: ['dogFood', 'catFood', 'treats'],
+      },
+      {
+        slug: 'pet-foods',
+        image: `${IMG}/cat_kibble.jpeg`,
+        sampleLinkKeys: ['wetFood', 'petCare', 'organicPetFood'],
+      },
+    ],
+  },
+  {
     categorySlug: 'milks-dairies',
-    labelKey: 'dairy',
-    sidebarImage: `${IMG}/vanilla_greek_yogurt.jpeg`,
+    labelKey: 'beautyHealth',
+    icon: '/icons/category-2.svg',
+    subgroups: [
+      {
+        slug: 'milks-dairies',
+        image: `${IMG}/vanilla_greek_yogurt.jpeg`,
+        sampleLinkKeys: ['yogurt', 'plantBasedDairy', 'cheese'],
+      },
+      {
+        slug: 'fruits',
+        image: `${IMG}/bananas.jpeg`,
+        sampleLinkKeys: ['organicFruit', 'berries', 'seasonalFruit'],
+      },
+    ],
+  },
+  {
+    categorySlug: 'fruits',
+    labelKey: 'jamJelly',
+    icon: '/icons/category-5.svg',
+    subgroups: [
+      {
+        slug: 'fruits',
+        image: `${IMG}/strawberry_fruit.jpg`,
+        sampleLinkKeys: ['berries', 'seasonalFruit', 'exoticFruit'],
+      },
+      {
+        slug: 'baking-material',
+        image: `${IMG}/white_bread.jpeg`,
+        sampleLinkKeys: ['pastries', 'cakes', 'bakingIngredients'],
+      },
+    ],
+  },
+  {
+    categorySlug: 'milks-dairies',
+    labelKey: 'milkDairy',
+    icon: '/icons/category-1.svg',
     subgroups: [
       {
         slug: 'milks-dairies',
@@ -101,26 +203,9 @@ export const MEGA_MENU_SIDEBAR: MegaMenuSidebarItem[] = [
     ],
   },
   {
-    categorySlug: 'baking-material',
-    labelKey: 'bakery',
-    sidebarImage: `${IMG}/white_bread.jpeg`,
-    subgroups: [
-      {
-        slug: 'baking-material',
-        image: `${IMG}/white_bread.jpeg`,
-        sampleLinkKeys: ['breadRolls', 'pastries', 'bakingIngredients'],
-      },
-      {
-        slug: 'baking-material',
-        image: `${IMG}/organic_quinoa.jpeg`,
-        sampleLinkKeys: ['cakes', 'crispbread', 'glutenFreeBakery'],
-      },
-    ],
-  },
-  {
     categorySlug: 'coffees-teas',
     labelKey: 'drinks',
-    sidebarImage: `${IMG}/roast_ground_cofee.jpeg`,
+    icon: '/icons/category-6.svg',
     subgroups: [
       {
         slug: 'coffees-teas',
@@ -135,51 +220,29 @@ export const MEGA_MENU_SIDEBAR: MegaMenuSidebarItem[] = [
     ],
   },
   {
-    categorySlug: 'pet-foods',
-    labelKey: 'pets',
-    sidebarImage: `${IMG}/dry_dog_food.jpeg`,
+    categorySlug: 'milks-dairies',
+    labelKey: 'breakfast',
+    icon: '/icons/category-10.svg',
     subgroups: [
       {
-        slug: 'pet-foods',
-        image: `${IMG}/cat_kibble.jpeg`,
-        sampleLinkKeys: ['dogFood', 'catFood', 'treats'],
+        slug: 'milks-dairies',
+        image: `${IMG}/vanilla_greek_yogurt.jpeg`,
+        sampleLinkKeys: ['milk', 'yogurt', 'eggs'],
       },
       {
-        slug: 'pet-foods',
-        image: `${IMG}/dog_treats.jpeg`,
-        sampleLinkKeys: ['wetFood', 'petCare', 'organicPetFood'],
+        slug: 'baking-material',
+        image: `${IMG}/white_bread.jpeg`,
+        sampleLinkKeys: ['breadRolls', 'pastries', 'crispbread'],
       },
-    ],
-  },
-  {
-    categorySlug: 'vegetables',
-    sidebarImage: `${IMG}/cherry_tomatoes.jpeg`,
-    subgroups: [
       {
-        slug: 'vegetables',
-        image: `${IMG}/cherry_tomatoes.jpeg`,
-        sampleLinkKeys: ['saladGreens', 'rootVegetables', 'tomatoesPeppers'],
+        slug: 'coffees-teas',
+        image: `${IMG}/roast_ground_cofee.jpeg`,
+        sampleLinkKeys: ['groundCoffee', 'instantCoffee', 'tea'],
       },
       {
         slug: 'fruits',
-        image: `${IMG}/granny_smith_apples.jpeg`,
-        sampleLinkKeys: ['citrus', 'berries', 'seasonalFruit'],
-      },
-    ],
-  },
-  {
-    categorySlug: 'fresh-seafood',
-    sidebarImage: `${IMG}/fresh_broccoli.jpg`,
-    subgroups: [
-      {
-        slug: 'fresh-seafood',
-        image: `${IMG}/fresh_broccoli.jpg`,
-        sampleLinkKeys: ['fishFillets', 'shellfish', 'smokedFish'],
-      },
-      {
-        slug: 'meats',
-        image: `${IMG}/vegetables-b.jpg`,
-        sampleLinkKeys: ['poultry', 'beefVeal', 'grillMeat'],
+        image: `${IMG}/bananas.jpeg`,
+        sampleLinkKeys: ['citrus', 'berries', 'applesPears'],
       },
     ],
   },

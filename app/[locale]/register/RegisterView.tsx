@@ -101,7 +101,7 @@ export default function RegisterView() {
           />
           <span>
             {t('acceptTerms')}{' '}
-            <Link href="/contact" className="text-green-600 hover:text-green-700">
+            <Link href="/terms" className="text-green-600 hover:text-green-700">
               {t('termsLink')}
             </Link>
           </span>
