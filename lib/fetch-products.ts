@@ -10,6 +10,8 @@ export async function fetchProducts(params?: {
   category?: string;
 }): Promise<ProductsApiResponse> {
   const sp = new URLSearchParams();
+
+  // console.log('params', params);
   if (params?.q?.trim()) sp.set('q', params.q.trim());
   if (params?.category?.trim() && params.category !== 'all') {
     sp.set('category', params.category.trim());

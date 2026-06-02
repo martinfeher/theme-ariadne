@@ -12,6 +12,8 @@ const TAB_IDS = [
   'vegetables',
   'pet-foods',
   'coffees-teas',
+  'drinks',
+  'jam-jelly',
   'milks-dairies',
 ] as const;
 

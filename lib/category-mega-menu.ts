@@ -169,17 +169,17 @@ export const MEGA_MENU_SIDEBAR: MegaMenuSidebarItem[] = [
     ],
   },
   {
-    categorySlug: 'fruits',
+    categorySlug: 'jam-jelly',
     labelKey: 'jamJelly',
     icon: '/icons/category-5.svg',
     subgroups: [
       {
-        slug: 'fruits',
+        slug: 'jam-jelly',
         image: `${IMG}/strawberry_fruit.jpg`,
         sampleLinkKeys: ['berries', 'seasonalFruit', 'exoticFruit'],
       },
       {
-        slug: 'baking-material',
+        slug: 'jam-jelly',
         image: `${IMG}/white_bread.jpeg`,
         sampleLinkKeys: ['pastries', 'cakes', 'bakingIngredients'],
       },
@@ -203,17 +203,17 @@ export const MEGA_MENU_SIDEBAR: MegaMenuSidebarItem[] = [
     ],
   },
   {
-    categorySlug: 'coffees-teas',
+    categorySlug: 'drinks',
     labelKey: 'drinks',
     icon: '/icons/category-6.svg',
     subgroups: [
       {
-        slug: 'coffees-teas',
+        slug: 'drinks',
         image: `${IMG}/whole_bean_coffee.jpeg`,
         sampleLinkKeys: ['groundCoffee', 'wholeBean', 'instantCoffee'],
       },
       {
-        slug: 'coffees-teas',
+        slug: 'drinks',
         image: `${IMG}/organic_green_tea.jpeg`,
         sampleLinkKeys: ['tea', 'herbalTea', 'coldDrinks'],
       },

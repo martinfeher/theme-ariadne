@@ -165,7 +165,9 @@
     "viewAll": "View all results",
     "categories": {
       "all": "All Categories",
+      "popular-products": "Popular Products",
       "milks-dairies": "Milks and Dairies",
+      "jam-jelly": "Jam & Jelly",
       "wines-alcohol": "Wines & Alcohol",
       "clothing-beauty": "Clothing & Beauty",
       "pet-foods-toy": "Pet Foods & Toy",
