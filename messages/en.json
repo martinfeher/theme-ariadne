@@ -364,7 +364,7 @@
     "trackOrder": "Track order",
     "tracking": "Tracking…",
     "notFound": "We could not find an order matching that number and email.",
-    "demoHint": "Demo: try ORD-2026-1042 with demo@example.com",
+    "demoHint": "Demo: try ORD-2026-1042 with admin or demo@example.com",
     "emptyHint": "Your order details and delivery progress will appear here.",
     "orderNumber": "Order number",
     "placedOn": "Placed on {date}",
@@ -407,7 +407,7 @@
     "emptyTitle": "No orders yet",
     "emptyDesc": "When you place an order while signed in, it will appear here.",
     "shopCta": "Start shopping",
-    "demoHint": "Demo: register with demo@example.com to see sample orders, or complete checkout while signed in."
+    "demoHint": "Demo: sign in as admin / demo to see sample orders, or complete checkout while signed in."
   },
   "Deals": {
     "metaDescription": "Save on groceries and household essentials — browse weekly deals, discounts, and limited-time offers at WebAriadne.",
@@ -1375,7 +1375,7 @@
     "resetSuccess": "Password updated. Redirecting to login…",
     "accountNotFound": "No account found for this email. Register first.",
     "loading": "Loading…",
-    "demoHint": "Demo auth — data is stored in your browser only."
+    "demoHint": "Demo login: username admin, password demo (or admin@example.com / demo). Data is stored in your browser only."
   },
   "Account": {
     "metaDescription": "Manage your WebAriadne account — profile, orders, wishlist, vouchers, and quick links.",

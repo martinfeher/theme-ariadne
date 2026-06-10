@@ -10,16 +10,16 @@ import Header from '@/app/components/Header';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { useProductI18n } from '@/app/hooks/useProductI18n';
 import { MOCK_PRODUCTS } from '@/lib/mock-products';
+import { normalizeLoginIdentifier } from '@/lib/auth-demo';
+import { findTrackedOrder } from '@/lib/order-history';
 import {
   ORDER_STATUS_FLOW,
-  findOrder,
   orderSubtotal,
   orderTotal,
   statusStepIndex,
   type MockOrder,
   type OrderStatus,
 } from '@/lib/mock-orders';
-import { findPlacedOrder } from '@/lib/placed-orders';
 
 function formatDateTime(iso: string, locale: string) {
   return new Date(iso).toLocaleString(locale, {
@@ -240,7 +240,7 @@ export default function OrderTrackingView() {
     if (qOrder) setOrderId(qOrder.toUpperCase());
     if (qEmail) setEmail(qEmail);
     if (qOrder && qEmail) {
-      const order = findOrder(qOrder, qEmail) ?? findPlacedOrder(qOrder, qEmail);
+      const order = findTrackedOrder(qOrder, normalizeLoginIdentifier(qEmail));
       if (order) setResult(order);
     }
   }, [searchParams]);
@@ -251,7 +251,7 @@ export default function OrderTrackingView() {
     setNotFound(false);
     setResult(null);
 
-    const order = findOrder(orderId, email) ?? findPlacedOrder(orderId, email);
+    const order = findTrackedOrder(orderId, normalizeLoginIdentifier(email));
     if (order) {
       setResult(order);
     } else {

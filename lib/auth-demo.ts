@@ -13,6 +13,42 @@ const USERS_KEY = 'ariadne-auth-users';
 const SESSION_KEY = 'ariadne-auth-session';
 const RESET_KEY = 'ariadne-auth-reset';
 
+/** Pre-seeded demo accounts for ThemeForest / live preview login. */
+export const DEMO_ACCOUNTS: DemoUser[] = [
+  {
+    name: 'Admin',
+    email: 'admin@example.com',
+    password: 'demo',
+  },
+];
+
+/** Map short usernames to demo account emails. */
+const LOGIN_ALIASES: Record<string, string> = {
+  admin: 'admin@example.com',
+};
+
+export function normalizeLoginIdentifier(value: string): string {
+  const trimmed = value.trim().toLowerCase();
+  return LOGIN_ALIASES[trimmed] ?? trimmed;
+}
+
+export function ensureDemoAccounts(): void {
+  const users = readUsers();
+  let changed = false;
+
+  for (const demo of DEMO_ACCOUNTS) {
+    const index = users.findIndex((u) => u.email === demo.email);
+    if (index === -1) {
+      users.push({ ...demo });
+      changed = true;
+    }
+  }
+
+  if (changed) {
+    writeUsers(users);
+  }
+}
+
 function readUsers(): DemoUser[] {
   if (typeof window === 'undefined') return [];
   try {
@@ -50,6 +86,7 @@ export function registerUser(input: {
   email: string;
   password: string;
 }): { ok: true } | { ok: false; error: 'emailTaken' } {
+  ensureDemoAccounts();
   const email = input.email.trim().toLowerCase();
   const users = readUsers();
   if (users.some((u) => u.email === email)) {
@@ -69,7 +106,8 @@ export function loginUser(input: {
   email: string;
   password: string;
 }): { ok: true; user: AuthSession } | { ok: false; error: 'invalid' } {
-  const email = input.email.trim().toLowerCase();
+  ensureDemoAccounts();
+  const email = normalizeLoginIdentifier(input.email);
   const user = readUsers().find((u) => u.email === email);
   if (!user || user.password !== input.password) {
     return { ok: false, error: 'invalid' };

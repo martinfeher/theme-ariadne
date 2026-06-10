@@ -11,6 +11,7 @@ import React, {
 import type { AuthSession } from '@/lib/auth-demo';
 import {
   changeUserPassword,
+  ensureDemoAccounts,
   getSession,
   loginUser,
   registerUser,
@@ -49,6 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    ensureDemoAccounts();
     setUser(getSession());
     setIsReady(true);
   }, []);

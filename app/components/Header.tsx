@@ -277,7 +277,8 @@ const Header = () => {
   const t = useTranslations('Header');
   const tAuth = useTranslations('Auth');
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout, isReady } = useAuth();
+  const accountNavLabel = isReady && user ? user.name : t('account');
   const { itemCount, openCart, toggleCart } = useCart();
   const { count: wishlistCount } = useWishlist();
   const { count: compareCount } = useCompare();
@@ -490,7 +491,9 @@ const Header = () => {
          
 
               <div
-                className="group relative mt-[1px] flex w-10 flex-col items-center"
+                className={`group relative mt-[1px] flex flex-col items-center ${
+                  user ? 'min-w-10 max-w-[5.5rem]' : 'w-10'
+                }`}
                 onMouseEnter={() => setIsAccountOpen(true)}
                 onMouseLeave={() => setIsAccountOpen(false)}
               >
@@ -498,14 +501,23 @@ const Header = () => {
                   <button
                     type="button"
                     className="cursor-pointer text-gray-600 transition-colors group-hover:text-green-600"
-                    aria-label={t('accountMenu')}
+                    aria-label={
+                      user ? `${accountNavLabel}, ${t('accountMenu')}` : t('accountMenu')
+                    }
                     aria-expanded={isAccountOpen}
                     aria-haspopup="true"
                   >
                     <User className={ICON} strokeWidth={ICON_STROKE} />
                   </button>
                 </div>
-                <span className="mt-0 cursor-pointer text-xs text-gray-500 group-hover:text-green-600">{t('account')}</span>
+                <span
+                  className={`mt-0 max-w-full cursor-pointer text-center text-xs text-gray-500 group-hover:text-green-600 ${
+                    user ? 'truncate' : ''
+                  }`}
+                  title={user ? user.name : undefined}
+                >
+                  {accountNavLabel}
+                </span>
 
                 {isAccountOpen && (
                   <div className="absolute right-0 top-full z-[55] w-48 pt-1.5">

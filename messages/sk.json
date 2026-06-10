@@ -363,7 +363,7 @@
     "trackOrder": "Sledovať objednávku",
     "tracking": "Hľadám…",
     "notFound": "Objednávku s týmto číslom a e-mailom sme nenašli.",
-    "demoHint": "Demo: skúste ORD-2026-1042 s demo@example.com",
+    "demoHint": "Demo: skúste ORD-2026-1042 s admin alebo demo@example.com",
     "emptyHint": "Tu sa zobrazia detaily objednávky a priebeh doručenia.",
     "orderNumber": "Číslo objednávky",
     "placedOn": "Objednané {date}",
@@ -406,7 +406,7 @@
     "emptyTitle": "Zatiaľ žiadne objednávky",
     "emptyDesc": "Po zadaní objednávky prihlásený sa zobrazí tu.",
     "shopCta": "Začať nakupovať",
-    "demoHint": "Demo: zaregistrujte sa s demo@example.com pre ukážkové objednávky alebo dokončite nákup prihlásený."
+    "demoHint": "Demo: prihláste sa ako admin / demo pre ukážkové objednávky alebo dokončite nákup prihlásený."
   },
   "Deals": {
     "metaDescription": "Ušetrite na potravinách a domácich potrebách — prehliadajte týždenné akcie a zľavy v WebAriadne.",
@@ -1374,7 +1374,7 @@
     "resetSuccess": "Heslo bolo zmenené. Presmerovanie na prihlásenie…",
     "accountNotFound": "Pre tento e-mail neexistuje účet. Najprv sa zaregistrujte.",
     "loading": "Načítavam…",
-    "demoHint": "Demo prihlásenie — údaje sa ukladajú len do prehliadača."
+    "demoHint": "Demo prihlásenie: používateľ admin, heslo demo (alebo admin@example.com / demo). Údaje sa ukladajú len do prehliadača."
   },
   "Account": {
     "metaDescription": "Spravujte svoj účet WebAriadne — profil, objednávky, obľúbené, poukážky a rýchle odkazy.",
