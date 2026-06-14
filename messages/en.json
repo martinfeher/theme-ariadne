@@ -1,7 +1,7 @@
 {
   "Meta": {
     "title": "WebAriadne - Multipurpose eCommerce",
-    "description": "Your one-stop shop for fresh groceries and daily essentials"
+    "description": "Fresh groceries and daily essentials, all in one place"
   },
   "Header": {
     "promo": "Grand opening, up to 15% off all items. Only 3 days left",
@@ -267,7 +267,7 @@
   },
   "Home": {
     "welcome": "Welcome to",
-    "subtitle": "Your one-stop shop for fresh groceries and daily essentials",
+    "subtitle": "Fresh groceries and daily essentials, all in one place",
     "freeShipping": "Free Shipping",
     "freeShippingDesc": "Free shipping on orders over €50",
     "securePayment": "Secure Payment",
@@ -1650,7 +1650,7 @@
       "13": "Medium Roast Ground Coffee",
       "15": "White Bread",
       "16": "Fresh Strawberries",
-      "17": "Organic Bananas",
+      "17": "Organic Kiwis",
       "18": "Valencia Oranges",
       "19": "Fresh Broccoli Crowns",
       "21": "Vine-Ripened Cherry Tomatoes",
@@ -1661,7 +1661,9 @@
       "26": "Dark Roast Whole Bean Coffee",
       "27": "Organic Green Tea",
       "28": "Jasmine Pearl Green Tea",
-      "29": "Dark Roast Espresso"
+      "29": "Dark Roast Espresso",
+      "31": "Strawberry Jam",
+      "32": "Apricot Fruit Spread"
     },
     "descriptions": {
       "1": "Organic whole grains blend of quinoa, brown rice, and red rice—ready in minutes and perfect as a side or bowl base.",
@@ -1670,7 +1672,7 @@
       "13": "Smooth balanced medium roast ground coffee for drip or pour-over.",
       "15": "Soft classic sandwich bread for everyday toast and lunches.",
       "16": "Sweet ripe strawberries, ideal for desserts, smoothies, or eating fresh.",
-      "17": "Naturally ripened organic bananas, great for breakfast bowls and baking.",
+      "17": "Naturally ripened organic kiwis.",
       "18": "Juicy Valencia oranges with a bright citrus flavor—perfect for fresh juice.",
       "19": "Crisp green broccoli crowns, perfect for steaming, roasting, or stir-fries.",
       "21": "Juicy cherry tomatoes picked at peak ripeness for salads and pasta.",
@@ -1681,7 +1683,9 @@
       "26": "Rich whole bean blend with notes of dark chocolate—freshly roasted for a bold morning cup.",
       "27": "Light and refreshing green tea with a clean finish—perfect hot or iced.",
       "28": "Hand-rolled jasmine pearls that unfurl for a fragrant, floral cup with multiple infusions.",
-      "29": "Intense dark roast espresso with a thick crema—ideal for lattes and straight shots."
+      "29": "Intense dark roast espresso with a thick crema—ideal for lattes and straight shots.",
+      "31": "Sweet strawberry jam made from ripe berries—perfect on toast or in desserts.",
+      "32": "A bright apricot spread with a smooth texture—great for pastries and breakfast bowls."
     }
   }
 }

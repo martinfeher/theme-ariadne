@@ -163,7 +163,7 @@ export const MEGA_MENU_SIDEBAR: MegaMenuSidebarItem[] = [
       },
       {
         slug: 'fruits',
-        image: `${IMG}/bananas.jpeg`,
+        image: `${IMG}/pear.jpeg`,
         sampleLinkKeys: ['organicFruit', 'berries', 'seasonalFruit'],
       },
     ],
@@ -241,7 +241,7 @@ export const MEGA_MENU_SIDEBAR: MegaMenuSidebarItem[] = [
       },
       {
         slug: 'fruits',
-        image: `${IMG}/bananas.jpeg`,
+        image: `${IMG}/pear.jpeg`,
         sampleLinkKeys: ['citrus', 'berries', 'applesPears'],
       },
     ],

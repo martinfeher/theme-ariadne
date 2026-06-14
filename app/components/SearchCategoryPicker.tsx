@@ -120,14 +120,14 @@ export default function SearchCategoryPicker({
       aria-expanded={open}
       aria-haspopup="listbox"
       aria-label={`${t('categoryLabel')}: ${selectedLabel}`}
-      className="flex min-w-44 max-w-52 items-center gap-2.5 px-4 py-1.5 text-left hover:bg-slate-50/80 cursor-pointer"
+      className="flex min-w-44 max-w-52 items-center gap-2.5 pl-4 pr-2 pt-2 pb-1.5 text-left hover:bg-slate-50/80 cursor-pointer hover:rounded-l-xl ring-none"
     >
-      <LayoutGrid className="h-5 w-5 shrink-0 text-[#3BB77E]" strokeWidth={1.75} aria-hidden />
+      <LayoutGrid className="h-5 w-5 mt-[3px] shrink-0 text-[#3BB77E]" strokeWidth={1.75} aria-hidden />
       <span className="min-w-0 flex-1">
         <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">
           {t('categoryLabel')}
         </span>
-        <span className="block truncate text-sm font-semibold text-slate-900">{selectedLabel}</span>
+        <span className="block truncate text-sm font-semibold text-slate-600">{selectedLabel}</span>
       </span>
       {open ? (
         <ChevronUp className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />

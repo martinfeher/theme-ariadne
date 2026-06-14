@@ -26,7 +26,7 @@ const PROMO_BANNERS = [
   {
     key: 'bannerBreakfast',
     href: '/category/milks-dairies',
-    image: '/images/products/mock/bananas.jpeg',
+    image: '/images/products/mock/pear.jpeg',
     tone: 'from-amber-500/90 to-orange-600/80',
   },
   {

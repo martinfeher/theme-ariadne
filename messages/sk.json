@@ -1660,7 +1660,9 @@
       "26": "Tmavé pražené celozrnková káva",
       "27": "Bio zelený čaj",
       "28": "Jasmínový perlový zelený čaj",
-      "29": "Tmavé praženie espresso"
+      "29": "Tmavé praženie espresso",
+      "31": "Jahodový džem",
+      "32": "Marhuľový ovocný spread"
     },
     "descriptions": {
       "1": "Bio zmes celozrnných obilnín z quinoy, hnedej a červenej ryže — pripravená za pár minút, ideálna ako príloha alebo základ misy.",
@@ -1680,7 +1682,9 @@
       "26": "Bohatá zmes celých zŕn s tónmi horkej čokolády — čerstvo pražená pre výraznú rannú kávu.",
       "27": "Jemný a osviežujúci zelený čaj s čistou dochuťou — vhodný horúci aj studený.",
       "28": "Ručne rolované jasmínové perly, ktoré sa rozvíjajú vo voňavý kvetinový čaj na viac infúzií.",
-      "29": "Intenzívne tmavé espresso s hustou cremou — ideálne do latte aj na čisté shoty."
+      "29": "Intenzívne tmavé espresso s hustou cremou — ideálne do latte aj na čisté shoty.",
+      "31": "Sladký jahodový džem z čerstvých plodov — skvelý na toast alebo do dezertov.",
+      "32": "Svetlý marhuľový spread s jemnou textúrou — výborný na pečivo a raňajkové misy."
     }
   }
 }
