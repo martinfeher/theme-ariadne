@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import CategoryShopView from '@/app/components/CategoryShopView';
 import {
   CATEGORY_SHOP_SLUGS,
@@ -40,9 +40,8 @@ export default async function CategoryPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
       <CategoryShopView slug={slug} />
-    </div>
+    </PageShell>
   );
 }

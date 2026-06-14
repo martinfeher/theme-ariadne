@@ -13,7 +13,7 @@ import {
   Truck,
   Users,
 } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import { CONTACT_INFO } from '@/lib/contact-info';
 
 const STATS = [
@@ -34,8 +34,7 @@ export default function AboutView() {
   const tHeader = useTranslations('Header');
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main>
         {/* Hero */}
@@ -208,6 +207,6 @@ export default function AboutView() {
           </div>
         </section>
       </main>
-    </div>
+    </PageShell>
   );
 }

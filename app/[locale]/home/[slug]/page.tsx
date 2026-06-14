@@ -3,7 +3,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import Home2View from '../Home2View';
 import Home3View from '../Home3View';
 
@@ -65,8 +65,7 @@ export default async function HomeVariantPage({ params }: Props) {
   const titleKey = SLUG_TO_KEY[slug as HomeSlug];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
       <main className="container mx-auto px-4 py-12">
         <h1 className="text-2xl font-semibold text-gray-900">{t(titleKey)}</h1>
         {slug === 'home-1' && (
@@ -77,6 +76,6 @@ export default async function HomeVariantPage({ params }: Props) {
           </p>
         )}
       </main>
-    </div>
+    </PageShell>
   );
 }

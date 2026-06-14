@@ -12,7 +12,7 @@ import {
   Ticket,
   User,
 } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import AccountSidebar from '@/app/components/AccountSidebar';
 import { useAuth } from '@/app/context/AuthContext';
 import { useWishlist } from '@/app/context/WishlistContext';
@@ -55,18 +55,16 @@ export default function AccountView() {
 
   if (!isReady || !user) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
+      <PageShell>
         <main className="container mx-auto px-4 py-16 text-center text-gray-500">
           {tAuth('loading')}
         </main>
-      </div>
+      </PageShell>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main className="container mx-auto px-4 py-8 lg:py-12">
         <nav className="text-sm text-gray-500" aria-label={t('breadcrumbNav')}>
@@ -213,6 +211,6 @@ export default function AccountView() {
           </div>
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 }

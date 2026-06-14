@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import { useCompare, MAX_COMPARE_PRODUCTS } from '@/app/context/CompareContext';
 import type { Product } from '@/app/types/product';
 import { useProductI18n } from '@/app/hooks/useProductI18n';
@@ -73,8 +73,7 @@ export default function CompareView() {
     );
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main className="container mx-auto px-4 py-8 lg:py-12">
         <nav className="text-sm text-green-600" aria-label="Breadcrumb">
@@ -258,6 +257,6 @@ export default function CompareView() {
           </div>
         )}
       </main>
-    </div>
+    </PageShell>
   );
 }

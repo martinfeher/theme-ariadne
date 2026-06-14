@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import Header from '@/app/components/Header';
+import Footer from '@/app/components/Footer';
 
 type StatusPageShellProps = {
   children: React.ReactNode;
@@ -33,11 +34,12 @@ export default function StatusPageShell({ children, minimal = false }: StatusPag
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="flex min-h-screen flex-col bg-gray-50">
       <Header />
-      <main className="container mx-auto flex min-h-[calc(100vh-12rem)] items-center justify-center px-4 py-12 lg:py-16">
+      <main className="container mx-auto flex flex-1 items-center justify-center px-4 py-12 lg:py-16">
         {children}
       </main>
+      <Footer />
     </div>
   );
 }

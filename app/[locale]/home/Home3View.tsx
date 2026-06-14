@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Flame, Home as HomeIcon, Sparkles, Tag, Truck } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import ProductCard from '@/app/components/ProductCard';
 import CategorySidebar, {
   type CategorySidebarSlug,
@@ -95,8 +95,7 @@ export default function Home3View() {
       : t('productsInCategory', { category: tBar(activeCategory as Parameters<typeof tBar>[0]) });
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main>
         <section className="border-b border-slate-200 bg-white">
@@ -270,6 +269,6 @@ export default function Home3View() {
           </div>
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 }

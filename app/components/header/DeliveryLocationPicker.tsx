@@ -58,7 +58,9 @@ export default function DeliveryLocationPicker({
       <span
         className={cn(
           'min-w-0 flex-1 truncate text-sm',
-          selected ? 'font-medium text-gray-700' : 'text-gray-500'
+          selected
+            ? 'font-medium text-[color-mix(in_srgb,var(--color-gray-700)_85%,black)]'
+            : 'text-[color-mix(in_srgb,var(--color-gray-500)_85%,black)]'
         )}
       >
         {selected ? selected.label : t('deliveryCityPlaceholder')}

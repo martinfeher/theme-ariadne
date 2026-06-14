@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Calendar, ChevronLeft, ChevronRight, Clock, User } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import BlogCard from '@/app/components/blog/BlogCard';
 import BlogSidebar from '@/app/components/blog/BlogSidebar';
 import { useBlogI18n } from '@/app/hooks/useBlogI18n';
@@ -43,8 +43,7 @@ export default function BlogPostView({ post, sidebar }: BlogPostViewProps) {
   const layoutToggleLabel = sidebar ? t('viewFullWidth') : t('viewWithSidebar');
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main className="container mx-auto px-4 py-8 lg:py-12">
         <nav className="text-sm text-green-600" aria-label={t('breadcrumbNav')}>
@@ -176,7 +175,7 @@ export default function BlogPostView({ post, sidebar }: BlogPostViewProps) {
           </section>
         )}
       </main>
-    </div>
+    </PageShell>
   );
 }
 

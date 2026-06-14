@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
 import { Trash2 } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import { useWishlist } from '@/app/context/WishlistContext';
 import { useCart } from '@/app/context/CartContext';
 import type { Product } from '@/app/types/product';
@@ -90,8 +90,7 @@ export default function WishlistView() {
         : t('countMany', { count: items.length });
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main className="container mx-auto px-4 py-8 lg:py-12">
         <nav className="text-sm text-green-600" aria-label="Breadcrumb">
@@ -267,6 +266,6 @@ export default function WishlistView() {
           </div>
         )}
       </main>
-    </div>
+    </PageShell>
   );
 }

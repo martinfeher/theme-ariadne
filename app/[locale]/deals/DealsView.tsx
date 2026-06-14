@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Flame, Home as HomeIcon, Tag } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import ProductCard from '@/app/components/ProductCard';
 import DiscountBadge, { getDiscountPercent } from '@/app/components/DiscountBadge';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
@@ -102,8 +102,7 @@ export default function DealsView() {
   const featuredName = featured ? getProductName(featured) : '';
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main>
         <section className="border-b border-orange-100 bg-gradient-to-br from-orange-50 via-amber-50 to-white">
@@ -290,6 +289,6 @@ export default function DealsView() {
           )}
         </section>
       </main>
-    </div>
+    </PageShell>
   );
 }

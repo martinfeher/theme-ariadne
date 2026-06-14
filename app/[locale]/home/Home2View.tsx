@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Home as HomeIcon, Truck, Shield, Headphones } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import ProductCard from '@/app/components/ProductCard';
 import CategorySidebar, {
   type CategorySidebarSlug,
@@ -55,8 +55,7 @@ export default function Home2View() {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main>
         <section
@@ -169,6 +168,6 @@ export default function Home2View() {
           </div>
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 }

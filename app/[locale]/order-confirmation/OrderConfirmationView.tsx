@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useSearchParams } from 'next/navigation';
 import { CheckCircle2, Package } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
 
 export default function OrderConfirmationView() {
@@ -23,8 +23,7 @@ export default function OrderConfirmationView() {
   const valid = Boolean(orderId && email);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main className="container mx-auto max-w-2xl px-4 py-8 lg:py-16">
         {valid ? (
@@ -88,6 +87,6 @@ export default function OrderConfirmationView() {
           </div>
         )}
       </main>
-    </div>
+    </PageShell>
   );
 }

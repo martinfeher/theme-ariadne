@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Mail, MapPin, Star } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import ProductCard from '@/app/components/ProductCard';
 import { useVendorI18n } from '@/app/hooks/useVendorI18n';
 import { getProductsByVendor, type Vendor } from '@/lib/mock-vendors';
@@ -34,8 +34,7 @@ export default function VendorDetailView({ vendor }: { vendor: Vendor }) {
   const products = getProductsByVendor(vendor);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main>
         <section className="relative overflow-hidden bg-gray-900">
@@ -162,6 +161,6 @@ export default function VendorDetailView({ vendor }: { vendor: Vendor }) {
           </aside>
         </section>
       </main>
-    </div>
+    </PageShell>
   );
 }

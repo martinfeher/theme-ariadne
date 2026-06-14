@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Clock, Mail, MapPin, Phone, Send, CheckCircle2 } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import {
   CONTACT_INFO,
   contactMapEmbedUrl,
@@ -102,8 +102,7 @@ export default function ContactView() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main className="container mx-auto px-4 py-8 lg:py-12">
         <nav className="text-sm text-green-600" aria-label={t('breadcrumbNav')}>
@@ -292,6 +291,6 @@ export default function ContactView() {
 
         <p className="mt-8 text-center text-xs text-gray-400">{t('demoHint')}</p>
       </main>
-    </div>
+    </PageShell>
   );
 }

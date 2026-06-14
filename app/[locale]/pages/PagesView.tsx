@@ -19,7 +19,7 @@ import {
   User,
   Wrench,
 } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 
 const PAGES = [
   { href: '/account', key: 'pageAccount', icon: User, tone: 'text-green-700 bg-green-50' },
@@ -64,8 +64,7 @@ export default function PagesView() {
   const tHeader = useTranslations('Header');
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main className="container mx-auto px-4 py-8 lg:py-12">
         <nav className="text-sm text-green-600" aria-label={t('breadcrumbNav')}>
@@ -107,6 +106,6 @@ export default function PagesView() {
           ))}
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 }

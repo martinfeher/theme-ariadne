@@ -1,6 +1,6 @@
 import { setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
-import Header from '../components/Header';
+import PageShell from '../components/PageShell';
 import PopularProducts from '../components/PopularProducts';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -11,9 +11,7 @@ export default async function HomePage({ params }: Props) {
   const t = await getTranslations('Home');
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-
+    <PageShell>
       <main>
         <section className="container mx-auto px-4 py-6">
           <div className="text-center">
@@ -48,6 +46,6 @@ export default async function HomePage({ params }: Props) {
 
         <PopularProducts />
       </main>
-    </div>
+    </PageShell>
   );
 }

@@ -4,7 +4,7 @@ import React, { useId, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { ChevronDown, HelpCircle, MessageCircle } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import { FAQ_SECTIONS, type FaqItemId, type FaqSectionId } from '@/lib/faq-content';
 
 function FaqAccordionItem({
@@ -65,8 +65,7 @@ export default function FaqView() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main className="container mx-auto px-4 py-8 lg:py-12">
         <nav className="text-sm text-green-600" aria-label={t('breadcrumbNav')}>
@@ -134,6 +133,6 @@ export default function FaqView() {
           </div>
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 }

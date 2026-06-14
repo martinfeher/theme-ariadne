@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import { useCart } from '@/app/context/CartContext';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { useProductI18n } from '@/app/hooks/useProductI18n';
@@ -151,18 +151,16 @@ export default function CheckoutView() {
 
   if (lines.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
+      <PageShell>
         <main className="container mx-auto px-4 py-16 text-center text-gray-500">
           {t('redirecting')}
         </main>
-      </div>
+      </PageShell>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main className="container mx-auto px-4 py-8 lg:py-12">
         <nav className="text-sm text-green-600">
@@ -537,6 +535,6 @@ export default function CheckoutView() {
           </aside>
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 }

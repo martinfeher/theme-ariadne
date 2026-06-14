@@ -4,6 +4,7 @@ import React from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import Header from '@/app/components/Header';
+import Footer from '@/app/components/Footer';
 
 type AuthPageLayoutProps = {
   title: string;
@@ -21,9 +22,9 @@ export default function AuthPageLayout({
   const tHeader = useTranslations('Header');
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="flex min-h-screen flex-col bg-gray-50">
       <Header />
-      <main className="container mx-auto px-4 py-8 lg:py-12">
+      <main className="container mx-auto flex-1 px-4 py-8 lg:py-12">
         <nav className="mb-6 text-sm text-gray-500">
           <Link href="/" className="hover:text-green-600">
             {tHeader('home')}
@@ -42,6 +43,7 @@ export default function AuthPageLayout({
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

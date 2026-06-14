@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import ProductCard from '@/app/components/ProductCard';
 import { fetchProducts } from '@/lib/fetch-products';
 import type { Product } from '@/app/types/product';
@@ -84,8 +84,7 @@ export default function SearchResults() {
         : t('found', { count: products.length });
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
 
       <main className="container mx-auto px-4 py-10">
         <nav className="text-sm text-green-600" aria-label="Breadcrumb">
@@ -150,6 +149,6 @@ export default function SearchResults() {
           </>
         )}
       </main>
-    </div>
+    </PageShell>
   );
 }

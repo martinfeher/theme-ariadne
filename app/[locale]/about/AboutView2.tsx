@@ -13,7 +13,7 @@ import {
   Recycle,
   Sparkles,
 } from 'lucide-react';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import { CONTACT_INFO } from '@/lib/contact-info';
 
 const STEPS = ['stepSource', 'stepPick', 'stepDeliver'] as const;
@@ -30,8 +30,7 @@ export default function AboutView2() {
   const tHeader = useTranslations('Header');
 
   return (
-    <div className="min-h-screen bg-[#f8f9f6]">
-      <Header />
+    <PageShell>
 
       <main>
         <section className="border-b border-gray-100 bg-white">
@@ -235,6 +234,6 @@ export default function AboutView2() {
           </div>
         </section>
       </main>
-    </div>
+    </PageShell>
   );
 }

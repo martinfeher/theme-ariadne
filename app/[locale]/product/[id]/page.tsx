@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Header from '@/app/components/Header';
+import PageShell from '@/app/components/PageShell';
 import ProductDetailView from '@/app/components/ProductDetailView';
 import {
   getProductById,
@@ -54,13 +54,12 @@ export default async function ProductPage({ params }: Props) {
   const newProductsSidebar = getProductsExcept(product.id, 3);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageShell>
       <ProductDetailView
         product={product}
         relatedProducts={relatedProducts}
         newProductsSidebar={newProductsSidebar}
       />
-    </div>
+    </PageShell>
   );
 }
