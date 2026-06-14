@@ -24,11 +24,12 @@ import {
 } from '@/lib/deals';
 
 function useCountdown(target: Date) {
+  const targetMs = target.getTime();
   const [parts, setParts] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     const tick = () => {
-      const diff = Math.max(0, target.getTime() - Date.now());
+      const diff = Math.max(0, targetMs - Date.now());
       setParts({
         days: Math.floor(diff / 86400000),
         hours: Math.floor((diff / 3600000) % 24),
@@ -39,7 +40,7 @@ function useCountdown(target: Date) {
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [target]);
+  }, [targetMs]);
 
   return parts;
 }

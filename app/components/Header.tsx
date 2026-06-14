@@ -45,6 +45,56 @@ function homeMenuHref(slug: (typeof HOME_MENU_SLUGS)[number]) {
   return slug === 'home-1' ? '/' : `/home/${slug}`;
 }
 
+function ShopMenuNav() {
+  const t = useTranslations('Header');
+  const [open, setOpen] = useState(false);
+
+  const links = [
+    { href: '/checkout', label: t('shopMenuCheckout') },
+    { href: '/shop-invoice', label: t('shopMenuInvoice') },
+  ] as const;
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <Link
+        href="/checkout"
+        className={
+          open
+            ? 'flex items-center gap-1 font-medium text-green-600 transition-colors'
+            : 'flex items-center gap-1 font-medium text-gray-700 transition-colors hover:text-green-600'
+        }
+        aria-expanded={open ? 'true' : 'false'}
+        aria-haspopup="true"
+      >
+        <span>{t('shop')}</span>
+        <ChevronDown className="h-4 w-4 shrink-0" strokeWidth={ICON_STROKE} aria-hidden />
+      </Link>
+      {open && (
+        <div
+          role="menu"
+          className="absolute left-0 top-full z-[55] min-w-[14rem] rounded-lg border border-gray-100 bg-white py-1.5 shadow-lg"
+        >
+          {links.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              role="menuitem"
+              className="block px-4 py-2.5 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-green-600"
+              onClick={() => setOpen(false)}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function BlogMenuNav() {
   const t = useTranslations('Header');
   const [open, setOpen] = useState(false);
@@ -105,9 +155,6 @@ function PagesMenuNav() {
   const [open, setOpen] = useState(false);
 
   const links = [
-    { href: '/account', label: t('pagesMenuAccount') },
-    { href: '/account/settings', label: t('pagesMenuAccountSettings') },
-    { href: '/pages', label: t('pagesMenuHub') },
     { href: '/about', label: t('pagesMenuAbout') },
     { href: '/about-2', label: t('pagesMenuAbout2') },
     { href: '/deals', label: t('pagesMenuDeals') },
@@ -118,6 +165,7 @@ function PagesMenuNav() {
     { href: '/500', label: t('pagesMenu500') },
     { href: '/maintenance', label: t('pagesMenuMaintenance') },
     { href: '/coming-soon', label: t('pagesMenuComingSoon') },
+    { href: '/pages', label: t('pagesMenuHub') },
   ] as const;
 
   return (
@@ -679,6 +727,8 @@ const Header = () => {
                 <HomeMenuNav />
                 <Link href="/about" className="text-gray-700 hover:text-green-500 font-medium">{t('about')}</Link>
 
+                <ShopMenuNav />
+
                 <Link
                   href="/deals"
                   className="flex items-center gap-1.5 font-medium text-orange-600 transition-colors hover:text-orange-700"
@@ -812,6 +862,31 @@ const Header = () => {
                   </ul>
                 </div>
                 <Link href="/about" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('about')}</Link>
+                <div>
+                  <Link
+                    href="/checkout"
+                    className="block py-2 font-medium text-gray-700 hover:text-green-500"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {t('shop')}
+                  </Link>
+                  <ul className="mt-1 space-y-1 border-l border-gray-200 pl-3">
+                    {[
+                      { href: '/checkout', label: t('shopMenuCheckout') },
+                      { href: '/shop-invoice', label: t('shopMenuInvoice') },
+                    ].map(({ href, label }) => (
+                      <li key={href}>
+                        <Link
+                          href={href}
+                          className="block py-1 text-sm text-gray-600 hover:text-green-600"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <Link href="/deals" className="flex items-center gap-1.5 py-2 font-medium text-orange-600 hover:text-orange-700">
                   <Flame className="h-4 w-4" aria-hidden />
                   {t('deals')}
@@ -857,15 +932,13 @@ const Header = () => {
                   </Link>
                   <ul className="mt-1 max-h-48 space-y-1 overflow-y-auto border-l border-gray-200 pl-3">
                     {[
-                      { href: '/account', label: t('pagesMenuAccount') },
-                      { href: '/account/settings', label: t('pagesMenuAccountSettings') },
-                      { href: '/pages', label: t('pagesMenuHub') },
                       { href: '/about', label: t('pagesMenuAbout') },
                       { href: '/about-2', label: t('pagesMenuAbout2') },
                       { href: '/deals', label: t('pagesMenuDeals') },
                       { href: '/refund-policy', label: t('pagesMenuRefundPolicy') },
                       { href: '/privacy', label: t('pagesMenuPrivacy') },
                       { href: '/terms', label: t('pagesMenuTerms') },
+                      { href: '/pages', label: t('pagesMenuHub') },
                     ].map(({ href, label }) => (
                       <li key={href}>
                         <Link

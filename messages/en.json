@@ -25,6 +25,8 @@
     "homeMenu4": "Home 4",
     "about": "About",
     "shop": "Shop",
+    "shopMenuCheckout": "Checkout",
+    "shopMenuInvoice": "Shop invoice",
     "vendors": "Vendors",
     "blog": "Blog",
     "blogGrid": "Blog grid",
@@ -211,6 +213,7 @@
       "all": "All Categories",
       "popular-products": "Popular Products",
       "milks-dairies": "Milks and Dairies",
+      "drinks": "Drinks",
       "jam-jelly": "Jam & Jelly",
       "wines-alcohol": "Wines & Alcohol",
       "clothing-beauty": "Clothing & Beauty",
@@ -609,6 +612,27 @@
     "shipping": "Shipping",
     "free": "Free",
     "total": "Total"
+  },
+  "ShopInvoice": {
+    "metaDescription": "Sample shop invoice layout with line items, tax, and grand total.",
+    "breadcrumbNav": "Breadcrumb",
+    "breadcrumb": "Shop invoice",
+    "title": "Shop invoice",
+    "subtitle": "Demo invoice layout for ThemeForest preview.",
+    "colItem": "Item name",
+    "colUnitPrice": "Unit Price",
+    "colQuantity": "Quantity",
+    "colAmount": "Amount",
+    "skuLabel": "SKU: {sku}",
+    "subtotal": "SubTotal",
+    "tax": "Tax",
+    "grandTotal": "Grand Total",
+    "items": {
+      "item1": "Field Roast Chao Cheese Creamy Original",
+      "item2": "Blue Diamond Almonds Lightly Salted",
+      "item3": "Fresh Organic Mustard Leaves Bell Pepper",
+      "item4": "All Natural Italian-Style Chicken Meatballs"
+    }
   },
   "OrderConfirmation": {
     "metaDescription": "Your order was placed successfully.",
@@ -1662,8 +1686,7 @@
       "27": "Organic Green Tea",
       "28": "Jasmine Pearl Green Tea",
       "29": "Dark Roast Espresso",
-      "31": "Strawberry Jam",
-      "32": "Apricot Fruit Spread"
+      "31": "Strawberry Jam"
     },
     "descriptions": {
       "1": "Organic whole grains blend of quinoa, brown rice, and red rice—ready in minutes and perfect as a side or bowl base.",
@@ -1684,8 +1707,7 @@
       "27": "Light and refreshing green tea with a clean finish—perfect hot or iced.",
       "28": "Hand-rolled jasmine pearls that unfurl for a fragrant, floral cup with multiple infusions.",
       "29": "Intense dark roast espresso with a thick crema—ideal for lattes and straight shots.",
-      "31": "Sweet strawberry jam made from ripe berries—perfect on toast or in desserts.",
-      "32": "A bright apricot spread with a smooth texture—great for pastries and breakfast bowls."
+      "31": "Sweet strawberry jam made from ripe berries—perfect on toast or in desserts."
     }
   }
 }

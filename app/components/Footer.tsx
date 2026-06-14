@@ -7,6 +7,7 @@ import { Link } from '@/i18n/navigation';
 import { CreditCard, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import LanguageSwitcher from '@/app/components/LanguageSwitcher';
 import CurrencySwitcher from '@/app/components/CurrencySwitcher';
+import { useHydrated } from '@/app/hooks/useHydrated';
 import { CONTACT_INFO } from '@/lib/contact-info';
 
 const PAYMENT_ICONS = [
@@ -85,8 +86,9 @@ function FooterLinkColumn({ column }: { column: LinkColumn }) {
   );
 }
 
-export default function Footer() {
+function FooterNewsletter() {
   const t = useTranslations('Footer');
+  const hydrated = useHydrated();
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -96,6 +98,54 @@ export default function Footer() {
     setSubscribed(true);
     setEmail('');
   };
+
+  if (subscribed) {
+    return <p className="mt-3 text-sm font-medium text-green-800">{t('newsletterSuccess')}</p>;
+  }
+
+  if (!hydrated) {
+    return (
+      <div
+        className="mt-3 flex flex-col gap-2 sm:flex-row"
+        aria-hidden
+      >
+        <div className="h-[38px] min-w-0 flex-1 rounded-md border border-gray-200 bg-gray-50" />
+        <div className="h-[38px] w-24 shrink-0 rounded-md bg-gray-200" />
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleNewsletter} className="mt-3 flex flex-col gap-2 sm:flex-row w-[340px]">
+      <label htmlFor="footer-newsletter-email" className="sr-only">
+        {t('newsletterEmailLabel')}
+      </label>
+      <input
+        id="footer-newsletter-email"
+        type="email"
+        name="newsletter-email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder={t('newsletterPlaceholder')}
+        required
+        autoComplete="off"
+        data-lpignore="true"
+        data-1p-ignore
+        data-form-type="other"
+        className="min-w-0 flex-1 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-200"
+      />
+      <button
+        type="submit"
+        className="shrink-0 cursor-pointer rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-gray-800"
+      >
+        {t('newsletterSubmit')}
+      </button>
+    </form>
+  );
+}
+
+export default function Footer() {
+  const t = useTranslations('Footer');
 
   return (
     <footer className="mt-auto border-t border-gray-200 bg-white" aria-label={t('ariaLabel')}>
@@ -108,14 +158,14 @@ export default function Footer() {
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-gray-600">
               {t('aboutBlurb')}
             </p>
-            <ul className="mt-5 space-y-3 text-sm text-gray-600">
-              <li className="flex items-start gap-2.5">
+            <ul className="mt-5 space-y-2 text-sm text-gray-600">
+              <li className="flex items-start gap-1">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gray-400" aria-hidden />
                 <span>
                   {CONTACT_INFO.addressLine1}, {CONTACT_INFO.city}
                 </span>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-1">
                 <Phone className="h-4 w-4 shrink-0 text-gray-400" aria-hidden />
                 <a
                   href={CONTACT_INFO.phoneHref}
@@ -124,7 +174,7 @@ export default function Footer() {
                   {CONTACT_INFO.phone}
                 </a>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li className="flex items-center gap-1">
                 <Mail className="h-4 w-4 shrink-0 text-gray-400" aria-hidden />
                 <a
                   href={CONTACT_INFO.emailHref}
@@ -137,31 +187,8 @@ export default function Footer() {
 
             <div className="mt-8">
               <h3 className="text-sm font-bold text-gray-900">{t('newsletterHeading')}</h3>
-              <p className="mt-1 text-sm text-gray-600">{t('newsletterSubtitle')}</p>
-              {subscribed ? (
-                <p className="mt-3 text-sm font-medium text-green-800">{t('newsletterSuccess')}</p>
-              ) : (
-                <form onSubmit={handleNewsletter} className="mt-3 flex flex-col gap-2 sm:flex-row">
-                  <label htmlFor="footer-newsletter-email" className="sr-only">
-                    {t('newsletterEmailLabel')}
-                  </label>
-                  <input
-                    id="footer-newsletter-email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={t('newsletterPlaceholder')}
-                    required
-                    className="min-w-0 flex-1 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-200"
-                  />
-                  <button
-                    type="submit"
-                    className="shrink-0 cursor-pointer rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-gray-800"
-                  >
-                    {t('newsletterSubmit')}
-                  </button>
-                </form>
-              )}
+              <p className="mt-1 text-[12px] text-gray-600">{t('newsletterSubtitle')}</p>
+              <FooterNewsletter />
             </div>
           </div>
 
@@ -219,7 +246,7 @@ export default function Footer() {
       <section className="border-t border-gray-100 bg-gray-50">
         <div className="container mx-auto px-4 py-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600" suppressHydrationWarning>
               {t('copyright', { year: new Date().getFullYear() })}
             </p>
 

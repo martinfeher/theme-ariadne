@@ -22,6 +22,11 @@ import ProductReviews from './product/ProductReviews';
 const ACCENT = '#3BB77E';
 
 const SIZE_OPTIONS = ['50', '60', '80', '100', '150'] as const;
+const BASE_SIZE_GRAMS = Number(SIZE_OPTIONS[0]);
+
+function priceForSize(basePrice: number, grams: number): number {
+  return Math.round(((basePrice * grams) / BASE_SIZE_GRAMS) * 100) / 100;
+}
 
 type TabId = 'description' | 'additional' | 'vendor' | 'reviews';
 
@@ -89,7 +94,7 @@ export default function ProductDetailView({
   );
   const [activeImg, setActiveImg] = useState(0);
   const [qty, setQty] = useState(1);
-  const [size, setSize] = useState<string>(SIZE_OPTIONS[1]);
+  const [size, setSize] = useState<string>(SIZE_OPTIONS[0]);
   const [tab, setTab] = useState<TabId>('description');
   const [zoomOpen, setZoomOpen] = useState(false);
   const [priceTo, setPriceTo] = useState(40);
@@ -98,7 +103,19 @@ export default function ProductDetailView({
   const wishlisted = isInWishlist(product.id);
   const compared = isInCompare(product.id);
   const compareDisabled = !canAdd(product.id) && !compared;
-  const pctOff = getDiscountPercent(product.price, product.oldPrice);
+  const sizeGrams = Number(size);
+  const displayPrice = useMemo(
+    () => priceForSize(product.price, sizeGrams),
+    [product.price, sizeGrams]
+  );
+  const displayOldPrice = useMemo(
+    () =>
+      product.oldPrice != null && product.oldPrice > product.price
+        ? priceForSize(product.oldPrice, sizeGrams)
+        : null,
+    [product.oldPrice, product.price, sizeGrams]
+  );
+  const pctOff = getDiscountPercent(displayPrice, displayOldPrice ?? undefined);
   const inStock = product.inStock !== false;
   const stockCount = inStock ? 8 : 0;
   const sku = `NT-${String(product.id).padStart(5, '0')}`;
@@ -114,7 +131,14 @@ export default function ProductDetailView({
 
   const addToCart = () => {
     if (!inStock) return;
-    addItem(product, qty);
+    addItem(
+      {
+        ...product,
+        price: displayPrice,
+        oldPrice: displayOldPrice ?? product.oldPrice,
+      },
+      qty
+    );
     openCart();
   };
 
@@ -219,11 +243,11 @@ export default function ProductDetailView({
                       className="text-3xl font-bold"
                       style={{ color: ACCENT }}
                     >
-                      {formatPrice(product.price)}
+                      {formatPrice(displayPrice)}
                     </span>
-                    {product.oldPrice != null && product.oldPrice > product.price && (
+                    {displayOldPrice != null && displayOldPrice > displayPrice && (
                       <span className="text-lg text-gray-400 line-through">
-                        {formatPrice(product.oldPrice)}
+                        {formatPrice(displayOldPrice)}
                       </span>
                     )}
                     {pctOff != null && (

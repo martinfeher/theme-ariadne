@@ -22,6 +22,8 @@ import {
 } from '@/lib/search-categories';
 import { countProductsWithCategorySlug, MOCK_PRODUCTS } from '@/lib/mock-products';
 
+const CATEGORY_LIST_ID = 'search-category-listbox';
+
 function readRecentSlugs(): string[] {
   if (typeof window === 'undefined') return [...DEFAULT_RECENT_CATEGORY_SLUGS];
   try {
@@ -119,6 +121,7 @@ export default function SearchCategoryPicker({
       role="combobox"
       aria-expanded={open}
       aria-haspopup="listbox"
+      aria-controls={CATEGORY_LIST_ID}
       aria-label={`${t('categoryLabel')}: ${selectedLabel}`}
       className="flex min-w-44 max-w-52 items-center gap-2.5 pl-4 pr-2 pt-2 pb-1.5 text-left hover:bg-slate-50/80 cursor-pointer hover:rounded-l-xl ring-none"
     >
@@ -170,7 +173,7 @@ export default function SearchCategoryPicker({
               </kbd>
             </div>
 
-            <CommandList className="max-h-[min(20rem,50vh)]">
+            <CommandList id={CATEGORY_LIST_ID} className="max-h-[min(20rem,50vh)]">
               <CommandEmpty>{t('noCategoryMatches')}</CommandEmpty>
 
               {recentCategories.length > 0 && (

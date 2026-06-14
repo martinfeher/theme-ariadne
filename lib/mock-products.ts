@@ -247,19 +247,7 @@ export const MOCK_PRODUCTS: Product[] = [
     vendor: 'Ariadne Foods',
     categories: ['all', 'jam-jelly', 'popular-products'],
     description: 'Sweet strawberry jam made from ripe berries—perfect on toast or in desserts.',
-    ...mediaForCategories(['all', 'jam-jelly']),
-  },
-  {
-    id: 32,
-    name: 'Apricot Fruit Spread',
-    category: 'Jam & Jelly',
-    price: 4.49,
-    rating: 4.6,
-    ratingCount: 12,
-    vendor: 'Ariadne Foods',
-    categories: ['all', 'jam-jelly', 'popular-products'],
-    description: 'A bright apricot spread with a smooth texture—great for pastries and breakfast bowls.',
-    ...mediaForCategories(['all', 'jam-jelly']),
+    ...mockProductImage('strawberry_jam.jpg'),
   },
 ];
 

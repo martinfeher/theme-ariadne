@@ -25,6 +25,8 @@
     "homeMenu4": "Domov 4",
     "about": "O nás",
     "shop": "Obchod",
+    "shopMenuCheckout": "Pokladňa",
+    "shopMenuInvoice": "Faktúra obchodu",
     "vendors": "Predajcovia",
     "blog": "Blog",
     "blogGrid": "Blog mriežka",
@@ -211,6 +213,7 @@
       "all": "Všetky kategórie",
       "popular-products": "Populárne produkty",
       "milks-dairies": "Mliečne výrobky",
+      "drinks": "Nápoje",
       "jam-jelly": "Džemy a želé",
       "wines-alcohol": "Víno a alkohol",
       "clothing-beauty": "Oblečenie a krása",
@@ -608,6 +611,27 @@
     "shipping": "Doprava",
     "free": "Zdarma",
     "total": "Spolu"
+  },
+  "ShopInvoice": {
+    "metaDescription": "Ukážková faktúra obchodu s položkami, DPH a celkovou sumou.",
+    "breadcrumbNav": "Drobečková navigácia",
+    "breadcrumb": "Faktúra obchodu",
+    "title": "Faktúra obchodu",
+    "subtitle": "Ukážková faktúra pre náhľad šablóny.",
+    "colItem": "Názov položky",
+    "colUnitPrice": "Jednotková cena",
+    "colQuantity": "Množstvo",
+    "colAmount": "Suma",
+    "skuLabel": "SKU: {sku}",
+    "subtotal": "Medzisúčet",
+    "tax": "Daň",
+    "grandTotal": "Celkom",
+    "items": {
+      "item1": "Field Roast Chao Cheese Creamy Original",
+      "item2": "Blue Diamond Almonds Lightly Salted",
+      "item3": "Fresh Organic Mustard Leaves Bell Pepper",
+      "item4": "All Natural Italian-Style Chicken Meatballs"
+    }
   },
   "OrderConfirmation": {
     "metaDescription": "Vaša objednávka bola úspešne odoslaná.",
