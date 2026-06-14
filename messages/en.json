@@ -192,7 +192,18 @@
     "localeNote": "Prices shown in selected currency. Site available in:"
   },
   "SearchBar": {
-    "placeholder": "Search you products",
+    "placeholder": "Search in all categories...",
+    "placeholderInCategory": "Search in {category}...",
+    "searchButton": "Search",
+    "categoryLabel": "Category",
+    "searchCategories": "Search categories...",
+    "noCategoryMatches": "No categories found.",
+    "recent": "Recent",
+    "allCategories": "All categories",
+    "itemCount": "{count, plural, one {# item} other {# items}}",
+    "categoryCount": "{count, plural, one {# category} other {# categories}}",
+    "keyboardNavigate": "↑↓ navigate",
+    "keyboardSelect": "↵ select",
     "searching": "Searching…",
     "noMatches": "No matching products.",
     "viewAll": "View all results",
@@ -231,8 +242,18 @@
     "sortPriceDesc": "Price: High to Low",
     "sortRating": "Top rated",
     "loading": "Loading products…",
-    "error": "Could not load products. Please refresh the page.",
+    "loadingCount": "Loading products…",
+    "error": "We couldn't load products right now. Check your connection and try again.",
+    "errorTitle": "Something went wrong",
+    "errorRetry": "Try again",
     "noProducts": "No products match your filters in this category.",
+    "emptyCategoryTitle": "No products here yet",
+    "emptyCategoryDesc": "This category doesn't have any products at the moment. Browse the full shop to discover more.",
+    "emptyCategoryCta": "Browse all products",
+    "emptyFiltersTitle": "No matching products",
+    "emptyFiltersDesc": "Nothing in this category fits your current price range. Try widening the range or clearing filters.",
+    "emptyFiltersReset": "Clear price filters",
+    "sidebarUnavailable": "New products unavailable",
     "tagCabbage": "Cabbage",
     "tagBroccoli": "Broccoli",
     "tagArtichoke": "Artichoke",
@@ -317,7 +338,9 @@
       "pet-foods": "Pet Foods",
       "meats": "Meats",
       "vegetables": "Vegetables",
-      "fruits": "Fruits"
+      "fruits": "Fruits",
+      "drinks": "Drinks",
+      "jam-jelly": "Jam & Jelly"
     }
   },
   "Search": {
@@ -490,7 +513,8 @@
     "stockStatus": "Stock status",
     "remove": "Remove",
     "inStock": "In Stock",
-    "outStock": "Out of stock"
+    "outStock": "Out of stock",
+    "noDescription": "No description is available for this product yet."
   },
   "Cart": {
     "yourCart": "Your cart",
@@ -1537,6 +1561,69 @@
     "vendorBlurb": "{name} supplies this product through our marketplace. Contact support for bulk or vendor inquiries.",
     "visitVendorStore": "Visit vendor store",
     "reviewsPlaceholder": "Customer reviews will appear here. This is a demo storefront.",
+    "reviewsBasedOn": "Based on {count} reviews",
+    "reviewsStar": "star",
+    "reviewsWriteTitle": "Write a review",
+    "reviewsWriteHint": "Share your experience with this product. Demo reviews are shown in the browser only.",
+    "reviewsSubmitSuccess": "Thank you! Your review has been added to this demo session.",
+    "reviewsFormName": "Your name",
+    "reviewsFormNamePlaceholder": "Enter your name",
+    "reviewsFormRating": "Your rating",
+    "reviewsFormTitle": "Review title",
+    "reviewsFormTitlePlaceholder": "Summarize your experience",
+    "reviewsFormBody": "Your review",
+    "reviewsFormBodyPlaceholder": "What did you like or dislike?",
+    "reviewsFormSubmit": "Submit review",
+    "reviewItems": {
+      "fallback": {
+        "title": "Great quality product",
+        "body": "Fresh, well packed, and exactly as described. Would order again from this store."
+      },
+      "21-1": {
+        "title": "Sweet and incredibly fresh",
+        "body": "These cherry tomatoes are bursting with flavor. Perfect for salads and pasta dishes."
+      },
+      "21-2": {
+        "title": "Best tomatoes this season",
+        "body": "Firm skin, juicy inside, and they lasted several days in the fridge without going soft."
+      },
+      "21-3": {
+        "title": "Very good, slightly small",
+        "body": "Taste is excellent and they look beautiful on the plate. A few were smaller than expected."
+      },
+      "21-4": {
+        "title": "Kids love them",
+        "body": "We snack on these straight from the bowl. Sweet enough that even picky eaters enjoy them."
+      },
+      "21-5": {
+        "title": "Lovely for roasting",
+        "body": "Roasted with olive oil and herbs they caramelize beautifully. Will buy again."
+      },
+      "11-1": {
+        "title": "Crisp and crunchy",
+        "body": "Apples arrived in great condition. Nice balance of sweet and tart."
+      },
+      "11-2": {
+        "title": "Good for baking",
+        "body": "Held their shape well in pies and tarts. Flavor is consistently good."
+      },
+      "13-1": {
+        "title": "Smooth morning cup",
+        "body": "Balanced medium roast with no bitterness. Brews evenly in my drip machine."
+      },
+      "13-2": {
+        "title": "Solid everyday coffee",
+        "body": "Good aroma when opening the bag. Not the strongest, but very drinkable."
+      },
+      "6-1": {
+        "title": "Creamy and not too sweet",
+        "body": "Nice texture and vanilla flavor. Works well with granola and fruit."
+      },
+      "6-2": {
+        "title": "Family favorite",
+        "body": "We keep this in the fridge for quick breakfasts. Thick and satisfying."
+      }
+    },
     "sidebarCategory": "Category",
     "sidebarFillPrice": "Fill by price",
     "from": "From:",

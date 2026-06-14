@@ -45,7 +45,7 @@ const CartOffCanvas: React.FC = () => {
   return (
     <>
       <div
-        className={`fixed inset-0 z-[250] bg-black/40 transition-opacity duration-300 lg:z-[250] ${
+        className={`fixed inset-0 z-[250] bg-black/40 transition-opacity duration-100 lg:z-[250] ${
           isOpen ? 'visible opacity-100' : 'invisible opacity-0 pointer-events-none'
         }`}
         aria-hidden={!isOpen}
@@ -53,7 +53,7 @@ const CartOffCanvas: React.FC = () => {
       />
 
       <aside
-        className={`fixed top-0 right-0 z-[260] flex h-full w-full max-w-md flex-col bg-white shadow-2xl transition-transform duration-300 ease-out lg:z-[260] ${
+        className={`fixed top-0 right-0 z-[260] flex h-full w-full max-w-md flex-col bg-white shadow-2xl transition-transform duration-100 ease-out lg:z-[260] ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-hidden={!isOpen}
@@ -108,7 +108,7 @@ const CartOffCanvas: React.FC = () => {
                       {formatPrice(product.price)}
                     </p>
                     <div className="mt-2 flex items-center gap-2">
-                      <div className="flex items-center rounded-lg border border-gray-200">
+                      <div className="flex items-center rounded-full border border-gray-200">
                         <button
                           type="button"
                           className="p-1.5 text-gray-600 hover:bg-gray-50 cursor-pointer"

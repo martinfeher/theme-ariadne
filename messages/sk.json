@@ -192,7 +192,18 @@
     "localeNote": "Ceny v zvolenej mene. Stránka dostupná v:"
   },
   "SearchBar": {
-    "placeholder": "Hľadať položky...",
+    "placeholder": "Hľadať vo všetkých kategóriách...",
+    "placeholderInCategory": "Hľadať v kategórii {category}...",
+    "searchButton": "Hľadať",
+    "categoryLabel": "Kategória",
+    "searchCategories": "Hľadať kategórie...",
+    "noCategoryMatches": "Nenašli sa žiadne kategórie.",
+    "recent": "Nedávne",
+    "allCategories": "Všetky kategórie",
+    "itemCount": "{count, plural, one {# položka} few {# položky} other {# položiek}}",
+    "categoryCount": "{count, plural, one {# kategória} few {# kategórie} other {# kategórií}}",
+    "keyboardNavigate": "↑↓ navigovať",
+    "keyboardSelect": "↵ vybrať",
     "searching": "Hľadám…",
     "noMatches": "Žiadne zodpovedajúce produkty.",
     "viewAll": "Zobraziť všetky výsledky",
@@ -230,8 +241,18 @@
     "sortPriceDesc": "Cena: od najvyššej",
     "sortRating": "Najlepšie hodnotené",
     "loading": "Načítavam produkty…",
-    "error": "Produkty sa nepodarilo načítať. Obnovte stránku.",
+    "loadingCount": "Načítavam produkty…",
+    "error": "Produkty sa nepodarilo načítať. Skontrolujte pripojenie a skúste znova.",
+    "errorTitle": "Niečo sa pokazilo",
+    "errorRetry": "Skúsiť znova",
     "noProducts": "V tejto kategórii nevyhovujú produkty vašim filtrom.",
+    "emptyCategoryTitle": "Zatiaľ tu nie sú žiadne produkty",
+    "emptyCategoryDesc": "Táto kategória momentálne nemá žiadne produkty. Prezrite si celý obchod a objavte viac.",
+    "emptyCategoryCta": "Prezrieť všetky produkty",
+    "emptyFiltersTitle": "Žiadne vyhovujúce produkty",
+    "emptyFiltersDesc": "V tejto kategórii nič nevyhovuje vášmu cenovému rozsahu. Rozšírte rozsah alebo zrušte filtre.",
+    "emptyFiltersReset": "Zrušiť cenové filtre",
+    "sidebarUnavailable": "Nové produkty nie sú k dispozícii",
     "tagCabbage": "Kapusta",
     "tagBroccoli": "Brokolica",
     "tagArtichoke": "Artičok",
@@ -316,7 +337,9 @@
       "pet-foods": "Krmivá",
       "meats": "Mäso",
       "vegetables": "Zelenina",
-      "fruits": "Ovocie"
+      "fruits": "Ovocie",
+      "drinks": "Nápoje",
+      "jam-jelly": "Džemy a želé"
     }
   },
   "Search": {
@@ -489,7 +512,8 @@
     "stockStatus": "Stav skladom",
     "remove": "Odstrániť",
     "inStock": "Na sklade",
-    "outStock": "Vypredané"
+    "outStock": "Vypredané",
+    "noDescription": "Pre tento produkt zatiaľ nie je k dispozícii popis."
   },
   "Cart": {
     "yourCart": "Váš košík",
@@ -1536,6 +1560,69 @@
     "vendorBlurb": "Tento produkt dodáva {name} cez náš trh. Pre hromadné objednávky kontaktujte podporu.",
     "visitVendorStore": "Navštíviť obchod predajcu",
     "reviewsPlaceholder": "Recenzie zákazníkov sa zobrazia tu. Toto je demo obchod.",
+    "reviewsBasedOn": "Na základe {count} recenzií",
+    "reviewsStar": "hviezda",
+    "reviewsWriteTitle": "Napísať recenziu",
+    "reviewsWriteHint": "Podeľte sa o skúsenosť s produktom. Demo recenzie sa zobrazujú len v prehliadači.",
+    "reviewsSubmitSuccess": "Ďakujeme! Vaša recenzia bola pridaná do tejto demo relácie.",
+    "reviewsFormName": "Vaše meno",
+    "reviewsFormNamePlaceholder": "Zadajte meno",
+    "reviewsFormRating": "Vaše hodnotenie",
+    "reviewsFormTitle": "Názov recenzie",
+    "reviewsFormTitlePlaceholder": "Zhrňte svoju skúsenosť",
+    "reviewsFormBody": "Vaša recenzia",
+    "reviewsFormBodyPlaceholder": "Čo sa vám páčilo alebo nepáčilo?",
+    "reviewsFormSubmit": "Odoslať recenziu",
+    "reviewItems": {
+      "fallback": {
+        "title": "Skvelá kvalita produktu",
+        "body": "Čerstvé, dobre zabalené a presne podľa popisu. Objednali by sme znova."
+      },
+      "21-1": {
+        "title": "Sladké a neuveriteľne čerstvé",
+        "body": "Tieto cherry paradajky sú plné chuti. Ideálne do šalátov a cestovín."
+      },
+      "21-2": {
+        "title": "Najlepšie paradajky tejto sezóny",
+        "body": "Pevná šupka, šťavnatý stred a vydržali niekoľko dní v chladničke."
+      },
+      "21-3": {
+        "title": "Veľmi dobré, trochu menšie",
+        "body": "Chuť je výborná a na tanieri vyzerajú skvele. Niektoré boli menšie, než som čakal."
+      },
+      "21-4": {
+        "title": "Deti ich milujú",
+        "body": "Požierame ich priamo z misky. Sú dosť sladké aj pre mlsných jedákov."
+      },
+      "21-5": {
+        "title": "Skvelé na pečenie",
+        "body": "S olivovým olejom a bylinkami sa krásne karamelizujú. Kúpim znova."
+      },
+      "11-1": {
+        "title": "Chrumkavé a šťavnaté",
+        "body": "Jablká prišli v dobrom stave. Pekná rovnováha sladkosti a kyselosti."
+      },
+      "11-2": {
+        "title": "Dobré na pečenie",
+        "body": "V koláčoch držali tvar. Chuť je konzistentne dobrá."
+      },
+      "13-1": {
+        "title": "Jemná ranná káva",
+        "body": "Vyvážená stredná pražina bez horkosti. Varí sa rovnomerne v kávovare."
+      },
+      "13-2": {
+        "title": "Spoľahlivá každodenná káva",
+        "body": "Po otvorení sáčku príjemná aróma. Nie najsilnejšia, ale veľmi pitelná."
+      },
+      "6-1": {
+        "title": "Krémový a nie príliš sladký",
+        "body": "Príjemná textúra a vanilková chuť. Dobrý s granolou a ovocím."
+      },
+      "6-2": {
+        "title": "Obľúbený v rodine",
+        "body": "Máme ho v chladničke na rýchle raňajky. Hustý a sýty."
+      }
+    },
     "sidebarCategory": "Kategória",
     "sidebarFillPrice": "Cena",
     "from": "Od:",

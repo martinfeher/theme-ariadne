@@ -111,15 +111,9 @@ function PagesMenuNav() {
     { href: '/about', label: t('pagesMenuAbout') },
     { href: '/about-2', label: t('pagesMenuAbout2') },
     { href: '/deals', label: t('pagesMenuDeals') },
-    { href: '/contact', label: t('pagesMenuContact') },
-    { href: '/faq', label: t('pagesMenuFaq') },
     { href: '/refund-policy', label: t('pagesMenuRefundPolicy') },
     { href: '/privacy', label: t('pagesMenuPrivacy') },
     { href: '/terms', label: t('pagesMenuTerms') },
-    { href: '/order-history', label: t('pagesMenuOrderHistory') },
-    { href: '/order-tracking', label: t('pagesMenuOrderTracking') },
-    { href: '/login', label: t('pagesMenuLogin') },
-    { href: '/register', label: t('pagesMenuRegister') },
     { href: '/404', label: t('pagesMenu404') },
     { href: '/500', label: t('pagesMenu500') },
     { href: '/maintenance', label: t('pagesMenuMaintenance') },
@@ -277,8 +271,8 @@ const Header = () => {
   const t = useTranslations('Header');
   const tAuth = useTranslations('Auth');
   const router = useRouter();
-  const { user, logout, isReady } = useAuth();
-  const accountNavLabel = isReady && user ? user.name : t('account');
+  const { user, logout } = useAuth();
+  const accountNavLabel = user ? user.name : t('account');
   const { itemCount, openCart, toggleCart } = useCart();
   const { count: wishlistCount } = useWishlist();
   const { count: compareCount } = useCompare();
@@ -491,8 +485,8 @@ const Header = () => {
          
 
               <div
-                className={`group relative mt-[1px] flex flex-col items-center ${
-                  user ? 'min-w-10 max-w-[5.5rem]' : 'w-10'
+                className={`group relative mt-[1px] flex min-w-0 !w-10 flex-col items-center ${
+                  user ? 'w-[5.5rem]' : 'w-10'
                 }`}
                 onMouseEnter={() => setIsAccountOpen(true)}
                 onMouseLeave={() => setIsAccountOpen(false)}
@@ -502,7 +496,7 @@ const Header = () => {
                     type="button"
                     className="cursor-pointer text-gray-600 transition-colors group-hover:text-green-600"
                     aria-label={
-                      user ? `${accountNavLabel}, ${t('accountMenu')}` : t('accountMenu')
+                      user ? `${user.name}, ${t('accountMenu')}` : t('accountMenu')
                     }
                     aria-expanded={isAccountOpen}
                     aria-haspopup="true"
@@ -511,10 +505,10 @@ const Header = () => {
                   </button>
                 </div>
                 <span
-                  className={`mt-0 max-w-full cursor-pointer text-center text-xs text-gray-500 group-hover:text-green-600 ${
-                    user ? 'truncate' : ''
+                  className={`mt-0 w-full min-w-0 text-center text-xs text-gray-500 group-hover:text-green-600 ${
+                    user ? 'block cursor-pointer truncate' : 'cursor-pointer'
                   }`}
-                  title={user ? user.name : undefined}
+                  title={user?.name}
                 >
                   {accountNavLabel}
                 </span>
@@ -869,15 +863,9 @@ const Header = () => {
                       { href: '/about', label: t('pagesMenuAbout') },
                       { href: '/about-2', label: t('pagesMenuAbout2') },
                       { href: '/deals', label: t('pagesMenuDeals') },
-                      { href: '/contact', label: t('pagesMenuContact') },
-                      { href: '/faq', label: t('pagesMenuFaq') },
                       { href: '/refund-policy', label: t('pagesMenuRefundPolicy') },
                       { href: '/privacy', label: t('pagesMenuPrivacy') },
                       { href: '/terms', label: t('pagesMenuTerms') },
-                      { href: '/order-history', label: t('pagesMenuOrderHistory') },
-                      { href: '/order-tracking', label: t('pagesMenuOrderTracking') },
-                      { href: '/login', label: t('pagesMenuLogin') },
-                      { href: '/register', label: t('pagesMenuRegister') },
                     ].map(({ href, label }) => (
                       <li key={href}>
                         <Link

@@ -3,32 +3,16 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { Search } from 'lucide-react';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { Link } from '@/i18n/navigation';
-import { Combobox } from '@/components/ui/combobox';
+import SearchCategoryPicker from '@/app/components/SearchCategoryPicker';
 import { fetchProducts } from '@/lib/fetch-products';
 import type { Product } from '@/app/types/product';
 import { useProductI18n } from '@/app/hooks/useProductI18n';
 
 const DEBOUNCE_MS = 280;
 const MAX_SUGGESTIONS = 8;
-
-const CATEGORY_VALUE_KEYS = [
-  'all',
-  'milks-dairies',
-  'wines-alcohol',
-  'clothing-beauty',
-  'fast-food',
-  'baking-material',
-  'vegetables',
-  'fresh-seafood',
-  'noodles-rice',
-  'ice-cream',
-  'coffees-teas',
-  'pet-foods',
-  'meats',
-  'fruits',
-] as const;
 
 export interface SearchBarWithSuggestionsProps {
   variant: 'desktop' | 'mobile';
@@ -59,12 +43,14 @@ export default function SearchBarWithSuggestions({
   const [loading, setLoading] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
 
-  const categoryOptions = useMemo(() =>
-      CATEGORY_VALUE_KEYS.map((value) => ({value,
-        label: t(`categories.${value}`),
-      })),
-    [t]
-  );
+  const categoryScopedPlaceholder = useMemo(() => {
+    if (!selectedCategory || selectedCategory === 'all') {
+      return t('placeholder');
+    }
+    return t('placeholderInCategory', {
+      category: t(`categories.${selectedCategory}`),
+    });
+  }, [selectedCategory, t]);
 
   const trimmed = searchQuery.trim();
   const showPanel = panelOpen && trimmed.length > 0;
@@ -130,63 +116,63 @@ export default function SearchBarWithSuggestions({
         onSubmit={handleFormSubmit}
         className={
           isDesktop
-            ? 'flex items-center bg-white border border-[#89b178] rounded-md shadow-sm overflow-visible'
-            : 'flex rounded-lg overflow-visible border border-gray-300'
+            ? 'flex items-stretch overflow-visible rounded-2xl border border-[#3BB77E]/70 bg-white shadow-sm'
+            : 'flex overflow-visible rounded-xl border border-slate-200 bg-white'
         }
       >
         {isDesktop && (
-          <div className="relative border-r border-gray-200 cursor-pointer shrink-0 pr-2">
-          {/* <div className="relative border-r border-gray-200 cursor-pointer shrink-0 pr-4"> */}
-            <Combobox
-              options={categoryOptions}
-              value={selectedCategory}
-              onValueChange={onCategoryChange}
-              placeholder={t('categories.all')}
-              className="w-[160px] border-0 rounded-none bg-transparent cursor-pointer"
-              boxClassName="ml-[10px] w-[170px] z-300"
-            />
-          </div>
+          <SearchCategoryPicker value={selectedCategory} onValueChange={onCategoryChange} />
         )}
 
-        <input
-          type="search"
-          name="q"
-          value={searchQuery}
-          onChange={(e) => {
-            onSearchQueryChange(e.target.value);
-            setPanelOpen(true);
-          }}
-          onFocus={() => setPanelOpen(true)}
-          placeholder={t('placeholder')}
-          autoComplete="off"
-          role="combobox"
-          aria-expanded={showPanel}
-          aria-controls={showPanel ? listId : undefined}
-          aria-autocomplete="list"
+        <div
           className={
             isDesktop
-              ? 'flex-1 px-4 py-3 text-sm border-0 focus:outline-none focus:ring-0 bg-transparent placeholder-gray-400'
-              : 'flex-1 px-4 py-2 text-sm border-0 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-inset bg-transparent'
+              ? 'flex min-w-0 flex-1 items-center gap-2 px-4'
+              : 'flex min-w-0 flex-1 items-center gap-2 px-3'
           }
-          aria-label={tHeader('searchProducts')}
-        />
-
+        >
+          <Search
+            className="h-4 w-4 shrink-0 text-slate-400"
+            strokeWidth={2}
+            aria-hidden
+          />
+          <input
+            type="search"
+            name="q"
+            value={searchQuery}
+            onChange={(e) => {
+              onSearchQueryChange(e.target.value);
+              setPanelOpen(true);
+            }}
+            onFocus={() => setPanelOpen(true)}
+            placeholder={isDesktop ? categoryScopedPlaceholder : t('placeholder')}
+            autoComplete="off"
+            role="combobox"
+            aria-expanded={showPanel}
+            aria-controls={showPanel ? listId : undefined}
+            aria-autocomplete="list"
+            className={
+              isDesktop
+                ? 'min-w-0 flex-1 border-0 bg-transparent py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-0'
+                : 'min-w-0 flex-1 border-0 bg-transparent py-1.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#3BB77E]/30 focus:ring-inset'
+            }
+            aria-label={tHeader('searchProducts')}
+          />
+        </div>
         <button
           type="submit"
-          className={ isDesktop
-              ? 'bg-green-500 text-white px-6 py-3 hover:bg-green-600 transition-colors flex items-center justify-center shrink-0 rounded-r-sm'
-              : 'bg-green-500 text-white px-4 py-2 rounded-r-lg shrink-0'
+          className={
+            isDesktop
+              ? 'm-1.5 flex shrink-0 items-center justify-center rounded-xl bg-[#3BB77E] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#35a570] cursor-pointer'
+              : 'flex shrink-0 items-center justify-center bg-[#3BB77E] px-4 py-2.5 text-white transition-colors hover:bg-[#35a570] cursor-pointer rounded-r-xl'
           }
           aria-label={tHeader('searchProducts')}
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
+          {isDesktop ? (
+            t('searchButton')
+          ) : (
+            <Search className="h-5 w-5" strokeWidth={2} aria-hidden />
+          )}
         </button>
       </form>
 
@@ -196,15 +182,15 @@ export default function SearchBarWithSuggestions({
           role="listbox"
           className={
             isDesktop
-              ? 'absolute left-0 right-0 top-full z-50 mt-1 max-h-[min(24rem,70vh)] overflow-y-auto rounded-lg border border-gray-200 bg-white py-2 shadow-lg'
-              : 'absolute left-0 right-0 top-full z-[60] mt-1 max-h-64 overflow-y-auto rounded-lg border border-gray-200 bg-white py-2 shadow-lg'
+              ? 'absolute left-0 right-0 top-full z-50 mt-2 max-h-[min(24rem,70vh)] overflow-y-auto rounded-2xl border border-slate-100 bg-white py-2 shadow-xl'
+              : 'absolute left-0 right-0 top-full z-[60] mt-1 max-h-64 overflow-y-auto rounded-xl border border-slate-100 bg-white py-2 shadow-lg'
           }
         >
           {loading && (
-            <p className="px-4 py-3 text-sm text-gray-500">{t('searching')}</p>
+            <p className="px-4 py-3 text-sm text-slate-500">{t('searching')}</p>
           )}
           {!loading && suggestions.length === 0 && (
-            <p className="px-4 py-3 text-sm text-gray-500">{t('noMatches')}</p>
+            <p className="px-4 py-3 text-sm text-slate-500">{t('noMatches')}</p>
           )}
           {!loading &&
             suggestions.map((product) => {
@@ -214,18 +200,18 @@ export default function SearchBarWithSuggestions({
                 key={product.id}
                 role="option"
                 aria-selected={false}
-                className="border-b border-gray-100 last:border-0"
+                className="border-b border-slate-100 last:border-0"
               >
                 <Link
                   href={`/product/${product.id}`}
-                  className="flex items-center gap-3 px-3 py-2.5 text-left hover:bg-green-50"
+                  className="flex items-center gap-3 px-3 py-2.5 text-left hover:bg-emerald-50/60"
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => {
                     setPanelOpen(false);
                     onAfterSuggestionPick?.();
                   }}
                 >
-                  <span className="relative block h-12 w-12 shrink-0 overflow-hidden rounded-md border border-gray-100 bg-gray-50">
+                  <span className="relative block h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-slate-100 bg-slate-50">
                     <Image
                       src={product.image}
                       alt={suggestionName}
@@ -235,10 +221,10 @@ export default function SearchBarWithSuggestions({
                     />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="line-clamp-2 text-sm font-medium text-gray-900">
+                    <span className="line-clamp-2 text-sm font-medium text-slate-900">
                       {suggestionName}
                     </span>
-                    <span className="mt-0.5 block text-sm font-semibold text-green-600">
+                    <span className="mt-0.5 block text-sm font-semibold text-[#3BB77E]">
                       {formatPrice(product.price)}
                     </span>
                   </span>
@@ -247,10 +233,10 @@ export default function SearchBarWithSuggestions({
               );
             })}
           {!loading && suggestions.length > 0 && (
-            <div className="border-t border-gray-100 px-3 pt-2">
+            <div className="border-t border-slate-100 px-3 pt-2">
               <Link
                 href={viewAllHref}
-                className="block rounded-md py-2 text-center text-sm font-medium text-green-600 hover:bg-green-50"
+                className="block rounded-lg py-2 text-center text-sm font-medium text-[#3BB77E] hover:bg-emerald-50/60"
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => {
                   setPanelOpen(false);

@@ -42,15 +42,6 @@ function StarRating({ rating, ratingCount }: { rating: number; ratingCount: numb
   );
 }
 
-function descriptionText(
-  product: Product,
-  getProductDescription: (product: Pick<Product, 'id' | 'name' | 'description'>) => string | undefined
-) {
-  const d = getProductDescription(product)?.trim();
-  if (d) return d;
-  return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-}
-
 const labelCell =
   'w-[140px] min-w-[120px] border border-gray-200 bg-gray-50 px-3 py-6 text-center text-sm font-medium text-gray-600 sm:w-[160px]';
 const dataCell =
@@ -213,7 +204,7 @@ export default function CompareView() {
                   {items.map((product) => (
                     <td key={product.id} className={dataCell}>
                       <p className="mx-auto max-w-xs text-center text-sm leading-relaxed text-gray-500">
-                        {descriptionText(product, getProductDescription)}
+                        {getProductDescription(product)?.trim() || t('noDescription')}
                       </p>
                     </td>
                   ))}

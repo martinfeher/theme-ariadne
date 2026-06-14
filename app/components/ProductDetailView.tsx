@@ -17,6 +17,7 @@ import { useProductI18n } from '@/app/hooks/useProductI18n';
 import { vendorHref } from '@/lib/mock-vendors';
 import OrganicBadge from './OrganicBadge';
 import DiscountBadge from './DiscountBadge';
+import ProductReviews from './product/ProductReviews';
 
 const ACCENT = '#3BB77E';
 
@@ -450,9 +451,7 @@ export default function ProductDetailView({
                     </Link>
                   </div>
                 )}
-                {tab === 'reviews' && (
-                  <p className="text-gray-500">{t('reviewsPlaceholder')}</p>
-                )}
+                {tab === 'reviews' && <ProductReviews product={product} />}
               </div>
             </div>
           </div>

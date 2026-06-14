@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
-import { Filter, Home, LayoutGrid, X } from 'lucide-react';
+import { AlertCircle, ChevronDown, Filter, Home, LayoutGrid, PackageOpen, RefreshCw, X } from 'lucide-react';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { fetchProducts } from '@/lib/fetch-products';
 import {
@@ -21,6 +21,9 @@ const BANNER_PATTERN =
 
 const PAGE_SIZES = [12, 24, 50] as const;
 type PageSize = (typeof PAGE_SIZES)[number];
+
+const CATEGORY_SELECT_CLASS =
+  'appearance-none rounded-lg border border-slate-200 bg-white py-2 pl-3 pr-10 text-sm text-slate-800 shadow-sm focus:border-[#3BB77E] focus:outline-none focus:ring-1 focus:ring-[#3BB77E] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50';
 
 type SortId = 'featured' | 'priceAsc' | 'priceDesc' | 'rating';
 
@@ -43,6 +46,65 @@ function StarRow({ rating }: { rating: number }) {
   );
 }
 
+function ProductGridSkeleton({ count = 10 }: { count?: number }) {
+  return (
+    <div
+      className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-5"
+      aria-hidden
+    >
+      {Array.from({ length: count }, (_, i) => (
+        <div
+          key={i}
+          className="overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm"
+        >
+          <div className="aspect-square animate-pulse bg-slate-100" />
+          <div className="space-y-2 p-3">
+            <div className="h-3 w-4/5 animate-pulse rounded bg-slate-100" />
+            <div className="h-3 w-2/5 animate-pulse rounded bg-slate-100" />
+            <div className="h-4 w-1/3 animate-pulse rounded bg-slate-100" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function SidebarProductSkeleton() {
+  return (
+    <li className="flex gap-3" aria-hidden>
+      <div className="h-16 w-16 shrink-0 animate-pulse rounded-lg bg-slate-100" />
+      <div className="min-w-0 flex-1 space-y-2 py-1">
+        <div className="h-3 w-full animate-pulse rounded bg-slate-100" />
+        <div className="h-3 w-2/3 animate-pulse rounded bg-slate-100" />
+        <div className="h-3 w-1/2 animate-pulse rounded bg-slate-100" />
+      </div>
+    </li>
+  );
+}
+
+function CategoryStatusPanel({
+  icon,
+  title,
+  description,
+  action,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  action?: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white px-6 py-16 text-center shadow-sm">
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-50 text-slate-400">
+        {icon}
+      </div>
+      <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
+      <p className="mt-2 max-w-md text-sm text-slate-500">{description}</p>
+      {action ? <div className="mt-6">{action}</div> : null}
+    </div>
+  );
+}
+
 export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
   const t = useTranslations('Category');
   const { getProductName } = useProductI18n();
@@ -60,6 +122,19 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
   const [draftPriceMax, setDraftPriceMax] = useState(80);
   const [appliedPriceMin, setAppliedPriceMin] = useState(0);
   const [appliedPriceMax, setAppliedPriceMax] = useState(80);
+  const [retrying, setRetrying] = useState(false);
+
+  const loadCatalog = useCallback(() => {
+    setStatus('loading');
+    return fetchProducts()
+      .then((res) => {
+        setCatalog(res.products);
+        setStatus('ok');
+      })
+      .catch(() => {
+        setStatus('error');
+      });
+  }, []);
 
   useEffect(() => {
     setBannerTags([
@@ -72,22 +147,15 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
   }, [t]);
 
   useEffect(() => {
-    let cancelled = false;
-    setStatus('loading');
-    fetchProducts()
-      .then((res) => {
-        if (!cancelled) {
-          setCatalog(res.products);
-          setStatus('ok');
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setStatus('error');
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    loadCatalog();
+  }, [loadCatalog]);
+
+  useEffect(() => {
+    setAppliedPriceMin(0);
+    setAppliedPriceMax(80);
+    setDraftPriceMin(0);
+    setDraftPriceMax(80);
+  }, [slug]);
 
   const categoryTitle = slug === 'all' ? t('allCategories') : tBar(slug);
 
@@ -128,8 +196,39 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
     setAppliedPriceMax(draftPriceMax);
   };
 
+  const clearPriceFilters = () => {
+    setDraftPriceMin(0);
+    setDraftPriceMax(80);
+    setAppliedPriceMin(0);
+    setAppliedPriceMax(80);
+  };
+
+  const handleRetry = () => {
+    setRetrying(true);
+    void loadCatalog().finally(() => setRetrying(false));
+  };
+
+  const isEmptyCategory = status === 'ok' && inCategory.length === 0;
+  const isEmptyFromFilters =
+    status === 'ok' && inCategory.length > 0 && processed.length === 0;
+
   const foundLabel =
-    processed.length === 1 ? t('foundItemsOne') : t('foundItems', { count: processed.length });
+    status === 'loading'
+      ? t('loadingCount')
+      : processed.length === 1
+        ? t('foundItemsOne')
+        : t('foundItems', { count: processed.length });
+
+  const statusAnnouncement =
+    status === 'loading'
+      ? t('loading')
+      : status === 'error'
+        ? t('errorTitle')
+        : isEmptyCategory
+          ? t('emptyCategoryTitle')
+          : isEmptyFromFilters
+            ? t('emptyFiltersTitle')
+            : foundLabel;
 
   return (
     <main>
@@ -196,50 +295,123 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
           <div className="min-w-0 flex-1 py-2">
             <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm font-medium text-slate-700">{foundLabel}</p>
+              <p
+                className={`text-sm font-medium ${
+                  status === 'loading' ? 'text-slate-400' : 'text-slate-700'
+                }`}
+              >
+                {foundLabel}
+              </p>
               <div className="flex flex-wrap items-center gap-3">
                 <label htmlFor="category-page-size" className="flex items-center gap-2 text-sm text-slate-600">
                   <span>{t('show')}</span>
-                  <select
-                    id="category-page-size"
-                    value={pageSize}
-                    onChange={(e) => setPageSize(Number(e.target.value) as PageSize)}
-                    aria-label={t('ariaPageSize')}
-                    className="rounded-lg border border-slate-200 bg-white pl-3 pr-4 py-2 text-sm text-slate-800 shadow-sm focus:border-[#3BB77E] focus:outline-none focus:ring-1 focus:ring-[#3BB77E] cursor-pointer"
-                  >
-                    {PAGE_SIZES.map((n) => (
-                      <option key={n} value={n}>
-                        {n}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="relative inline-flex">
+                    <select
+                      id="category-page-size"
+                      value={pageSize}
+                      onChange={(e) => setPageSize(Number(e.target.value) as PageSize)}
+                      aria-label={t('ariaPageSize')}
+                      disabled={status === 'loading'}
+                      className={CATEGORY_SELECT_CLASS}
+                    >
+                      {PAGE_SIZES.map((n) => (
+                        <option key={n} value={n}>
+                          {n}
+                        </option>
+                      ))}
+                    </select>
+                    <span
+                      className="pointer-events-none absolute inset-y-0 right-0 flex items-center pl-2 pr-2.5"
+                      aria-hidden
+                    >
+                      <ChevronDown className="h-4 w-4 text-slate-500" strokeWidth={2} />
+                    </span>
+                  </div>
                 </label>
                 <label htmlFor="category-sort" className="flex items-center gap-2 text-sm text-slate-600">
                   <span>{t('sortBy')}</span>
-                  <select
-                    id="category-sort"
-                    value={sort}
-                    onChange={(e) => setSort(e.target.value as SortId)}
-                    aria-label={t('ariaSort')}
-                    className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-[#3BB77E] focus:outline-none focus:ring-1 focus:ring-[#3BB77E] cursor-pointer"
-                  >
-                    <option value="featured">{t('sortFeatured')}</option>
-                    <option value="priceAsc">{t('sortPriceAsc')}</option>
-                    <option value="priceDesc">{t('sortPriceDesc')}</option>
-                    <option value="rating">{t('sortRating')}</option>
-                  </select>
+                  <div className="relative inline-flex">
+                    <select
+                      id="category-sort"
+                      value={sort}
+                      onChange={(e) => setSort(e.target.value as SortId)}
+                      aria-label={t('ariaSort')}
+                      disabled={status === 'loading'}
+                      className={CATEGORY_SELECT_CLASS}
+                    >
+                      <option value="featured">{t('sortFeatured')}</option>
+                      <option value="priceAsc">{t('sortPriceAsc')}</option>
+                      <option value="priceDesc">{t('sortPriceDesc')}</option>
+                      <option value="rating">{t('sortRating')}</option>
+                    </select>
+                    <span
+                      className="pointer-events-none absolute inset-y-0 right-0 flex items-center pl-2 pr-2.5"
+                      aria-hidden
+                    >
+                      <ChevronDown className="h-4 w-4 text-slate-500" strokeWidth={2} />
+                    </span>
+                  </div>
                 </label>
               </div>
             </div>
 
-            {status === 'loading' && (
-              <p className="py-16 text-center text-slate-500">{t('loading')}</p>
-            )}
+            <p className="sr-only" aria-live="polite">
+              {statusAnnouncement}
+            </p>
+
+            {status === 'loading' && <ProductGridSkeleton count={pageSize > 12 ? 12 : pageSize} />}
             {status === 'error' && (
-              <p className="py-16 text-center text-red-600">{t('error')}</p>
+              <CategoryStatusPanel
+                icon={<AlertCircle className="h-7 w-7" strokeWidth={1.5} />}
+                title={t('errorTitle')}
+                description={t('error')}
+                action={
+                  <button
+                    type="button"
+                    onClick={handleRetry}
+                    disabled={retrying}
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#3BB77E] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#35a570] disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer"
+                  >
+                    <RefreshCw
+                      className={`h-4 w-4 ${retrying ? 'animate-spin' : ''}`}
+                      aria-hidden
+                    />
+                    {t('errorRetry')}
+                  </button>
+                }
+              />
             )}
-            {status === 'ok' && visible.length === 0 && (
-              <p className="py-16 text-center text-slate-500">{t('noProducts')}</p>
+            {isEmptyCategory && (
+              <CategoryStatusPanel
+                icon={<PackageOpen className="h-7 w-7" strokeWidth={1.5} />}
+                title={t('emptyCategoryTitle')}
+                description={t('emptyCategoryDesc')}
+                action={
+                  <Link
+                    href="/category/all"
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#3BB77E] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#35a570]"
+                  >
+                    {t('emptyCategoryCta')}
+                  </Link>
+                }
+              />
+            )}
+            {isEmptyFromFilters && (
+              <CategoryStatusPanel
+                icon={<Filter className="h-7 w-7" strokeWidth={1.5} />}
+                title={t('emptyFiltersTitle')}
+                description={t('emptyFiltersDesc')}
+                action={
+                  <button
+                    type="button"
+                    onClick={clearPriceFilters}
+                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 cursor-pointer"
+                  >
+                    <X className="h-4 w-4" aria-hidden />
+                    {t('emptyFiltersReset')}
+                  </button>
+                }
+              />
             )}
             {status === 'ok' && visible.length > 0 && (
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-5">
@@ -410,7 +582,13 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
                 {tDetail('newProducts')}
               </h2>
               <ul className="space-y-4">
-                {newProductsSidebar.map((p) => {
+                {status === 'loading' &&
+                  Array.from({ length: 3 }, (_, i) => <SidebarProductSkeleton key={i} />)}
+                {status === 'error' && (
+                  <li className="text-sm text-slate-500">{t('sidebarUnavailable')}</li>
+                )}
+                {status === 'ok' &&
+                  newProductsSidebar.map((p) => {
                   const sidebarName = getProductName(p);
                   return (
                   <li key={p.id}>
