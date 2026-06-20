@@ -1,0 +1,565 @@
+'use client';
+
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
+import {
+  AlertCircle,
+  ChevronDown,
+  Filter,
+  Home,
+  LayoutGrid,
+  List,
+  PackageOpen,
+  RefreshCw,
+  X,
+} from 'lucide-react';
+import { useFormatCurrency } from '@/app/context/CurrencyContext';
+import { fetchProducts } from '@/lib/fetch-products';
+import { CATEGORY_SIDEBAR_ICONS } from '@/lib/category-shop';
+import { countProductsWithCategorySlug } from '@/lib/mock-products';
+import type { Product } from '@/app/types/product';
+import ProductListItem from './ProductListItem';
+import { useProductI18n } from '@/app/hooks/useProductI18n';
+
+const BANNER_PATTERN =
+  'url("data:image/svg+xml,%3Csvg width%3D%2280%22 height%3D%2280%22 viewBox%3D%220 0 80 80%22 xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath d%3D%22M12 48c8-18 22-28 36-32M20 24c12 4 20 14 24 28M52 20c-6 14-6 28 2 40%22 fill%3D%22none%22 stroke%3D%22%233BB77E%22 stroke-opacity%3D%220.14%22 stroke-width%3D%221.2%22 stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E")';
+
+const PAGE_SIZES = [12, 24, 50] as const;
+type PageSize = (typeof PAGE_SIZES)[number];
+
+const SELECT_CLASS =
+  'appearance-none rounded-lg border border-slate-200 bg-white py-2 pl-3 pr-10 text-sm text-slate-800 shadow-sm focus:border-[#3BB77E] focus:outline-none focus:ring-1 focus:ring-[#3BB77E] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50';
+
+type SortId = 'featured' | 'priceAsc' | 'priceDesc' | 'rating';
+
+function StarRow({ rating }: { rating: number }) {
+  const filled = Math.floor(rating);
+  return (
+    <div className="flex items-center gap-0.5" aria-hidden>
+      {[0, 1, 2, 3, 4].map((i) => (
+        <svg
+          key={i}
+          className={`h-3.5 w-3.5 ${
+            i < filled ? 'fill-amber-400 text-amber-400' : 'fill-gray-200 text-gray-200'
+          }`}
+          viewBox="0 0 20 20"
+        >
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      ))}
+    </div>
+  );
+}
+
+function ProductListSkeleton({ count = 8 }: { count?: number }) {
+  return (
+    <div className="space-y-4" aria-hidden>
+      {Array.from({ length: count }, (_, i) => (
+        <div
+          key={i}
+          className="flex overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm"
+        >
+          <div className="h-40 w-44 shrink-0 animate-pulse bg-slate-100 sm:h-auto sm:min-h-[168px]" />
+          <div className="flex flex-1 flex-col justify-between p-5">
+            <div className="space-y-2">
+              <div className="h-3 w-24 animate-pulse rounded bg-slate-100" />
+              <div className="h-5 w-3/4 animate-pulse rounded bg-slate-100" />
+              <div className="h-4 w-full animate-pulse rounded bg-slate-100" />
+            </div>
+            <div className="mt-4 flex justify-between border-t border-slate-100 pt-4">
+              <div className="h-6 w-20 animate-pulse rounded bg-slate-100" />
+              <div className="h-9 w-32 animate-pulse rounded-lg bg-slate-100" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function SidebarProductSkeleton() {
+  return (
+    <li className="flex gap-3" aria-hidden>
+      <div className="h-16 w-16 shrink-0 animate-pulse rounded-lg bg-slate-100" />
+      <div className="min-w-0 flex-1 space-y-2 py-1">
+        <div className="h-3 w-full animate-pulse rounded bg-slate-100" />
+        <div className="h-3 w-2/3 animate-pulse rounded bg-slate-100" />
+      </div>
+    </li>
+  );
+}
+
+function StatusPanel({
+  icon,
+  title,
+  description,
+  action,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  action?: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white px-6 py-16 text-center shadow-sm">
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-50 text-slate-400">
+        {icon}
+      </div>
+      <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
+      <p className="mt-2 max-w-md text-sm text-slate-500">{description}</p>
+      {action ? <div className="mt-6">{action}</div> : null}
+    </div>
+  );
+}
+
+export default function ShopListView() {
+  const t = useTranslations('ShopList');
+  const tCat = useTranslations('Category');
+  const tDetail = useTranslations('ProductDetail');
+  const tBar = useTranslations('SearchBar.categories');
+  const { getProductName } = useProductI18n();
+  const formatPrice = useFormatCurrency();
+
+  const [catalog, setCatalog] = useState<Product[]>([]);
+  const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading');
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [pageSize, setPageSize] = useState<PageSize>(12);
+  const [sort, setSort] = useState<SortId>('featured');
+  const [draftPriceMin, setDraftPriceMin] = useState(0);
+  const [draftPriceMax, setDraftPriceMax] = useState(80);
+  const [appliedPriceMin, setAppliedPriceMin] = useState(0);
+  const [appliedPriceMax, setAppliedPriceMax] = useState(80);
+  const [retrying, setRetrying] = useState(false);
+
+  const loadCatalog = useCallback(() => {
+    setStatus('loading');
+    return fetchProducts()
+      .then((res) => {
+        setCatalog(res.products);
+        setStatus('ok');
+      })
+      .catch(() => {
+        setStatus('error');
+      });
+  }, []);
+
+  useEffect(() => {
+    loadCatalog();
+  }, [loadCatalog]);
+
+  const inCategory = useMemo(() => {
+    if (activeCategory === 'all') return catalog;
+    return catalog.filter((p) => p.categories?.includes(activeCategory) ?? false);
+  }, [catalog, activeCategory]);
+
+  const processed = useMemo(() => {
+    let list = inCategory.filter(
+      (p) => p.price >= appliedPriceMin && p.price <= appliedPriceMax
+    );
+
+    switch (sort) {
+      case 'priceAsc':
+        list = [...list].sort((a, b) => a.price - b.price);
+        break;
+      case 'priceDesc':
+        list = [...list].sort((a, b) => b.price - a.price);
+        break;
+      case 'rating':
+        list = [...list].sort((a, b) => b.rating - a.rating);
+        break;
+    }
+
+    return list;
+  }, [inCategory, appliedPriceMin, appliedPriceMax, sort]);
+
+  const visible = useMemo(() => processed.slice(0, pageSize), [processed, pageSize]);
+
+  const newProductsSidebar = useMemo(() => catalog.slice(0, 3), [catalog]);
+
+  const applySidebarFilter = () => {
+    setAppliedPriceMin(draftPriceMin);
+    setAppliedPriceMax(draftPriceMax);
+  };
+
+  const clearPriceFilters = () => {
+    setDraftPriceMin(0);
+    setDraftPriceMax(80);
+    setAppliedPriceMin(0);
+    setAppliedPriceMax(80);
+  };
+
+  const handleRetry = () => {
+    setRetrying(true);
+    void loadCatalog().finally(() => setRetrying(false));
+  };
+
+  const isEmptyCategory = status === 'ok' && inCategory.length === 0;
+  const isEmptyFromFilters =
+    status === 'ok' && inCategory.length > 0 && processed.length === 0;
+
+  const foundLabel =
+    status === 'loading'
+      ? tCat('loadingCount')
+      : processed.length === 1
+        ? tCat('foundItemsOne')
+        : tCat('foundItems', { count: processed.length });
+
+  const statusAnnouncement =
+    status === 'loading'
+      ? tCat('loading')
+      : status === 'error'
+        ? tCat('errorTitle')
+        : isEmptyCategory
+          ? tCat('emptyCategoryTitle')
+          : isEmptyFromFilters
+            ? tCat('emptyFiltersTitle')
+            : foundLabel;
+
+  return (
+    <main>
+      <section
+        className="relative overflow-hidden border-b border-emerald-100/80"
+        style={{
+          backgroundColor: '#E8F8F1',
+          backgroundImage: BANNER_PATTERN,
+        }}
+      >
+        <div className="container mx-auto max-w-7xl px-4 py-10 sm:py-12">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                {t('title')}
+              </h1>
+              <p className="mt-2 max-w-2xl text-sm text-slate-600 sm:text-base">{t('subtitle')}</p>
+              <nav
+                className="mt-3 flex flex-wrap items-center gap-1.5 text-sm text-slate-600"
+                aria-label={tCat('breadcrumbNav')}
+              >
+                <Link
+                  href="/"
+                  className="inline-flex items-center gap-1 rounded-md hover:text-[#3BB77E]"
+                >
+                  <Home className="h-4 w-4" aria-hidden />
+                  <span>{tCat('breadcrumbHome')}</span>
+                </Link>
+                <span className="text-slate-400" aria-hidden>
+                  &gt;
+                </span>
+                <span>{tCat('breadcrumbShop')}</span>
+                <span className="text-slate-400" aria-hidden>
+                  &gt;
+                </span>
+                <span className="font-medium text-slate-800">{t('breadcrumb')}</span>
+              </nav>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href="/category/all"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:border-[#3BB77E] hover:text-[#3BB77E]"
+              >
+                <LayoutGrid className="h-4 w-4" aria-hidden />
+                {t('gridView')}
+              </Link>
+              <span className="inline-flex items-center gap-2 rounded-lg bg-[#3BB77E] px-3 py-2 text-sm font-semibold text-white">
+                <List className="h-4 w-4" aria-hidden />
+                {t('listView')}
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="container mx-auto max-w-7xl px-4 py-8">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+          <aside className="w-full shrink-0 space-y-6 lg:w-[300px]">
+            <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+              <h2 className="mb-4 text-lg font-semibold text-slate-900">
+                {tDetail('sidebarCategory')}
+              </h2>
+              <ul className="space-y-1">
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => setActiveCategory('all')}
+                    className={`flex w-full items-center justify-between rounded-xl py-2.5 pl-1 pr-1 transition-colors cursor-pointer ${
+                      activeCategory === 'all'
+                        ? 'bg-emerald-50 ring-1 ring-emerald-100'
+                        : 'hover:bg-slate-50'
+                    }`}
+                  >
+                    <span className="flex min-w-0 items-center gap-3">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-[#3BB77E]">
+                        <LayoutGrid className="h-4 w-4" aria-hidden />
+                      </span>
+                      <span className="truncate text-sm text-slate-700">{tCat('allCategories')}</span>
+                    </span>
+                    <span className="flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full bg-[#3BB77E] px-2 text-xs font-semibold text-white">
+                      {status === 'ok' ? catalog.length : '—'}
+                    </span>
+                  </button>
+                </li>
+                {CATEGORY_SIDEBAR_ICONS.map(({ slug: catSlug, icon }) => {
+                  const count = countProductsWithCategorySlug(catSlug);
+                  const label = tBar(catSlug);
+                  const active = activeCategory === catSlug;
+                  return (
+                    <li key={catSlug}>
+                      <button
+                        type="button"
+                        onClick={() => setActiveCategory(catSlug)}
+                        className={`flex w-full items-center justify-between rounded-xl py-2.5 pl-1 pr-1 transition-colors cursor-pointer ${
+                          active ? 'bg-emerald-50 ring-1 ring-emerald-100' : 'hover:bg-slate-50'
+                        }`}
+                      >
+                        <span className="flex min-w-0 items-center gap-3">
+                          <Image
+                            src={icon}
+                            alt=""
+                            width={28}
+                            height={28}
+                            className="shrink-0 opacity-80"
+                          />
+                          <span className="truncate text-sm text-slate-700">{label}</span>
+                        </span>
+                        <span className="flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full bg-[#3BB77E] px-2 text-xs font-semibold text-white">
+                          {count}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+              <h2 className="mb-4 text-lg font-semibold text-slate-900">
+                {tDetail('sidebarFillPrice')}
+              </h2>
+              <div className="mb-4 space-y-3">
+                <input
+                  type="range"
+                  min={0}
+                  max={80}
+                  value={draftPriceMin}
+                  onChange={(e) => {
+                    const v = Number(e.target.value);
+                    setDraftPriceMin(Math.min(v, draftPriceMax));
+                  }}
+                  aria-label={tCat('ariaPriceMin')}
+                  className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#3BB77E]"
+                />
+                <input
+                  type="range"
+                  min={0}
+                  max={80}
+                  value={draftPriceMax}
+                  onChange={(e) => {
+                    const v = Number(e.target.value);
+                    setDraftPriceMax(Math.max(v, draftPriceMin));
+                  }}
+                  aria-label={tCat('ariaPriceMax')}
+                  className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#3BB77E]"
+                />
+                <div className="flex justify-between text-xs text-slate-500">
+                  <span>
+                    {tDetail('from')} {formatPrice(draftPriceMin)}
+                  </span>
+                  <span>
+                    {tDetail('to')} {formatPrice(draftPriceMax)}
+                  </span>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={applySidebarFilter}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#3BB77E] py-2.5 text-sm font-semibold text-white hover:bg-[#35a570] cursor-pointer"
+              >
+                <Filter className="h-4 w-4" aria-hidden />
+                {tDetail('filter')}
+              </button>
+            </div>
+
+            <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+              <h2 className="mb-4 text-lg font-semibold text-slate-900">
+                {tDetail('newProducts')}
+              </h2>
+              <ul className="space-y-4">
+                {status === 'loading' &&
+                  Array.from({ length: 3 }, (_, i) => <SidebarProductSkeleton key={i} />)}
+                {status === 'error' && (
+                  <li className="text-sm text-slate-500">{tCat('sidebarUnavailable')}</li>
+                )}
+                {status === 'ok' &&
+                  newProductsSidebar.map((p) => {
+                    const sidebarName = getProductName(p);
+                    return (
+                      <li key={p.id}>
+                        <Link
+                          href={`/product/${p.id}`}
+                          className="flex gap-3 rounded-lg hover:bg-slate-50"
+                        >
+                          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-slate-100">
+                            <Image
+                              src={p.image}
+                              alt={sidebarName}
+                              fill
+                              className="object-cover"
+                              sizes="64px"
+                            />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="line-clamp-2 text-sm font-medium text-[#3BB77E]">
+                              {sidebarName}
+                            </p>
+                            <p className="mt-1 text-sm font-semibold text-amber-600">
+                              {formatPrice(p.price)}
+                            </p>
+                            <div className="mt-1">
+                              <StarRow rating={p.rating} />
+                            </div>
+                          </div>
+                        </Link>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+          </aside>
+
+          <div className="min-w-0 flex-1">
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p
+                className={`text-sm font-medium ${
+                  status === 'loading' ? 'text-slate-400' : 'text-slate-700'
+                }`}
+              >
+                {foundLabel}
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <label htmlFor="shop-list-page-size" className="flex items-center gap-2 text-sm text-slate-600">
+                  <span>{tCat('show')}</span>
+                  <div className="relative inline-flex">
+                    <select
+                      id="shop-list-page-size"
+                      value={pageSize}
+                      onChange={(e) => setPageSize(Number(e.target.value) as PageSize)}
+                      aria-label={tCat('ariaPageSize')}
+                      disabled={status === 'loading'}
+                      className={SELECT_CLASS}
+                    >
+                      {PAGE_SIZES.map((n) => (
+                        <option key={n} value={n}>
+                          {n}
+                        </option>
+                      ))}
+                    </select>
+                    <span
+                      className="pointer-events-none absolute inset-y-0 right-0 flex items-center pl-2 pr-2.5"
+                      aria-hidden
+                    >
+                      <ChevronDown className="h-4 w-4 text-slate-500" strokeWidth={2} />
+                    </span>
+                  </div>
+                </label>
+                <label htmlFor="shop-list-sort" className="flex items-center gap-2 text-sm text-slate-600">
+                  <span>{tCat('sortBy')}</span>
+                  <div className="relative inline-flex">
+                    <select
+                      id="shop-list-sort"
+                      value={sort}
+                      onChange={(e) => setSort(e.target.value as SortId)}
+                      aria-label={tCat('ariaSort')}
+                      disabled={status === 'loading'}
+                      className={SELECT_CLASS}
+                    >
+                      <option value="featured">{tCat('sortFeatured')}</option>
+                      <option value="priceAsc">{tCat('sortPriceAsc')}</option>
+                      <option value="priceDesc">{tCat('sortPriceDesc')}</option>
+                      <option value="rating">{tCat('sortRating')}</option>
+                    </select>
+                    <span
+                      className="pointer-events-none absolute inset-y-0 right-0 flex items-center pl-2 pr-2.5"
+                      aria-hidden
+                    >
+                      <ChevronDown className="h-4 w-4 text-slate-500" strokeWidth={2} />
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <p className="sr-only" aria-live="polite">
+              {statusAnnouncement}
+            </p>
+
+            {status === 'loading' && <ProductListSkeleton count={pageSize > 8 ? 8 : pageSize} />}
+            {status === 'error' && (
+              <StatusPanel
+                icon={<AlertCircle className="h-7 w-7" strokeWidth={1.5} />}
+                title={tCat('errorTitle')}
+                description={tCat('error')}
+                action={
+                  <button
+                    type="button"
+                    onClick={handleRetry}
+                    disabled={retrying}
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#3BB77E] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#35a570] disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer"
+                  >
+                    <RefreshCw
+                      className={`h-4 w-4 ${retrying ? 'animate-spin' : ''}`}
+                      aria-hidden
+                    />
+                    {tCat('errorRetry')}
+                  </button>
+                }
+              />
+            )}
+            {isEmptyCategory && (
+              <StatusPanel
+                icon={<PackageOpen className="h-7 w-7" strokeWidth={1.5} />}
+                title={tCat('emptyCategoryTitle')}
+                description={tCat('emptyCategoryDesc')}
+                action={
+                  <button
+                    type="button"
+                    onClick={() => setActiveCategory('all')}
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#3BB77E] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#35a570] cursor-pointer"
+                  >
+                    {tCat('emptyCategoryCta')}
+                  </button>
+                }
+              />
+            )}
+            {isEmptyFromFilters && (
+              <StatusPanel
+                icon={<Filter className="h-7 w-7" strokeWidth={1.5} />}
+                title={tCat('emptyFiltersTitle')}
+                description={tCat('emptyFiltersDesc')}
+                action={
+                  <button
+                    type="button"
+                    onClick={clearPriceFilters}
+                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 cursor-pointer"
+                  >
+                    <X className="h-4 w-4" aria-hidden />
+                    {tCat('emptyFiltersReset')}
+                  </button>
+                }
+              />
+            )}
+            {status === 'ok' && visible.length > 0 && (
+              <div className="space-y-4">
+                {visible.map((product) => (
+                  <ProductListItem key={product.id} product={product} flyToCartOnAdd />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}

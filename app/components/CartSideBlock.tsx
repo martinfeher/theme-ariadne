@@ -23,7 +23,7 @@ const CartSideBlock: React.FC = () => {
       aria-label={t('cartAria', { itemsLabel, total: formattedTotal })}
       className="fixed right-0 top-1/2 z-[220] flex min-w-[83px] w-19 -translate-y-1/2 flex-col overflow-hidden rounded-l-xl border border-b-0 border-r-0 border-gray-200 bg-white text-center shadow-md transition-shadow hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 cursor-pointer"
     >
-      <div className="flex flex-1 flex-col items-center justify-center gap-2 px-2 py-4">
+      <div className="flex flex-1 flex-col items-center justify-center gap-2 px-2 py-4" id="cart-side-block">
         <ShoppingBag
           className="h-7 w-7 text-green-500"
           strokeWidth={1.75}

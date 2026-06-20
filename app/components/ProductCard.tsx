@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
@@ -23,8 +23,8 @@ interface ProductCardProps {
   product: Product;
   allProducts?: Product[];
   size?: 'small' | 'medium';
-  /** When true, card click opens the full product page instead of quick view. */
   linkToProductPage?: boolean;
+  flyToCartOnAdd?: boolean;
 }
 
 function getSimilarProducts(current: Product, all: Product[]): Product[] {
@@ -47,13 +47,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
   allProducts = [],
   size = 'medium',
   linkToProductPage = false,
+  flyToCartOnAdd = false,
 }) => {
   const t = useTranslations('ProductCard');
   const router = useRouter();
   const { getProductName } = useProductI18n();
   const productName = getProductName(product);
   const formatPrice = useFormatCurrency();
-  const { addItem, removeOne, getQuantity } = useCart();
+  const { addItem, removeOne, getQuantity, flyToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
   const { isInCompare, addToCompare, removeFromCompare, canAdd } = useCompare();
   const wishlisted = isInWishlist(product.id);
@@ -63,6 +64,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState<ModalTab>('description');
+  const productCardRef = useRef<HTMLDivElement>(null);
 
   const similarProducts = useMemo(
     () => getSimilarProducts(product, allProducts),
@@ -106,6 +108,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const addToCart = () => {
     if (!inStock) return;
+    const isFirstAdd = productCartCounter === 0;
+    if (flyToCartOnAdd && isFirstAdd && productCardRef.current) {
+      flyToCart(product.image, productCardRef.current.getBoundingClientRect());
+    }
     addItem(product, 1);
   };
 
@@ -176,7 +182,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="relative aspect-square">
+          <div ref={productCardRef} className="relative aspect-square product-card">
             <Image
               src={isHovered && product.hoverImage ? product.hoverImage : product.image}
               alt={productName}

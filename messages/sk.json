@@ -26,6 +26,8 @@
     "about": "O nás",
     "shop": "Obchod",
     "shopMenuCheckout": "Pokladňa",
+    "shopMenuList": "Obchod — zoznam",
+    "shopMenuGrid": "Obchod — mriežka",
     "shopMenuInvoice": "Faktúra obchodu",
     "vendors": "Predajcovia",
     "blog": "Blog",
@@ -228,6 +230,16 @@
       "meats": "Mäso",
       "fruits": "Ovocie"
     }
+  },
+  "ShopList": {
+    "title": "Obchod — zoznam",
+    "subtitle": "Prehliadajte produkty v riadkovom rozložení s rýchlym pridaním do košíka.",
+    "breadcrumb": "Zoznam",
+    "metaDescription": "Prehliadajte všetky produkty v zoznamovom rozložení s filtrami, triedením a rýchlym pridaním do košíka.",
+    "gridView": "Mriežka",
+    "listView": "Zoznam",
+    "addToCart": "Pridať do košíka",
+    "viewProduct": "Zobraziť produkt"
   },
   "Category": {
     "allCategories": "Všetky produkty",
@@ -1686,7 +1698,12 @@
       "28": "Jasmínový perlový zelený čaj",
       "29": "Tmavé praženie espresso",
       "31": "Jahodový džem",
-      "32": "Marhuľový ovocný spread"
+      "32": "Bio mrkva",
+      "33": "Čerstvé uhorky",
+      "34": "Paradajky dozreté na stonke",
+      "35": "Čerstvý baby špenát",
+      "36": "Zelené papriky",
+      "37": "Čerstvý karfiol"
     },
     "descriptions": {
       "1": "Bio zmes celozrnných obilnín z quinoy, hnedej a červenej ryže — pripravená za pár minút, ideálna ako príloha alebo základ misy.",
@@ -1708,7 +1725,12 @@
       "28": "Ručne rolované jasmínové perly, ktoré sa rozvíjajú vo voňavý kvetinový čaj na viac infúzií.",
       "29": "Intenzívne tmavé espresso s hustou cremou — ideálne do latte aj na čisté shoty.",
       "31": "Sladký jahodový džem z čerstvých plodov — skvelý na toast alebo do dezertov.",
-      "32": "Svetlý marhuľový spread s jemnou textúrou — výborný na pečivo a raňajkové misy."
+      "32": "Sladká bio mrkva, ideálna na desiatu, pečenie alebo do polievok a ragú.",
+      "33": "Chladivé chrumkavé uhorky, perfektné do šalátov, sendvičov a osviežujúcich snackov.",
+      "34": "Šťavnaté paradajky dozreté na stonke s bohatou chuťou na omáčky, šaláty a sendviče.",
+      "35": "Jemné listy baby špenátu, ideálne do šalátov, smoothie a rýchleho restovania.",
+      "36": "Chrumkavé zelené papriky s jemnou sladkou chuťou — skvelé surové aj pečené.",
+      "37": "Pevné biele ružičky karfiolu vhodné na pečenie, pyré alebo karfiolovú ryžu."
     }
   }
 }

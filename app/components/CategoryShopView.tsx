@@ -421,6 +421,7 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
                     product={product}
                     allProducts={catalog}
                     size="small"
+                    flyToCartOnAdd
                   />
                 ))}
               </div>

@@ -10,6 +10,7 @@ import React, {
 import type { Product } from '../types/product';
 import CartOffCanvas from '../components/CartOffCanvas';
 import CartSideBlock from '../components/CartSideBlock';
+import FlyToCartLayer, { getCartSideBlockTarget, type FlyToCartItem } from '../components/FlyToCartLayer';
 
 export interface CartLine {
   product: Product;
@@ -25,6 +26,7 @@ interface CartContextValue {
   closeCart: () => void;
   toggleCart: () => void;
   addItem: (product: Product, quantity?: number) => void;
+  flyToCart: (image: string, fromRect: DOMRect) => void;
   removeOne: (productId: number) => void;
   removeLine: (productId: number) => void;
   setQuantity: (productId: number, quantity: number) => void;
@@ -45,6 +47,8 @@ export function useCart() {
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [flyItems, setFlyItems] = useState<FlyToCartItem[]>([]);
+  const flyIdRef = React.useRef(0);
 
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
@@ -63,6 +67,28 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       };
       return next;
     });
+  }, []);
+
+  const flyToCart = useCallback((image: string, fromRect: DOMRect) => {
+    const target = getCartSideBlockTarget();
+    if (!target) return;
+    flyIdRef.current += 1;
+    const id = flyIdRef.current;
+    setFlyItems((prev) => [
+      ...prev,
+      {
+        id,
+        image,
+        startX: fromRect.left,
+        startY: fromRect.top,
+        endX: target.endX,
+        endY: target.endY,
+      },
+    ]);
+  }, []);
+
+  const completeFlyToCart = useCallback((id: number) => {
+    setFlyItems((prev) => prev.filter((item) => item.id !== id));
   }, []);
 
   const removeOne = useCallback((productId: number) => {
@@ -126,6 +152,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       closeCart,
       toggleCart,
       addItem,
+      flyToCart,
       removeOne,
       removeLine,
       setQuantity,
@@ -141,6 +168,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       closeCart,
       toggleCart,
       addItem,
+      flyToCart,
       removeOne,
       removeLine,
       setQuantity,
@@ -154,6 +182,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       {children}
       <CartSideBlock />
       <CartOffCanvas />
+      <FlyToCartLayer items={flyItems} onComplete={completeFlyToCart} />
     </CartContext.Provider>
   );
 }

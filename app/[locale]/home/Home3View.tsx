@@ -250,6 +250,7 @@ export default function Home3View() {
                       product={product}
                       allProducts={products}
                       size="small"
+                      flyToCartOnAdd
                     />
                   ))}
                 </div>

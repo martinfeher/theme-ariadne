@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Search } from 'lucide-react';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
-import { Link } from '@/i18n/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
 import SearchCategoryPicker from '@/app/components/SearchCategoryPicker';
 import { fetchProducts } from '@/lib/fetch-products';
 import type { Product } from '@/app/types/product';
@@ -37,11 +37,14 @@ export default function SearchBarWithSuggestions({
   const tHeader = useTranslations('Header');
   const { getProductName } = useProductI18n();
   const formatPrice = useFormatCurrency();
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
+  const optionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const listId = variant === 'desktop' ? 'search-suggestions-desktop' : 'search-suggestions-mobile';
   const [suggestions, setSuggestions] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
 
   const categoryScopedPlaceholder = useMemo(() => {
     if (!selectedCategory || selectedCategory === 'all') {
@@ -84,6 +87,16 @@ export default function SearchBarWithSuggestions({
   }, [trimmed, selectedCategory]);
 
   useEffect(() => {
+    setActiveIndex(-1);
+  }, [trimmed, suggestions]);
+
+  useEffect(() => {
+    if (activeIndex >= 0) {
+      optionRefs.current[activeIndex]?.scrollIntoView({ block: 'nearest' });
+    }
+  }, [activeIndex]);
+
+  useEffect(() => {
     const close = (e: MouseEvent) => {
       if (!containerRef.current?.contains(e.target as Node)) {
         setPanelOpen(false);
@@ -107,6 +120,57 @@ export default function SearchBarWithSuggestions({
     setPanelOpen(false);
     onSubmit(e);
   };
+
+  const openSelectedProduct = (product: Product) => {
+    setPanelOpen(false);
+    setActiveIndex(-1);
+    onAfterSuggestionPick?.();
+    router.push(`/product/${product.id}`);
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      if (panelOpen) {
+        e.preventDefault();
+        setPanelOpen(false);
+        setActiveIndex(-1);
+      }
+      return;
+    }
+
+    if (trimmed.length === 0) return;
+
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (!loading && suggestions.length > 0) {
+        e.preventDefault();
+        if (!panelOpen) setPanelOpen(true);
+        setActiveIndex((index) => {
+          if (e.key === 'ArrowDown') {
+            return index < suggestions.length - 1 ? index + 1 : 0;
+          }
+          return index > 0 ? index - 1 : suggestions.length - 1;
+        });
+      }
+      return;
+    }
+
+    if (
+      e.key === 'Enter' &&
+      panelOpen &&
+      !loading &&
+      activeIndex >= 0 &&
+      suggestions[activeIndex]
+    ) {
+      e.preventDefault();
+      openSelectedProduct(suggestions[activeIndex]);
+    }
+  };
+
+  const getOptionId = (productId: number) => `${listId}-option-${productId}`;
+  const activeDescendantId =
+    activeIndex >= 0 && suggestions[activeIndex]
+      ? getOptionId(suggestions[activeIndex].id)
+      : undefined;
 
   const isDesktop = variant === 'desktop';
 
@@ -145,11 +209,13 @@ export default function SearchBarWithSuggestions({
               setPanelOpen(true);
             }}
             onFocus={() => setPanelOpen(true)}
+            onKeyDown={handleInputKeyDown}
             placeholder={isDesktop ? categoryScopedPlaceholder : t('placeholder')}
             autoComplete="off"
             role="combobox"
             aria-expanded={showPanel}
             aria-controls={showPanel ? listId : undefined}
+            aria-activedescendant={showPanel ? activeDescendantId : undefined}
             aria-autocomplete="list"
             className={
               isDesktop
@@ -193,21 +259,30 @@ export default function SearchBarWithSuggestions({
             <p className="px-4 py-3 text-sm text-slate-500">{t('noMatches')}</p>
           )}
           {!loading &&
-            suggestions.map((product) => {
+            suggestions.map((product, index) => {
               const suggestionName = getProductName(product);
+              const isActive = activeIndex === index;
               return (
               <div
                 key={product.id}
+                id={getOptionId(product.id)}
+                ref={(el) => {
+                  optionRefs.current[index] = el;
+                }}
                 role="option"
-                aria-selected={false}
+                aria-selected={isActive}
                 className="border-b border-slate-100 last:border-0"
               >
                 <Link
                   href={`/product/${product.id}`}
-                  className="flex items-center gap-3 px-3 py-2.5 text-left hover:bg-emerald-50/60"
+                  className={`flex items-center gap-3 px-3 py-2.5 text-left ${
+                    isActive ? 'bg-emerald-50' : 'hover:bg-slate-50/60'
+                  }`}
                   onMouseDown={(e) => e.preventDefault()}
+                  onMouseEnter={() => setActiveIndex(index)}
                   onClick={() => {
                     setPanelOpen(false);
+                    setActiveIndex(-1);
                     onAfterSuggestionPick?.();
                   }}
                 >

@@ -50,6 +50,11 @@ function ShopMenuNav() {
   const [open, setOpen] = useState(false);
 
   const links = [
+    { href: '/category/all', label: t('shopMenuGrid') },
+    { href: '/shop/list', label: t('shopMenuList') },
+    { href: '/cart', label: t('cart') },
+    { href: '/wishlist', label: t('wishlist') },
+    { href: '/compare', label: t('compare') },
     { href: '/checkout', label: t('shopMenuCheckout') },
     { href: '/shop-invoice', label: t('shopMenuInvoice') },
   ] as const;
@@ -61,7 +66,7 @@ function ShopMenuNav() {
       onMouseLeave={() => setOpen(false)}
     >
       <Link
-        href="/checkout"
+        href="/category/all"
         className={
           open
             ? 'flex items-center gap-1 font-medium text-green-600 transition-colors'
@@ -464,7 +469,7 @@ const Header = () => {
       </div>
 
       {/* Header Middle */}
-      <div className="hidden lg:block py-4 bg-[#f3f4f5]">
+      <div className="hidden lg:block py-4 bg-[#f3f6fa">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="shrink-0">

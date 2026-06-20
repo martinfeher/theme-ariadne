@@ -29,6 +29,7 @@ export function getSitemapPathEntries(): SitemapPathEntry[] {
     { path: '/about-2', changeFrequency: 'monthly', priority: 0.5 },
     { path: '/vendors', changeFrequency: 'weekly', priority: 0.7 },
     { path: '/vouchers', changeFrequency: 'weekly', priority: 0.5 },
+    { path: '/shop/list', changeFrequency: 'daily', priority: 0.8 },
     { path: '/checkout', changeFrequency: 'monthly', priority: 0.5 },
     { path: '/shop-invoice', changeFrequency: 'monthly', priority: 0.4 },
     { path: '/order-tracking', changeFrequency: 'monthly', priority: 0.5 },

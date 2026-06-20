@@ -26,6 +26,8 @@
     "about": "About",
     "shop": "Shop",
     "shopMenuCheckout": "Checkout",
+    "shopMenuList": "Shop — List view",
+    "shopMenuGrid": "Shop — Grid view",
     "shopMenuInvoice": "Shop invoice",
     "vendors": "Vendors",
     "blog": "Blog",
@@ -229,6 +231,16 @@
       "meats": "Meats",
       "fruits": "Fruits"
     }
+  },
+  "ShopList": {
+    "title": "Shop — List view",
+    "subtitle": "Browse products in a detailed row layout with quick add-to-cart actions.",
+    "breadcrumb": "List view",
+    "metaDescription": "Browse all products in a list layout with filters, sorting, and quick add to cart.",
+    "gridView": "Grid view",
+    "listView": "List view",
+    "addToCart": "Add to cart",
+    "viewProduct": "View product"
   },
   "Category": {
     "allCategories": "All products",
@@ -1686,7 +1698,11 @@
       "27": "Organic Green Tea",
       "28": "Jasmine Pearl Green Tea",
       "29": "Dark Roast Espresso",
-      "31": "Strawberry Jam"
+      "31": "Strawberry Jam",
+      "34": "Vine-Ripened Tomatoes",
+      "35": "Fresh Baby Spinach",
+      "36": "Green Bell Peppers",
+      "37": "Fresh Cauliflower Head"
     },
     "descriptions": {
       "1": "Organic whole grains blend of quinoa, brown rice, and red rice—ready in minutes and perfect as a side or bowl base.",
@@ -1707,7 +1723,12 @@
       "27": "Light and refreshing green tea with a clean finish—perfect hot or iced.",
       "28": "Hand-rolled jasmine pearls that unfurl for a fragrant, floral cup with multiple infusions.",
       "29": "Intense dark roast espresso with a thick crema—ideal for lattes and straight shots.",
-      "31": "Sweet strawberry jam made from ripe berries—perfect on toast or in desserts."
+      "31": "Sweet strawberry jam made from ripe berries—perfect on toast or in desserts.",
+      "33": "Cool, crisp cucumbers perfect for salads, sandwiches, and refreshing snacks.",
+      "34": "Plump vine-ripened tomatoes with rich flavor for sauces, salads, and sandwiches.",
+      "35": "Tender baby spinach leaves, perfect for salads, smoothies, and quick sautés.",
+      "36": "Crisp green bell peppers with a mild, sweet flavor—great raw or roasted.",
+      "37": "Firm white cauliflower florets ideal for roasting, mashing, or rice bowls."
     }
   }
 }

@@ -84,6 +84,7 @@ const PopularProducts: React.FC = () => {
                   product={product}
                   allProducts={products}
                   size="medium"
+                  flyToCartOnAdd
                 />
               ))}
             </div>

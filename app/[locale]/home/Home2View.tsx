@@ -144,6 +144,7 @@ export default function Home2View() {
                       product={product}
                       allProducts={products}
                       size="small"
+                      flyToCartOnAdd
                     />
                   ))}
                 </div>
