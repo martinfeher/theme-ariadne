@@ -21,7 +21,7 @@ export default function OrganicBadge({ className = '', size = 'md' }: OrganicBad
 
   return (
     <span
-      className={`inline-flex items-center rounded-full bg-green-500/70 backdrop-blur-[7px] font-medium text-white ${sizeClass} ${className}`}
+      className={`inline-flex items-center rounded-full bg-[#00b645]/70 backdrop-blur-[7px] font-medium text-white ${sizeClass} ${className}`}
  
  
     >

@@ -108,7 +108,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     // ? 'mb-[7px] mr-1 h-[36px] w-[88%] px-1.5 py-1'
     : 'mb-[8px] mr-[7px] h-[40px] w-[93.5%] px-[4px] py-[10px]';
   const cartPillBtnClass = isSmall ? 'h-[29px] w-[29px]' : 'h-[35px] w-[35px]';
-  const cartCircleGreen = 'bg-[#3BB77E]';
+  const cartCircleGreen = 'bg-[#22b257]';
 
   const addToCart = () => {
     if (!inStock) return;

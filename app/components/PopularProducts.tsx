@@ -49,7 +49,7 @@ const PopularProducts: React.FC = () => {
       : products.filter((product) => product.categories?.includes(activeTab) ?? false);
 
   return (
-    <section className="relative bg-white py-8 sm:py-10 lg:py-12">
+    <section className="relative bg-white py-6 lg:py-8">
       <div className="container mx-auto max-w-7xl px-4">
         <div className="mb-2 flex flex-col gap-5 sm:mb-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -78,7 +78,7 @@ const PopularProducts: React.FC = () => {
                   onClick={() => setActiveTab(id)}
                   className={`cursor-pointer rounded-full px-4 py-1.5 text-[13px]! font-medium transition-colors duration-200 sm:text-base ${
                     isActive
-                      ? 'bg-[#3BB77E] text-white shadow-sm'
+                      ? 'bg-[#17A34B] text-white shadow-sm'
                       : 'border border-gray-200 bg-white text-gray-500 hover:border-[#3BB77E]/40 hover:text-[#3BB77E]'
                   }`}
                 >
