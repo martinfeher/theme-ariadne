@@ -15,6 +15,12 @@ export function getDealProducts(products: Product[]): Product[] {
     .sort((a, b) => getDealDiscount(b) - getDealDiscount(a));
 }
 
+export function getWeeklyDealProducts(products: Product[]): Product[] {
+  return getDealProducts(products).filter((p) =>
+    p.categories?.includes('weekly-deals')
+  );
+}
+
 export function getFeaturedDeal(products: Product[]): Product | undefined {
   const deals = getDealProducts(products);
   return deals.find((p) => p.inStock !== false) ?? deals[0];

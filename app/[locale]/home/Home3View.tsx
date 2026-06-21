@@ -148,12 +148,6 @@ export default function Home3View() {
 
         <div className="container mx-auto max-w-7xl px-4 py-8 lg:py-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
-            <CategorySidebar
-              activeSlug={activeCategory}
-              onCategorySelect={setActiveCategory}
-              className="order-1 lg:order-none"
-            />
-
             <div className="min-w-0 flex-1">
               <div className="mb-6 grid gap-3 sm:grid-cols-3">
                 {PROMO_BANNERS.map(({ key, href, image, tone }) => (
@@ -267,6 +261,11 @@ export default function Home3View() {
                 </div>
               )}
             </div>
+
+            <CategorySidebar
+              activeSlug={activeCategory}
+              onCategorySelect={setActiveCategory}
+            />
           </div>
         </div>
       </main>

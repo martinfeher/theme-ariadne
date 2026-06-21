@@ -283,6 +283,7 @@
   "Home": {
     "welcome": "Welcome to",
     "subtitle": "Fresh groceries and daily essentials, all in one place",
+    "heroImageAlt": "Fresh groceries and daily essentials, all in one place",
     "freeShipping": "Free Shipping",
     "freeShippingDesc": "Free shipping on orders over €50",
     "securePayment": "Secure Payment",
@@ -347,6 +348,7 @@
     "error": "Could not load products. Please refresh the page.",
     "noProducts": "No products in this category yet.",
     "viewAll": "View All Products",
+    "loadMore": "Load more",
     "tabs": {
       "all": "All",
       "milks-dairies": "Milks & Dairies",
@@ -358,6 +360,28 @@
       "drinks": "Drinks",
       "jam-jelly": "Jam & Jelly"
     }
+  },
+  "WeeklyDiscounts": {
+    "title": "Weekly Discounts",
+    "subtitle": "Hand-picked deals on fresh produce and pantry staples — updated every week.",
+    "loading": "Loading deals…",
+    "error": "Could not load deals. Please refresh the page.",
+    "viewAllDeals": "All deals"
+  },
+  "FreshInSeason": {
+    "title": "Fresh in Season",
+    "subtitle": "Peak-season produce picked for flavor — scroll to explore this week's harvest.",
+    "loading": "Loading products…",
+    "error": "Could not load products. Please refresh the page.",
+    "scrollPrev": "Scroll to previous products",
+    "scrollNext": "Scroll to next products"
+  },
+  "TopSellingProducts": {
+    "title": "Top Selling Products",
+    "subtitle": "Customer favorites flying off the shelves — ranked by shopper reviews.",
+    "loading": "Loading products…",
+    "error": "Could not load products. Please refresh the page.",
+    "viewAll": "View all bestsellers"
   },
   "Search": {
     "breadcrumbHome": "Home",
@@ -1678,7 +1702,7 @@
   "Products": {
     "names": {
       "13": "Medium Roast Ground Coffee",
-      "34": "Vine-Ripened Tomatoes",
+      "34": "Tomatoes",
       "36": "Green Bell Peppers",
       "37": "Fresh Cauliflower Head",
       "38": "Fresh Blueberries",
@@ -1707,7 +1731,7 @@
       "13": "Smooth balanced medium roast ground coffee for drip or pour-over.",
       "15": "Soft classic sandwich bread for everyday toast and lunches.",
       "26": "Rich whole bean blend with notes of dark chocolate—freshly roasted for a bold morning cup.",
-      "34": "Plump vine-ripened tomatoes with rich flavor for sauces, salads, and sandwiches.",
+      "34": "Plump tomatoes with rich flavor for sauces, salads, and sandwiches.",
       "36": "Crisp green bell peppers with a mild, sweet flavor—great raw or roasted.",
       "37": "Firm white cauliflower florets ideal for roasting, mashing, or rice bowls.",
       "38": "Plump sweet blueberries with a natural bloom—ideal for snacking, baking, and smoothies.",

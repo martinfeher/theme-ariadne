@@ -104,6 +104,12 @@ export default function Home2View() {
 
         <div className="container mx-auto max-w-7xl px-4 py-8 lg:py-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+            <CategorySidebar
+              activeSlug={activeCategory}
+              onCategorySelect={setActiveCategory}
+              className="order-1 lg:order-none"
+            />
+
             <div className="min-w-0 flex-1">
               <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
@@ -161,11 +167,6 @@ export default function Home2View() {
                 </div>
               )}
             </div>
-
-            <CategorySidebar
-              activeSlug={activeCategory}
-              onCategorySelect={setActiveCategory}
-            />
           </div>
         </div>
       </main>

@@ -17,10 +17,10 @@ export default function DiscountBadge({
 
   const sizeClass =
     size === 'xs'
-      ? 'min-w-[2rem] px-1.5 py-0.5 text-[12px]'
+      ? 'min-w-[2rem] px-1.5 py-[3px] text-[12px]'
       : size === 'sm'
         ? 'min-w-[2rem] px-1.5 py-0.5 text-[11px]'
-        : 'min-w-[2.5rem] px-2.5 py-1 text-xs';
+        : 'min-w-[2.5rem] px-2.5 py-[5px] text-xs';
 
   return (
     <span
