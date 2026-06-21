@@ -49,35 +49,56 @@ const PopularProducts: React.FC = () => {
       : products.filter((product) => product.categories?.includes(activeTab) ?? false);
 
   return (
-    <section className="py-8 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">{t('title')}</h2>
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {TAB_IDS.map((id) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setActiveTab(id)}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                  activeTab === id ? 'bg-green-500 text-white' : 'bg-white text-gray-600 hover:bg-green-50 hover:text-green-500'
-                }`}
-              >
-                {t(`tabs.${id}`)}
-              </button>
-            ))}
+    <section className="relative bg-white py-8 sm:py-10 lg:py-12">
+      <div className="container mx-auto max-w-7xl px-4">
+        <div className="mb-2 flex flex-col gap-5 sm:mb-6 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+          <h2 className="shrink-0 text-2xl font-bold tracking-tight text-[#253D4E] sm:text-3xl lg:text-[32px]">
+            {t('title')}
+          </h2>
+          <div className="flex flex-col mt-1 gap-2">
+            <p className="text-sm text-gray-500 w-[400px]">
+              {t('subtitle')}
+            </p>
+          </div>
+          </div>
+          <div
+            className="flex flex-wrap gap-2"
+            role="tablist"
+            aria-label={t('title')}
+          >
+            {TAB_IDS.map((id) => {
+              const isActive = activeTab === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActiveTab(id)}
+                  className={`cursor-pointer rounded-full px-4 py-1.5 text-[13px]! font-medium transition-colors duration-200 sm:text-base ${
+                    isActive
+                      ? 'bg-[#3BB77E] text-white shadow-sm'
+                      : 'border border-gray-200 bg-white text-gray-500 hover:border-[#3BB77E]/40 hover:text-[#3BB77E]'
+                  }`}
+                >
+                  {t(`tabs.${id}`)}
+                </button>
+              );
+            })}
           </div>
         </div>
+        <hr className="mb-8 border-gray-100" />
 
         {loadState === 'loading' && (
-          <p className="text-center text-gray-500 py-12">{t('loading')}</p>
+          <p className="py-12 text-center text-gray-500">{t('loading')}</p>
         )}
         {loadState === 'error' && (
-          <p className="text-center text-red-600 py-12">{t('error')}</p>
+          <p className="py-12 text-center text-red-600">{t('error')}</p>
         )}
         {loadState === 'ok' && (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-5">
               {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -90,15 +111,15 @@ const PopularProducts: React.FC = () => {
             </div>
 
             {filteredProducts.length === 0 && (
-              <p className="text-center text-gray-500 py-12">{t('noProducts')}</p>
+              <p className="py-12 text-center text-gray-500">{t('noProducts')}</p>
             )}
 
             {filteredProducts.length < products.length && activeTab !== 'all' && (
-              <div className="text-center mt-8">
+              <div className="mt-10 text-center">
                 <button
                   type="button"
                   onClick={() => setActiveTab('all')}
-                  className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors cursor-pointer"
+                  className="cursor-pointer rounded-lg bg-[#3BB77E] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-green-600"
                 >
                   {t('viewAll')}
                 </button>

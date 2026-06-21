@@ -1614,23 +1614,23 @@
         "title": "Skvelá kvalita produktu",
         "body": "Čerstvé, dobre zabalené a presne podľa popisu. Objednali by sme znova."
       },
-      "21-1": {
+      "34-1": {
         "title": "Sladké a neuveriteľne čerstvé",
-        "body": "Tieto cherry paradajky sú plné chuti. Ideálne do šalátov a cestovín."
+        "body": "Tieto paradajky sú plné chuti. Ideálne do šalátov a cestovín."
       },
-      "21-2": {
+      "34-2": {
         "title": "Najlepšie paradajky tejto sezóny",
         "body": "Pevná šupka, šťavnatý stred a vydržali niekoľko dní v chladničke."
       },
-      "21-3": {
+      "34-3": {
         "title": "Veľmi dobré, trochu menšie",
         "body": "Chuť je výborná a na tanieri vyzerajú skvele. Niektoré boli menšie, než som čakal."
       },
-      "21-4": {
+      "34-4": {
         "title": "Deti ich milujú",
         "body": "Požierame ich priamo z misky. Sú dosť sladké aj pre mlsných jedákov."
       },
-      "21-5": {
+      "34-5": {
         "title": "Skvelé na pečenie",
         "body": "S olivovým olejom a bylinkami sa krásne karamelizujú. Kúpim znova."
       },
@@ -1650,11 +1650,11 @@
         "title": "Spoľahlivá každodenná káva",
         "body": "Po otvorení sáčku príjemná aróma. Nie najsilnejšia, ale veľmi pitelná."
       },
-      "6-1": {
+      "53-1": {
         "title": "Krémový a nie príliš sladký",
         "body": "Príjemná textúra a vanilková chuť. Dobrý s granolou a ovocím."
       },
-      "6-2": {
+      "53-2": {
         "title": "Obľúbený v rodine",
         "body": "Máme ho v chladničke na rýchle raňajky. Hustý a sýty."
       }
@@ -1680,57 +1680,62 @@
   "Products": {
     "names": {
       "1": "Seeds of Change Bio quinoa, hnedá a červená ryža",
-      "6": "Vanilkový jogurt",
       "11": "Jablká Granny Smith",
       "13": "Mletá káva stredného praženia",
-      "15": "Biely chlieb",
-      "16": "Čerstvé jahody",
-      "17": "Bio banány",
-      "18": "Pomaranče Valencia",
-      "19": "Čerstvé hlávky brokolice",
-      "21": "Cherry paradajky dozreté na stonke",
-      "22": "Prémiové suché krmivo pre psy",
-      "23": "Gurmánske mokré krmivo pre mačky",
-      "24": "Suché krmivo pre domáce mačky",
-      "25": "Kuracie jerky pamlsky pre psy",
       "26": "Tmavé pražené celozrnková káva",
-      "27": "Bio zelený čaj",
-      "28": "Jasmínový perlový zelený čaj",
-      "29": "Tmavé praženie espresso",
-      "31": "Jahodový džem",
-      "32": "Bio mrkva",
-      "33": "Čerstvé uhorky",
       "34": "Paradajky dozreté na stonke",
-      "35": "Čerstvý baby špenát",
       "36": "Zelené papriky",
-      "37": "Čerstvý karfiol"
+      "37": "Čerstvý karfiol",
+      "38": "Čerstvé čučoriedky",
+      "39": "Ružičková kapusta",
+      "40": "Klementínky",
+      "41": "Medjool datle",
+      "42": "Čerstvé fazule",
+      "43": "Čerstvé limetky",
+      "44": "Zrelé mango",
+      "45": "Baby mrkva",
+      "46": "Čerstvé citróny",
+      "47": "Čerstvá mäta",
+      "48": "Maslový šalát",
+      "49": "Záhradné jahody",
+      "50": "Bio baby špenát",
+      "51": "Kivi Zespri",
+      "52": "Seeds of Change bio quinoa",
+      "53": "Bio vanilkový jogurt",
+      "54": "Čerstvé pomaranče navel",
+      "55": "Bio zelený čaj",
+      "56": "Bio jasmínový zelený čaj",
+      "57": "Bio jahodový ovocný spread"
     },
     "descriptions": {
       "1": "Bio zmes celozrnných obilnín z quinoy, hnedej a červenej ryže — pripravená za pár minút, ideálna ako príloha alebo základ misy.",
-      "6": "Krémový grécky jogurt s vanilkovou príchuťou a extra bielkovinami na dlhšie zasýtenie.",
       "11": "Chrumkavé sladké jablká, vhodné na desiatu, pečenie alebo do desiatových boxov.",
       "13": "Jemne vyvážená mletá káva stredného praženia na filter alebo pour-over.",
       "15": "Mäkký klasický toastový chlieb na každodenné raňajky a desiaty.",
-      "16": "Sladké zrelé jahody, ideálne na dezerty, smoothie alebo priame konzumovanie.",
-      "17": "Prirodzene dozreté bio banány, skvelé do raňajkových mis a na pečenie.",
-      "18": "Šťavnaté pomaranče Valencia s výraznou citrusovou chuťou — perfektné na čerstvú šťavu.",
-      "19": "Chrumkavé zelené hlávky brokolice, vhodné na varienie, pečenie alebo wok.",
-      "21": "Šťavnaté cherry paradajky zbierané v plnej zrelosti na šaláty a cestoviny.",
-      "22": "Vysokoproteínové suché granule s kuracím mäsom a celozrnnými obilninami pre dospelých psov.",
-      "23": "Lahodná mokrá paštéta s kúskami hovädzieho mäsa — kompletná výživa, ktorú mačky milujú.",
-      "24": "Vyvážené suché krmivo pre domáce mačky s vlákninou pre zdravé trávenie a lesklú srsť.",
-      "25": "Prírodné kuracie jerky pásiky — ideálne na tréning aj každodenné odmeňovanie.",
       "26": "Bohatá zmes celých zŕn s tónmi horkej čokolády — čerstvo pražená pre výraznú rannú kávu.",
-      "27": "Jemný a osviežujúci zelený čaj s čistou dochuťou — vhodný horúci aj studený.",
-      "28": "Ručne rolované jasmínové perly, ktoré sa rozvíjajú vo voňavý kvetinový čaj na viac infúzií.",
-      "29": "Intenzívne tmavé espresso s hustou cremou — ideálne do latte aj na čisté shoty.",
-      "31": "Sladký jahodový džem z čerstvých plodov — skvelý na toast alebo do dezertov.",
-      "32": "Sladká bio mrkva, ideálna na desiatu, pečenie alebo do polievok a ragú.",
-      "33": "Chladivé chrumkavé uhorky, perfektné do šalátov, sendvičov a osviežujúcich snackov.",
       "34": "Šťavnaté paradajky dozreté na stonke s bohatou chuťou na omáčky, šaláty a sendviče.",
-      "35": "Jemné listy baby špenátu, ideálne do šalátov, smoothie a rýchleho restovania.",
       "36": "Chrumkavé zelené papriky s jemnou sladkou chuťou — skvelé surové aj pečené.",
-      "37": "Pevné biele ružičky karfiolu vhodné na pečenie, pyré alebo karfiolovú ryžu."
+      "37": "Pevné biele ružičky karfiolu vhodné na pečenie, pyré alebo karfiolovú ryžu.",
+      "38": "Šťavnaté sladké čučoriedky s prirodzeným povlakom — ideálne na desiatu, pečenie a smoothie.",
+      "39": "Pevné svetlozelené ružičky ružičkovej kapusty vhodné na pečenie, restovanie alebo do šalátov.",
+      "40": "Klementínky ľahko olúpané so šťavnatými segmentmi — sladké a praktické na desiatu.",
+      "41": "Mäkké karamelovo sladké datle Medjool — skvelé na energické snacky a pečenie.",
+      "42": "Chrumkavé jemné zelené fazule — na varenie v pare, wok alebo blanchovanie.",
+      "43": "Svetlé voňavé limetky na dresingy, marinády, drinky a dochutenie jedál.",
+      "44": "Slnečom dozreté mango so zlatou dužinou a tropickou sladkosťou.",
+      "45": "Sladká chrumkavá baby mrkva — pripravená na snack, pečenie alebo do polievok.",
+      "46": "Šťavnaté žlté citróny s výraznou kyslosťou na varenie, pečenie a nápoje.",
+      "47": "Voňavé lístky mäty na čaje, šaláty, omáčky a letné jedlá.",
+      "48": "Jemný maslový šalát v tvare kelu — ideálny na wrapy a šaláty.",
+      "49": "Červené jahody so zelenými stopkami — sladké, šťavnaté a perfektné na dezerty.",
+      "50": "Jemný bio baby špenát v praktickom obale — ideálny do šalátov, smoothie a na restovanie.",
+      "51": "Zelené kivi s jasnou sladko-kyslou dužinou — skvelé do misy aj na desiatu.",
+      "52": "Bio quinoa pripravená za pár minút — ľahká a nadýchaná ako príloha alebo základ misy.",
+      "53": "Krémový bio vanilkový jogurt s pravou vanilkou — na raňajky, parféty a pečenie.",
+      "54": "Šťavnaté pomaranče navel s ľahko olúpanou kôrou a sladkými segmentmi.",
+      "55": "Jemný bio zelený čaj v praktických vrecúškach — osviežujúci horúci aj studený.",
+      "56": "Voňavý jasmínový zelený čaj s kvetinovou arómou a hladkou chuťou.",
+      "57": "Bio jahodový ovocný spread zo zrelých plodov — na toast alebo do jogurtu."
     }
   }
 }

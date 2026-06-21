@@ -35,15 +35,7 @@ export const MOCK_VENDORS: Vendor[] = [
     since: 2020,
     featured: true,
   },
-  {
-    slug: 'ariadne-teas',
-    name: 'Ariadne Teas',
-    logo: `${IMAGE_BASE}/organic_green_tea.jpeg`,
-    banner: `${IMAGE_BASE}/jasmine_tea.jpeg`,
-    rating: 4.6,
-    reviewCount: 214,
-    since: 2021,
-  },
+
   {
     slug: 'starbucks',
     name: 'Starbucks',

@@ -103,8 +103,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const discountPercent = getDiscountPercent(product.price, product.oldPrice);
   const isSmall = size === 'small';
   const badgeSize = isSmall ? 'xs' : 'md';
-  const cartSliderHeight = isSmall ? 34 : 37;
-  const minusBtnSize = isSmall ? 34 : 36;
+  const cartPillClass = isSmall
+    ? 'mb-[7px] mr-1 h-[36px] w-[88%] px-[5px] py-[5px]'
+    // ? 'mb-[7px] mr-1 h-[36px] w-[88%] px-1.5 py-1'
+    : 'mb-[8px] mr-[7px] h-[40px] w-[93.5%] px-[4px] py-[10px]';
+  const cartPillBtnClass = isSmall ? 'h-[29px] w-[29px]' : 'h-[35px] w-[35px]';
+  const cartCircleGreen = 'bg-[#3BB77E]';
 
   const addToCart = () => {
     if (!inStock) return;
@@ -191,68 +195,54 @@ const ProductCard: React.FC<ProductCardProps> = ({
             />
           </div>
           <div
-            className={`relative flex justify-end items-center ${isSmall ? '-mt-12' : '-mt-[50px]'}`}
+            className={`relative flex justify-end items-center ${
+              productCartCounter >= 1
+                ? isSmall
+                  ? '-mt-[52px]'
+                  : '-mt-[54px]'
+                : isSmall
+                  ? '-mt-12'
+                  : '-mt-[50px]'
+            }`}
+       
             onClick={(e) => e.stopPropagation()}
           >
             {inStock ? (
-              <>
+              productCartCounter === 0 ? (
                 <button
                   type="button"
-                  className={`flex items-center justify-center bg-green-500 text-white transition-colors z-40 cursor-pointer rounded-full ${
-                    isSmall
-                      ? 'mr-1 mb-[7px] p-1.5'
-                      : 'mr-[7px] mb-[8px] space-x-1 px-1.5 py-1.5 text-sm'
+                  className={`flex items-center justify-center ${cartCircleGreen} text-white transition-colors z-40 cursor-pointer rounded-full shadow-sm ${
+                    isSmall ? 'mr-1 mb-[7px] p-1.5' : 'mr-[7px] mb-[8px] p-1.5'
                   }`}
                   onClick={() => addToCart()}
                 >
-                  {productCartCounter === 0 && (
-                    <IoAdd className={isSmall ? 'h-5 w-5' : 'h-6 w-6'} aria-hidden />
-                  )}
-                  {productCartCounter > 0 && (
-                    <div
-                      className={`flex items-center justify-center cursor-pointer z-100 ${
-                        isSmall ? 'h-5 w-5 text-xs' : 'h-6 w-6 text-[16px]'
-                      }`}
-                    >
-                      {productCartCounter}
-                    </div>
-                  )}
+                  <IoAdd className={isSmall ? 'h-5 w-5' : 'h-6 w-6'} aria-hidden />
                 </button>
-                {productCartCounter > 0 && (
-                  <div className="pointer-events-none">
-                    <div
-                      className="absolute top-0 right-[10px] rounded-full bg-[#d8e7fb] opacity-92"
-                      style={{
-                        height: cartSliderHeight,
-                        width: isSmall ? '88%' : '93.5%',
-                      }}
-                    />
-                    <div
-                      className={`absolute top-0 right-[0.5%] flex items-center space-x-1 text-white mr-4 mb-4 transition-colors z-100 cursor-pointer rounded-full ${
-                        isSmall ? 'text-xs' : 'text-sm'
-                      }`}
-                      style={{
-                        height: cartSliderHeight,
-                        width: isSmall ? '80%' : '90%',
-                      }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                      }}
-                      aria-label={t('removeFromCart')}
-                    >
-                      <button
-                        type="button"
-                        aria-label={t('removeFromCart')}
-                        onClick={() => removeFromCart()}
-                        className="bg-green-500 -ml-1 rounded-full flex items-center justify-center z-200 cursor-pointer pointer-events-auto"
-                        style={{ width: minusBtnSize, height: minusBtnSize }}
-                      >
-                        <FaMinus className={isSmall ? 'h-3.5 w-3.5' : 'h-4 w-4'} aria-hidden />
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </>
+              ) : (
+                <div
+                  className={`z-40 flex items-center justify-between rounded-full bg-[#d7e1f0eb]/93 shadow-sm ${cartPillClass}`} style={{ backdropFilter: 'blur(1px)' }}
+             
+             
+                >
+                  <button
+                    type="button"
+                    aria-label={t('removeFromCart')}
+                    onClick={() => removeFromCart()}
+                    className={`flex shrink-0 items-center justify-center rounded-full ${cartCircleGreen} text-white cursor-pointer ${cartPillBtnClass}`}
+                  >
+                    <FaMinus className={isSmall ? 'h-3 w-3' : 'h-3.5 w-3.5'} aria-hidden />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => addToCart()}
+                    className={`flex shrink-0 items-center justify-center rounded-full ${cartCircleGreen} text-white cursor-pointer ${cartPillBtnClass} ${
+                      isSmall ? 'text-sm' : 'text-base'
+                    }`}
+                  >
+                    {productCartCounter}
+                  </button>
+                </div>
+              )
             ) : (
               <span
                 className={`rounded-full bg-[#03ac85] font-semibold text-white z-40 ${

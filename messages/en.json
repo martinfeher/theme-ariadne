@@ -342,6 +342,7 @@
   },
   "PopularProducts": {
     "title": "Popular Products",
+    "subtitle": "Fresh arrivals and local favorites delivered daily to your door.",
     "loading": "Loading products…",
     "error": "Could not load products. Please refresh the page.",
     "noProducts": "No products in this category yet.",
@@ -1201,10 +1202,6 @@
         "tagline": "Small-batch coffee roasters",
         "description": "Ariadne Roasters sources beans from sustainable farms and roasts in small batches for balanced, aromatic cups at home."
       },
-      "ariadne-teas": {
-        "tagline": "Loose-leaf tea specialists",
-        "description": "From everyday green tea to fragrant jasmine blends, Ariadne Teas curates leaves packed for freshness and clarity of flavour."
-      },
       "ariadne-pets": {
         "tagline": "Nutrition for dogs & cats",
         "description": "Ariadne Pets offers balanced dry food, treats, and wet meals formulated with named proteins and transparent ingredient lists."
@@ -1615,23 +1612,23 @@
         "title": "Great quality product",
         "body": "Fresh, well packed, and exactly as described. Would order again from this store."
       },
-      "21-1": {
+      "34-1": {
         "title": "Sweet and incredibly fresh",
-        "body": "These cherry tomatoes are bursting with flavor. Perfect for salads and pasta dishes."
+        "body": "These tomatoes are bursting with flavor. Perfect for salads and pasta dishes."
       },
-      "21-2": {
+      "34-2": {
         "title": "Best tomatoes this season",
         "body": "Firm skin, juicy inside, and they lasted several days in the fridge without going soft."
       },
-      "21-3": {
+      "34-3": {
         "title": "Very good, slightly small",
         "body": "Taste is excellent and they look beautiful on the plate. A few were smaller than expected."
       },
-      "21-4": {
+      "34-4": {
         "title": "Kids love them",
         "body": "We snack on these straight from the bowl. Sweet enough that even picky eaters enjoy them."
       },
-      "21-5": {
+      "34-5": {
         "title": "Lovely for roasting",
         "body": "Roasted with olive oil and herbs they caramelize beautifully. Will buy again."
       },
@@ -1651,11 +1648,11 @@
         "title": "Solid everyday coffee",
         "body": "Good aroma when opening the bag. Not the strongest, but very drinkable."
       },
-      "6-1": {
+      "53-1": {
         "title": "Creamy and not too sweet",
         "body": "Nice texture and vanilla flavor. Works well with granola and fruit."
       },
-      "6-2": {
+      "53-2": {
         "title": "Family favorite",
         "body": "We keep this in the fridge for quick breakfasts. Thick and satisfying."
       }
@@ -1680,55 +1677,58 @@
   },
   "Products": {
     "names": {
-      "1": "Seeds of Change Organic Quinoa, Brown, & Red Rice",
-      "6": "Vanilla Yogurt",
-      "11": "Granny Smith Apples",
       "13": "Medium Roast Ground Coffee",
-      "15": "White Bread",
-      "16": "Fresh Strawberries",
-      "17": "Organic Kiwis",
-      "18": "Valencia Oranges",
-      "19": "Fresh Broccoli Crowns",
-      "21": "Vine-Ripened Cherry Tomatoes",
-      "22": "Premium Dry Dog Food",
-      "23": "Gourmet Wet Cat Food",
-      "24": "Indoor Cat Kibble",
-      "25": "Chicken Jerky Dog Treats",
-      "26": "Dark Roast Whole Bean Coffee",
-      "27": "Organic Green Tea",
-      "28": "Jasmine Pearl Green Tea",
-      "29": "Dark Roast Espresso",
-      "31": "Strawberry Jam",
       "34": "Vine-Ripened Tomatoes",
-      "35": "Fresh Baby Spinach",
       "36": "Green Bell Peppers",
-      "37": "Fresh Cauliflower Head"
+      "37": "Fresh Cauliflower Head",
+      "38": "Fresh Blueberries",
+      "39": "Brussels Sprouts",
+      "40": "Clementines",
+      "41": "Medjool Dates",
+      "42": "Fresh Green Beans",
+      "43": "Fresh Limes",
+      "44": "Ripe Mango",
+      "45": "Baby Carrots",
+      "46": "Fresh Lemons",
+      "47": "Fresh Mint",
+      "48": "Butter Lettuce",
+      "49": "Garden Strawberries",
+      "50": "Organic Baby Spinach",
+      "51": "Zespri Kiwifruit",
+      "52": "Seeds of Change Organic Quinoa",
+      "53": "Organic Vanilla Yogurt",
+      "54": "Fresh Navel Oranges",
+      "55": "Organic Green Tea",
+      "56": "Organic Jasmine Green Tea"
     },
     "descriptions": {
       "1": "Organic whole grains blend of quinoa, brown rice, and red rice—ready in minutes and perfect as a side or bowl base.",
-      "6": "Creamy Greek yogurt with vanilla flavor and extra protein to keep you full through the day.",
       "11": "Crisp sweet Fuji apples, perfect for snacking, baking, or lunch boxes.",
       "13": "Smooth balanced medium roast ground coffee for drip or pour-over.",
       "15": "Soft classic sandwich bread for everyday toast and lunches.",
-      "16": "Sweet ripe strawberries, ideal for desserts, smoothies, or eating fresh.",
-      "17": "Naturally ripened organic kiwis.",
-      "18": "Juicy Valencia oranges with a bright citrus flavor—perfect for fresh juice.",
-      "19": "Crisp green broccoli crowns, perfect for steaming, roasting, or stir-fries.",
-      "21": "Juicy cherry tomatoes picked at peak ripeness for salads and pasta.",
-      "22": "High-protein dry kibble with real chicken and whole grains for adult dogs of all sizes.",
-      "23": "Savory wet pâté with tender beef chunks—complete nutrition cats love at every meal.",
-      "24": "Balanced dry formula for indoor cats with fiber for healthy digestion and a shiny coat.",
-      "25": "All-natural chicken jerky strips—perfect for training rewards and everyday snacking.",
       "26": "Rich whole bean blend with notes of dark chocolate—freshly roasted for a bold morning cup.",
-      "27": "Light and refreshing green tea with a clean finish—perfect hot or iced.",
-      "28": "Hand-rolled jasmine pearls that unfurl for a fragrant, floral cup with multiple infusions.",
-      "29": "Intense dark roast espresso with a thick crema—ideal for lattes and straight shots.",
-      "31": "Sweet strawberry jam made from ripe berries—perfect on toast or in desserts.",
-      "33": "Cool, crisp cucumbers perfect for salads, sandwiches, and refreshing snacks.",
       "34": "Plump vine-ripened tomatoes with rich flavor for sauces, salads, and sandwiches.",
-      "35": "Tender baby spinach leaves, perfect for salads, smoothies, and quick sautés.",
       "36": "Crisp green bell peppers with a mild, sweet flavor—great raw or roasted.",
-      "37": "Firm white cauliflower florets ideal for roasting, mashing, or rice bowls."
+      "37": "Firm white cauliflower florets ideal for roasting, mashing, or rice bowls.",
+      "38": "Plump sweet blueberries with a natural bloom—ideal for snacking, baking, and smoothies.",
+      "39": "Tight, bright green Brussels sprouts perfect for roasting, sautéing, or shaving into salads.",
+      "40": "Easy-peel clementines with juicy segments—sweet, portable, and lunchbox-ready.",
+      "41": "Soft, caramel-sweet Medjool dates—great for energy bites, baking, and natural snacking.",
+      "42": "Crisp tender green beans with a clean snap—steam, stir-fry, or blanch for sides.",
+      "43": "Bright, fragrant limes for dressings, marinades, cocktails, and finishing dishes.",
+      "44": "Sun-ripened mango with golden flesh and tropical sweetness—perfect fresh or in salsas.",
+      "45": "Sweet, crunchy baby carrots—ready to snack, roast, or add to soups and stews.",
+      "46": "Juicy yellow lemons with bright acidity for cooking, baking, and fresh drinks.",
+      "47": "Fragrant mint leaves for teas, salads, sauces, and garnishing summer dishes.",
+      "48": "Soft, cup-shaped butter lettuce with a mild flavor—ideal for wraps and salads.",
+      "49": "Ruby-red strawberries with green tops—sweet, juicy, and perfect for desserts.",
+      "50": "Tender organic baby spinach in a ready-to-use clamshell—ideal for salads, smoothies, and sautés.",
+      "51": "Fuzzy green kiwifruit with bright, tangy-sweet flesh—perfect for fruit bowls and snacking.",
+      "52": "Organic quinoa ready in minutes—light, fluffy, and perfect as a side or grain bowl base.",
+      "53": "Creamy organic vanilla yogurt with real vanilla—great for breakfast, parfaits, and baking.",
+      "54": "Juicy navel oranges with easy-to-peel skin and sweet segments—perfect for fresh juice or snacking.",
+      "55": "Light organic green tea in convenient tea bags—clean, refreshing, and perfect hot or iced.",
+      "56": "Fragrant jasmine-scented green tea bags with a floral aroma and smooth, mellow cup."
     }
   }
 }
