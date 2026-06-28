@@ -11,9 +11,9 @@ import { useHydrated } from '@/app/hooks/useHydrated';
 import { CONTACT_INFO } from '@/lib/contact-info';
 
 const PAYMENT_ICONS = [
-  { src: '/images/theme/icons/payment-visa.svg', label: 'Visa' },
-  { src: '/images/theme/icons/payment-master.svg', label: 'Mastercard' },
-  { src: '/images/theme/icons/payment-paypal.svg', label: 'PayPal' },
+  { src: '/images/theme/icons/payment-visa.svg', label: 'Visa', boxClass: 'h-7 w-11' },
+  { src: '/images/theme/icons/payment-master.svg', label: 'Mastercard', boxClass: 'h-7 w-11' },
+  { src: '/images/theme/icons/payment-paypal.svg', label: 'PayPal', boxClass: 'h-7 w-[6.875rem]' },
 ] as const;
 
 const SOCIAL_LINKS = [
@@ -148,7 +148,7 @@ export default function Footer() {
 
   return (
     <footer className="mt-auto border-t border-gray-200 bg-white" aria-label={t('ariaLabel')}>
-      <section className="container mx-auto px-4 py-8 lg:py-10">
+      <section className="container mx-auto px-4 py-6 lg:py-8">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
           <div>
             <Link href="/" className="text-lg font-bold text-gray-900">
@@ -185,8 +185,8 @@ export default function Footer() {
             </ul>
 
             <div className="mt-8">
-              <h3 className="text-sm font-bold text-gray-900">{t('newsletterHeading')}</h3>
-              <p className="mt-1 text-[12px] text-gray-600">{t('newsletterSubtitle')}</p>
+              <h3 className="text-[15px] font-bold text-gray-900">{t('newsletterHeading')}</h3>
+              <p className="mt-1 text-[13px] text-gray-600">{t('newsletterSubtitle')}</p>
               <FooterNewsletter />
             </div>
           </div>
@@ -209,7 +209,7 @@ export default function Footer() {
                   aria-label={label}
                   className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-gray-100 transition-colors hover:bg-gray-200"
                 >
-                  <Image src={icon} alt="" width={26} height={26} aria-hidden />
+                  <Image src={icon} alt="" width={28} height={28} aria-hidden />
                 </a>
               ))}
             </nav>
@@ -225,14 +225,14 @@ export default function Footer() {
                 className="mt-3 flex items-center gap-3"
                 aria-label={t('securedPayments')}
               >
-                {PAYMENT_ICONS.map(({ src, label }) => (
+                {PAYMENT_ICONS.map(({ src, label, boxClass }) => (
                   <li key={label}>
-                    <span className="relative block h-7 w-11 shrink-0">
+                    <span className={`relative block shrink-0 ${boxClass}`}>
                       <Image
                         src={src}
                         alt={label}
                         fill
-                        sizes="44px"
+                        sizes="110px"
                         className="object-contain object-center opacity-80"
                       />
                     </span>

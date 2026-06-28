@@ -49,7 +49,7 @@ export default function AboutView() {
             aria-hidden
           />
           <div className="absolute inset-0 bg-gradient-to-r from-green-700/90 via-green-600/85 to-green-500/80" aria-hidden />
-          <div className="container relative mx-auto px-4 py-14 lg:py-20">
+          <div className="container relative mx-auto px-4 py-6 lg:py-10">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <nav className="text-sm text-green-100" aria-label={t('breadcrumbNav')}>
                 <ol className="flex flex-wrap items-center gap-1">
@@ -81,7 +81,7 @@ export default function AboutView() {
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100 shadow-sm">
               <Image
-                src="/images/products/mock/fruits-a.jpg"
+                src="/images/webariadne-about.jpeg"
                 alt=""
                 fill
                 className="object-cover"

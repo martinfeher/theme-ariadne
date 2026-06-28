@@ -57,7 +57,7 @@ const WeeklyDiscounts: React.FC = () => {
             <span aria-hidden>→</span>
           </Link>
         </div>
-        <hr className="mb-8 border-gray-200" />
+        <hr className="mb-6 border-gray-200" />
 
         {loadState === 'loading' && (
           <p className="py-12 text-center text-gray-500">{t('loading')}</p>

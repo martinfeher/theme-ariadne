@@ -55,11 +55,6 @@ export const CATEGORY_SIDEBAR_TREE: CategorySidebarGroup[] = [
     ],
   },
   {
-    slug: 'popular-products',
-    icon: '/icons/category-10.svg',
-    subcategories: [],
-  },
-  {
     slug: 'milks-dairies',
     icon: '/icons/category-1.svg',
     subcategories: [

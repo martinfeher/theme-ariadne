@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Home as HomeIcon, Truck, Shield, Headphones } from 'lucide-react';
@@ -17,8 +17,17 @@ export default function Home2View() {
   const tHeader = useTranslations('Header');
   const tBar = useTranslations('SearchBar.categories');
   const [activeCategory, setActiveCategory] = useState<CategorySidebarSlug>('all');
+  const [activeSubcategoryKey, setActiveSubcategoryKey] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [loadState, setLoadState] = useState<'loading' | 'ok' | 'error'>('loading');
+
+  const handleCategorySelect = useCallback(
+    (slug: CategorySidebarSlug, subcategoryKey?: string | null) => {
+      setActiveCategory(slug);
+      setActiveSubcategoryKey(subcategoryKey ?? null);
+    },
+    []
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -106,7 +115,8 @@ export default function Home2View() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
             <CategorySidebar
               activeSlug={activeCategory}
-              onCategorySelect={setActiveCategory}
+              activeSubcategoryKey={activeSubcategoryKey}
+              onCategorySelect={handleCategorySelect}
               className="order-1 lg:order-none"
             />
 
@@ -125,7 +135,7 @@ export default function Home2View() {
                 {activeCategory !== 'all' && (
                   <button
                     type="button"
-                    onClick={() => setActiveCategory('all')}
+                    onClick={() => handleCategorySelect('all', null)}
                     className="text-sm font-medium text-green-600 hover:text-green-700 cursor-pointer"
                   >
                     {t('clearFilter')}

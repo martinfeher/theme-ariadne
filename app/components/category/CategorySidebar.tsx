@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { ChevronDown, LayoutGrid } from 'lucide-react';
@@ -19,8 +20,10 @@ export type CategorySidebarSlug = 'all' | CategoryShopSlug;
 
 type CategorySidebarProps = {
   activeSlug: CategorySidebarSlug;
+  /** When set, highlights a single subcategory row (falls back to `?sub=` in the URL). */
+  activeSubcategoryKey?: string | null;
   /** When set, category rows act as filters instead of navigating away. */
-  onCategorySelect?: (slug: CategorySidebarSlug) => void;
+  onCategorySelect?: (slug: CategorySidebarSlug, subcategoryKey?: string | null) => void;
   className?: string;
   /** Renders only the inner card (for use inside an existing aside column). */
   embedded?: boolean;
@@ -29,8 +32,53 @@ type CategorySidebarProps = {
   totalCountOverride?: number | null;
 };
 
-export default function CategorySidebar({
+function categoryHref(slug: CategorySidebarSlug, subcategoryKey?: string | null) {
+  if (slug === 'all') return '/category/all';
+  if (subcategoryKey) return `/category/${slug}?sub=${encodeURIComponent(subcategoryKey)}`;
+  return `/category/${slug}`;
+}
+
+export default function CategorySidebar(props: CategorySidebarProps) {
+  return (
+    <Suspense
+      fallback={
+        <CategorySidebarFallback embedded={props.embedded} className={props.className} />
+      }
+    >
+      <CategorySidebarContent {...props} />
+    </Suspense>
+  );
+}
+
+function CategorySidebarFallback({
+  embedded = false,
+  className = '',
+}: Pick<CategorySidebarProps, 'embedded' | 'className'>) {
+  const shell = (
+    <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm animate-pulse">
+      <div className="mb-4 h-6 w-24 rounded bg-slate-100" />
+      <div className="space-y-2">
+        {Array.from({ length: 8 }, (_, i) => (
+          <div key={i} className="h-10 rounded-xl bg-slate-50" />
+        ))}
+      </div>
+    </div>
+  );
+
+  if (embedded) {
+    return shell;
+  }
+
+  return (
+    <aside className={`w-full shrink-0 lg:w-[300px] ${className}`.trim()}>
+      <div className="sticky top-24">{shell}</div>
+    </aside>
+  );
+}
+
+function CategorySidebarContent({
   activeSlug,
+  activeSubcategoryKey,
   onCategorySelect,
   className = '',
   embedded = false,
@@ -41,6 +89,11 @@ export default function CategorySidebar({
   const tBar = useTranslations('SearchBar.categories');
   const tSub = useTranslations('Header.megaSubLinks');
   const tDetail = useTranslations('ProductDetail');
+  const searchParams = useSearchParams();
+  const subFromUrl = searchParams.get('sub');
+  const effectiveSubKey =
+    activeSubcategoryKey !== undefined ? activeSubcategoryKey : subFromUrl;
+
   const [totalCount, setTotalCount] = useState<number | null>(totalCountOverride ?? null);
   const [expanded, setExpanded] = useState<Set<string>>(() => {
     const group = findCategorySidebarGroup(activeSlug);
@@ -70,17 +123,29 @@ export default function CategorySidebar({
     if (group && group.subcategories.length > 0) {
       setExpanded((prev) => new Set(prev).add(group.slug));
     }
-  }, [activeSlug]);
+  }, [activeSlug, effectiveSubKey]);
 
   const rowClass = (active: boolean) =>
     `flex w-full items-center justify-between rounded-xl py-2.5 pl-1 pr-1 text-left transition-colors ${
-      active ? 'bg-emerald-50 ring-1 ring-emerald-100' : 'hover:bg-slate-50'
+      active ? 'bg-slate-100 ring-1 ring-slate-200' : 'hover:bg-slate-50'
     }`;
 
   const subRowClass = (active: boolean) =>
     `block w-full rounded-lg py-2 pl-10 pr-2 text-left text-sm transition-colors ${
-      active ? 'bg-emerald-50 font-medium text-emerald-800' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-700'
+      active ? 'bg-slate-100 font-medium text-slate-800' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-800'
     }`;
+
+  const isParentActive = (
+    slug: CategoryShopSlug,
+    subcategories: { labelKey: string }[]
+  ) => {
+    if (activeSlug !== slug) return false;
+    if (!effectiveSubKey) return true;
+    return subcategories.some((sub) => sub.labelKey === effectiveSubKey);
+  };
+
+  const isSubActive = (slug: CategoryShopSlug, labelKey: string) =>
+    activeSlug === slug && effectiveSubKey === labelKey;
 
   const countBadge = (count: number | string) => (
     <span
@@ -91,10 +156,44 @@ export default function CategorySidebar({
     </span>
   );
 
-  const navigateOrSelect = (slug: CategorySidebarSlug, href: string, children: React.ReactNode, className: string) => {
+  const renderParentRow = (
+    slug: CategorySidebarSlug,
+    href: string,
+    children: React.ReactNode,
+    className: string
+  ) => {
     if (onCategorySelect) {
       return (
-        <button type="button" onClick={() => onCategorySelect(slug)} className={`${className} cursor-pointer`}>
+        <button
+          type="button"
+          onClick={() => onCategorySelect(slug, null)}
+          className={`${className} cursor-pointer`}
+        >
+          {children}
+        </button>
+      );
+    }
+    return (
+      <Link href={href} className={className}>
+        {children}
+      </Link>
+    );
+  };
+
+  const renderSubRow = (
+    slug: CategorySidebarSlug,
+    labelKey: string,
+    href: string,
+    children: React.ReactNode,
+    className: string
+  ) => {
+    if (onCategorySelect) {
+      return (
+        <button
+          type="button"
+          onClick={() => onCategorySelect(slug, labelKey)}
+          className={`${className} cursor-pointer`}
+        >
           {children}
         </button>
       );
@@ -120,7 +219,7 @@ export default function CategorySidebar({
       <h2 className="mb-4 text-lg font-semibold text-slate-900">{tDetail('sidebarCategory')}</h2>
       <ul className="space-y-1">
         <li>
-          {navigateOrSelect(
+          {renderParentRow(
             'all',
             '/category/all',
             <>
@@ -139,16 +238,16 @@ export default function CategorySidebar({
         {CATEGORY_SIDEBAR_TREE.map(({ slug, icon, subcategories }) => {
           const label = tBar(slug as Parameters<typeof tBar>[0]);
           const count = countProductsWithCategorySlug(slug);
-          const parentActive = activeSlug === slug;
+          const parentActive = isParentActive(slug, subcategories);
           const hasSubs = subcategories.length > 0;
           const isExpanded = expanded.has(slug);
 
           if (!hasSubs) {
             return (
               <li key={slug}>
-                {navigateOrSelect(
+                {renderParentRow(
                   slug,
-                  `/category/${slug}`,
+                  categoryHref(slug),
                   <>
                     <span className="flex min-w-0 items-center gap-3">
                       <Image src={icon} alt="" width={28} height={28} className="shrink-0 opacity-80" />
@@ -166,12 +265,12 @@ export default function CategorySidebar({
             <li key={slug}>
               <div
                 className={`flex items-center gap-0.5 rounded-xl transition-colors ${
-                  parentActive ? 'bg-emerald-50 ring-1 ring-emerald-100' : 'hover:bg-slate-50'
+                  parentActive ? 'bg-slate-100 ring-1 ring-slate-200' : 'hover:bg-slate-50'
                 }`}
               >
-                {navigateOrSelect(
+                {renderParentRow(
                   slug,
-                  `/category/${slug}`,
+                  categoryHref(slug),
                   <>
                     <span className="flex min-w-0 flex-1 items-center gap-3 py-2.5 pl-1">
                       <Image src={icon} alt="" width={28} height={28} className="shrink-0 opacity-80" />
@@ -195,14 +294,15 @@ export default function CategorySidebar({
                 </button>
               </div>
               {isExpanded && (
-                <ul className="mt-0.5 space-y-0.5 border-l border-emerald-100 ml-4 pl-1">
+                <ul className="mt-0.5 space-y-0.5 border-l border-slate-200 ml-4 pl-1">
                   {subcategories.map((sub) => {
-                    const subActive = activeSlug === sub.slug;
+                    const subActive = isSubActive(sub.slug, sub.labelKey);
                     return (
                       <li key={`${slug}-${sub.labelKey}`}>
-                        {navigateOrSelect(
+                        {renderSubRow(
                           sub.slug,
-                          `/category/${sub.slug}`,
+                          sub.labelKey,
+                          categoryHref(sub.slug, sub.labelKey),
                           tSub(sub.labelKey as Parameters<typeof tSub>[0]),
                           subRowClass(subActive)
                         )}

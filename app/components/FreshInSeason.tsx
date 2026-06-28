@@ -9,7 +9,7 @@ import { fetchProducts } from '@/lib/fetch-products';
 import { getFreshInSeasonProducts } from '@/lib/fresh-in-season';
 
 const SCROLL_ARROW_BASE =
-  'absolute top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white bg-black/40 text-white shadow-md backdrop-blur-[1px] transition-opacity duration-200 hover:bg-black/55 disabled:pointer-events-none disabled:opacity-0 sm:h-11 sm:w-11';
+  'absolute top-2/3 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white bg-black/30 hover:bg-black/40 text-white shadow-md backdrop-blur-[1px] transition-opacity duration-200 disabled:pointer-events-none disabled:opacity-0 sm:h-11 sm:w-11';
 
 const SCROLL_ARROW_VISIBLE =
   'pointer-events-none opacity-0 group-hover:pointer-events-auto group-hover:opacity-100 focus-visible:pointer-events-auto focus-visible:opacity-100';
@@ -73,16 +73,16 @@ const FreshInSeason: React.FC = () => {
   }
 
   return (
-    <section className="relative bg-white py-6 lg:py-8">
+    <section className="relative bg-white py-4 lg:py-6">
       <div className="container mx-auto max-w-7xl px-4">
-        <div className="mb-2 sm:mb-6">
+        <div className="mb-2 sm:mb-4">
           <h2 className="flex shrink-0 items-center gap-2 text-2xl font-bold tracking-tight text-[#253D4E] sm:text-3xl lg:text-[32px]">
             <Leaf className="h-6 w-6 text-[#17A34B]" aria-hidden />
             {t('title')}
           </h2>
           <p className="mt-1 max-w-md text-sm text-gray-500">{t('subtitle')}</p>
         </div>
-        <hr className="mb-8 border-gray-100" />
+        <hr className="mb-6 border-gray-100" />
 
         {loadState === 'loading' && (
           <p className="py-12 text-center text-gray-500">{t('loading')}</p>

@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
-import { TrendingUp } from 'lucide-react';
 import ProductCard from './ProductCard';
 import type { Product } from '../types/product';
 import { fetchProducts } from '@/lib/fetch-products';
@@ -56,7 +55,7 @@ const TopSellingProducts: React.FC = () => {
             <span aria-hidden>→</span>
           </Link>
         </div>
-        <hr className="mb-8 border-gray-100" />
+        <hr className="mb-6 border-gray-100" />
 
         {loadState === 'loading' && (
           <p className="py-12 text-center text-gray-500">{t('loading')}</p>

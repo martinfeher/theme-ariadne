@@ -117,13 +117,21 @@ export default function ShopListView() {
   const t = useTranslations('ShopList');
   const tCat = useTranslations('Category');
   const tDetail = useTranslations('ProductDetail');
-  const tBar = useTranslations('SearchBar.categories');
   const { getProductName } = useProductI18n();
   const formatPrice = useFormatCurrency();
 
   const [catalog, setCatalog] = useState<Product[]>([]);
   const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading');
   const [activeCategory, setActiveCategory] = useState<CategorySidebarSlug>('all');
+  const [activeSubcategoryKey, setActiveSubcategoryKey] = useState<string | null>(null);
+
+  const handleCategorySelect = useCallback(
+    (slug: CategorySidebarSlug, subcategoryKey?: string | null) => {
+      setActiveCategory(slug);
+      setActiveSubcategoryKey(subcategoryKey ?? null);
+    },
+    []
+  );
   const [pageSize, setPageSize] = useState<PageSize>(12);
   const [sort, setSort] = useState<SortId>('featured');
   const [draftPriceMin, setDraftPriceMin] = useState(0);
@@ -277,7 +285,8 @@ export default function ShopListView() {
             <CategorySidebar
               embedded
               activeSlug={activeCategory}
-              onCategorySelect={setActiveCategory}
+              activeSubcategoryKey={activeSubcategoryKey}
+              onCategorySelect={handleCategorySelect}
               totalCountOverride={status === 'ok' ? catalog.length : null}
             />
 
@@ -472,7 +481,7 @@ export default function ShopListView() {
                 action={
                   <button
                     type="button"
-                    onClick={() => setActiveCategory('all')}
+                    onClick={() => handleCategorySelect('all', null)}
                     className="inline-flex items-center gap-2 rounded-xl bg-[#3BB77E] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#35a570] cursor-pointer"
                   >
                     {tCat('emptyCategoryCta')}

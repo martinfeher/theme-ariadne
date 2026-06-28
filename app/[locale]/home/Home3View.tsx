@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
@@ -42,9 +42,18 @@ export default function Home3View() {
   const tHeader = useTranslations('Header');
   const tBar = useTranslations('SearchBar.categories');
   const [activeCategory, setActiveCategory] = useState<CategorySidebarSlug>('all');
+  const [activeSubcategoryKey, setActiveSubcategoryKey] = useState<string | null>(null);
   const [sort, setSort] = useState<SortId>('featured');
   const [products, setProducts] = useState<Product[]>([]);
   const [loadState, setLoadState] = useState<'loading' | 'ok' | 'error'>('loading');
+
+  const handleCategorySelect = useCallback(
+    (slug: CategorySidebarSlug, subcategoryKey?: string | null) => {
+      setActiveCategory(slug);
+      setActiveSubcategoryKey(subcategoryKey ?? null);
+    },
+    []
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -204,7 +213,7 @@ export default function Home3View() {
                   {activeCategory !== 'all' && (
                     <button
                       type="button"
-                      onClick={() => setActiveCategory('all')}
+                      onClick={() => handleCategorySelect('all', null)}
                       className="cursor-pointer text-sm font-medium text-green-600 hover:text-green-700"
                     >
                       {t('clearFilter')}
@@ -264,7 +273,8 @@ export default function Home3View() {
 
             <CategorySidebar
               activeSlug={activeCategory}
-              onCategorySelect={setActiveCategory}
+              activeSubcategoryKey={activeSubcategoryKey}
+              onCategorySelect={handleCategorySelect}
             />
           </div>
         </div>
