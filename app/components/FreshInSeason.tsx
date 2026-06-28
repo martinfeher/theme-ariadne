@@ -2,11 +2,17 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { ChevronDown, ChevronUp, Leaf } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Leaf } from 'lucide-react';
 import ProductCard from './ProductCard';
 import type { Product } from '../types/product';
 import { fetchProducts } from '@/lib/fetch-products';
 import { getFreshInSeasonProducts } from '@/lib/fresh-in-season';
+
+const SCROLL_ARROW_BASE =
+  'absolute top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white bg-black/40 text-white shadow-md backdrop-blur-[1px] transition-opacity duration-200 hover:bg-black/55 disabled:pointer-events-none disabled:opacity-0 sm:h-11 sm:w-11';
+
+const SCROLL_ARROW_VISIBLE =
+  'pointer-events-none opacity-0 group-hover:pointer-events-auto group-hover:opacity-100 focus-visible:pointer-events-auto focus-visible:opacity-100';
 
 const FreshInSeason: React.FC = () => {
   const t = useTranslations('FreshInSeason');
@@ -85,10 +91,20 @@ const FreshInSeason: React.FC = () => {
           <p className="py-12 text-center text-red-600">{t('error')}</p>
         )}
         {loadState === 'ok' && seasonalProducts.length > 0 && (
-          <div className="flex items-stretch gap-3 sm:gap-4">
+          <div className="group relative">
+            <button
+              type="button"
+              onClick={() => scrollRow(-1)}
+              disabled={!canScrollLeft}
+              aria-label={t('scrollPrev')}
+              className={`left-1 sm:left-2 ${SCROLL_ARROW_BASE} ${SCROLL_ARROW_VISIBLE}`}
+            >
+              <ChevronLeft className="h-5 w-5 stroke-[2.5]" aria-hidden />
+            </button>
+
             <div
               ref={scrollRef}
-              className="min-w-0 flex-1 overflow-x-auto scroll-smooth [scrollbar-width:none] snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
+              className="overflow-x-auto scroll-smooth px-1 [scrollbar-width:none] snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
             >
               <div className="flex gap-4">
                 {seasonalProducts.map((product) => (
@@ -107,26 +123,15 @@ const FreshInSeason: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex shrink-0 flex-col justify-center gap-2">
-              <button
-                type="button"
-                onClick={() => scrollRow(-1)}
-                disabled={!canScrollLeft}
-                aria-label={t('scrollPrev')}
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white text-[#253D4E] shadow-sm transition-colors hover:border-[#17A34B] hover:text-[#17A34B] disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-gray-200 disabled:hover:text-[#253D4E] sm:h-11 sm:w-11"
-              >
-                <ChevronUp className="h-5 w-5" aria-hidden />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollRow(1)}
-                disabled={!canScrollRight}
-                aria-label={t('scrollNext')}
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white text-[#253D4E] shadow-sm transition-colors hover:border-[#17A34B] hover:text-[#17A34B] disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-gray-200 disabled:hover:text-[#253D4E] sm:h-11 sm:w-11"
-              >
-                <ChevronDown className="h-5 w-5" aria-hidden />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => scrollRow(1)}
+              disabled={!canScrollRight}
+              aria-label={t('scrollNext')}
+              className={`right-1 sm:right-2 ${SCROLL_ARROW_BASE} ${SCROLL_ARROW_VISIBLE}`}
+            >
+              <ChevronRight className="h-5 w-5 stroke-[2.5]" aria-hidden />
+            </button>
           </div>
         )}
       </div>

@@ -52,10 +52,6 @@ function ShopMenuNav() {
   const links = [
     { href: '/category/all', label: t('shopMenuGrid') },
     { href: '/shop/list', label: t('shopMenuList') },
-    { href: '/cart', label: t('cart') },
-    { href: '/wishlist', label: t('wishlist') },
-    { href: '/compare', label: t('compare') },
-    { href: '/checkout', label: t('shopMenuCheckout') },
     { href: '/shop-invoice', label: t('shopMenuInvoice') },
   ] as const;
 
@@ -535,31 +531,27 @@ const Header = () => {
                 </div>
                 <span className="mt-1 cursor-pointer text-xs text-gray-500 group-hover:text-green-600">{t('wishlist')}</span>
               </Link>
-         
-
               <div
-                className={`group relative mt-[1px] flex min-w-0 !w-10 flex-col items-center ${
-                  user ? 'w-[5.5rem]' : 'w-10'
+                className={`group relative flex flex-col items-center ${
+                  user ? 'max-w-[5.5rem]' : ''
                 }`}
                 onMouseEnter={() => setIsAccountOpen(true)}
                 onMouseLeave={() => setIsAccountOpen(false)}
               >
-                <div className="relative">
-                  <button
-                    type="button"
-                    className="cursor-pointer text-gray-600 transition-colors group-hover:text-green-600"
-                    aria-label={
-                      user ? `${user.name}, ${t('accountMenu')}` : t('accountMenu')
-                    }
-                    aria-expanded={isAccountOpen}
-                    aria-haspopup="true"
-                  >
-                    <User className={ICON} strokeWidth={ICON_STROKE} />
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className="flex cursor-pointer items-center justify-center text-gray-600 transition-colors group-hover:text-green-600"
+                  aria-label={
+                    user ? `${user.name}, ${t('accountMenu')}` : t('accountMenu')
+                  }
+                  aria-expanded={isAccountOpen}
+                  aria-haspopup="true"
+                >
+                  <User className={ICON} strokeWidth={ICON_STROKE} />
+                </button>
                 <span
-                  className={`mt-0 w-full min-w-0 text-center text-xs text-gray-500 group-hover:text-green-600 ${
-                    user ? 'block cursor-pointer truncate' : 'cursor-pointer'
+                  className={`mt-1 min-w-0 text-center text-xs text-gray-500 group-hover:text-green-600 ${
+                    user ? 'block w-full cursor-pointer truncate' : 'cursor-pointer whitespace-nowrap'
                   }`}
                   title={user?.name}
                 >
@@ -567,7 +559,7 @@ const Header = () => {
                 </span>
 
                 {isAccountOpen && (
-                  <div className="absolute right-0 top-full z-[55] w-48 pt-1.5">
+                  <div className="absolute left-1/2 top-full z-[55] w-48 -translate-x-1/2 pt-1.5">
                     <div
                       role="menu"
                       className="rounded-lg border border-gray-100 bg-white shadow-xl"
@@ -869,7 +861,7 @@ const Header = () => {
                 <Link href="/about" className="block py-2 text-gray-700 hover:text-green-500 font-medium">{t('about')}</Link>
                 <div>
                   <Link
-                    href="/checkout"
+                    href="/category/all"
                     className="block py-2 font-medium text-gray-700 hover:text-green-500"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
@@ -877,7 +869,8 @@ const Header = () => {
                   </Link>
                   <ul className="mt-1 space-y-1 border-l border-gray-200 pl-3">
                     {[
-                      { href: '/checkout', label: t('shopMenuCheckout') },
+                      { href: '/category/all', label: t('shopMenuGrid') },
+                      { href: '/shop/list', label: t('shopMenuList') },
                       { href: '/shop-invoice', label: t('shopMenuInvoice') },
                     ].map(({ href, label }) => (
                       <li key={href}>

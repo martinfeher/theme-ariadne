@@ -104,8 +104,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const isSmall = size === 'small';
   const badgeSize = isSmall ? 'xs' : 'md';
   const cartPillClass = isSmall
-    ? 'mb-[7px] mr-1 h-[36px] w-[88%] px-[5px] py-[5px]'
-    // ? 'mb-[7px] mr-1 h-[36px] w-[88%] px-1.5 py-1'
+    ? 'mb-[7px] h-[36px] w-[88%] px-[5px] py-[5px]'
     : 'mb-[8px] mr-[7px] h-[40px] w-[93.5%] px-[4px] py-[10px]';
   const cartPillBtnClass = isSmall ? 'h-[29px] w-[29px]' : 'h-[35px] w-[35px]';
   const cartCircleGreen = 'bg-[#22b257]';
@@ -195,35 +194,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
             />
           </div>
           <div
-            className={`relative flex justify-end items-center ${
-              productCartCounter >= 1
-                ? isSmall
-                  ? '-mt-[52px]'
-                  : '-mt-[54px]'
-                : isSmall
-                  ? '-mt-12'
-                  : '-mt-[50px]'
-            }`}
-       
+            className={`relative flex items-center ${
+              isSmall ? 'justify-center' : 'justify-end'
+            } ${isSmall ? '-mt-[52px]' : '-mt-[54px]'}`}
             onClick={(e) => e.stopPropagation()}
           >
             {inStock ? (
-              productCartCounter === 0 ? (
-                <button
-                  type="button"
-                  className={`flex items-center justify-center ${cartCircleGreen} text-white transition-colors z-40 cursor-pointer rounded-full shadow-sm ${
-                    isSmall ? 'mr-1 mb-[7px] p-1.5' : 'mr-[7px] mb-[8px] p-1.5'
-                  }`}
-                  onClick={() => addToCart()}
-                >
-                  <IoAdd className={isSmall ? 'h-5 w-5' : 'h-6 w-6'} aria-hidden />
-                </button>
-              ) : (
-                <div
-                  className={`z-40 flex items-center justify-between rounded-full bg-[#d7e1f0eb]/93 shadow-sm ${cartPillClass}`} style={{ backdropFilter: 'blur(1px)' }}
-             
-             
-                >
+              <div
+                className={`z-40 flex items-center justify-between rounded-full ${cartPillClass} ${
+                  productCartCounter >= 1 ? 'bg-[#d7e1f0eb]/93 shadow-sm' : ''
+                }`}
+                style={productCartCounter >= 1 ? { backdropFilter: 'blur(1px)' } : undefined}
+              >
+                {productCartCounter >= 1 ? (
                   <button
                     type="button"
                     aria-label={t('removeFromCart')}
@@ -232,17 +215,24 @@ const ProductCard: React.FC<ProductCardProps> = ({
                   >
                     <FaMinus className={isSmall ? 'h-3 w-3' : 'h-3.5 w-3.5'} aria-hidden />
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => addToCart()}
-                    className={`flex shrink-0 items-center justify-center rounded-full ${cartCircleGreen} text-white cursor-pointer ${cartPillBtnClass} ${
-                      isSmall ? 'text-sm' : 'text-base'
-                    }`}
-                  >
-                    {productCartCounter}
-                  </button>
-                </div>
-              )
+                ) : (
+                  <span className={`shrink-0 ${cartPillBtnClass}`} aria-hidden />
+                )}
+                <button
+                  type="button"
+                  aria-label={productCartCounter >= 1 ? String(productCartCounter) : t('addToCart')}
+                  onClick={() => addToCart()}
+                  className={`flex shrink-0 items-center justify-center rounded-full ${cartCircleGreen} text-white cursor-pointer ${cartPillBtnClass} ${
+                    productCartCounter >= 1 ? (isSmall ? 'text-sm' : 'text-base') : ''
+                  }`}
+                >
+                  {productCartCounter >= 1 ? (
+                    productCartCounter
+                  ) : (
+                    <IoAdd className={isSmall ? 'h-5 w-5' : 'h-6 w-6'} aria-hidden />
+                  )}
+                </button>
+              </div>
             ) : (
               <span
                 className={`rounded-full bg-[#03ac85] font-semibold text-white z-40 ${

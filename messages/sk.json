@@ -340,6 +340,12 @@
     "noProducts": "V tejto kategórii zatiaľ nie sú produkty.",
     "shopCategory": "Celý obchod kategórie"
   },
+  "Home4": {
+    "metaTitle": "Domov 4",
+    "metaDescription": "Čerstvé potraviny s hero bannerom — obľúbené produkty, týždenné akcie a vybraní predajcovia.",
+    "breadcrumbNav": "Drobečková navigácia",
+    "heroImageAlt": "Váš obchod pre čerstvé potraviny a každodenné potreby"
+  },
   "PopularProducts": {
     "title": "Obľúbené produkty",
     "loading": "Načítavam produkty…",
@@ -347,9 +353,11 @@
     "noProducts": "V tejto kategórii zatiaľ nie sú žiadne produkty.",
     "viewAll": "Zobraziť všetky produkty",
     "loadMore": "Načítať viac",
+    "showingPrefix": "Zobrazených",
+    "showingMiddle": "položiek v kategórii",
     "subtitle": "Čerstvé novinky a lokálne obľúbené produkty doručené priamo k vám.",
     "tabs": {
-      "all": "Všetko",
+      "all": "Všetky",
       "milks-dairies": "Mliečne výrobky",
       "coffees-teas": "Káva a čaj",
       "pet-foods": "Krmivá",
@@ -381,6 +389,11 @@
     "loading": "Načítavam produkty…",
     "error": "Produkty sa nepodarilo načítať. Obnovte stránku.",
     "viewAll": "Zobraziť všetky bestsellery"
+  },
+  "FeaturedVendors": {
+    "title": "Vybraní predajcovia",
+    "subtitle": "Overení predajcovia za naším katalógom — od lokálnych producentov po špecializované značky.",
+    "viewAll": "Všetci predajcovia"
   },
   "Search": {
     "breadcrumbHome": "Domov",
@@ -1428,6 +1441,7 @@
   },
   "ProductCard": {
     "removeFromCart": "Odobrať z košíka",
+    "addToCart": "Pridať do košíka",
     "addWishlist": "Pridať do obľúbených",
     "removeWishlist": "Odobrať z obľúbených",
     "addCompare": "Pridať na porovnanie",
@@ -1730,7 +1744,8 @@
       "54": "Čerstvé pomaranče navel",
       "55": "Bio zelený čaj",
       "56": "Bio jasmínový zelený čaj",
-      "57": "Bio jahodový ovocný spread"
+      "57": "Suché krmivo pre dospelých psov — kuracie a ryžové",
+      "58": "Mokré krmivo pre psov s hovädzou príchuťou — vysoký obsah bielkovín"
     },
     "descriptions": {
       "1": "Bio zmes celozrnných obilnín z quinoy, hnedej a červenej ryže — pripravená za pár minút, ideálna ako príloha alebo základ misy.",
@@ -1760,7 +1775,8 @@
       "54": "Šťavnaté pomaranče navel s ľahko olúpanou kôrou a sladkými segmentmi.",
       "55": "Jemný bio zelený čaj v praktických vrecúškach — osviežujúci horúci aj studený.",
       "56": "Voňavý jasmínový zelený čaj s kvetinovou arómou a hladkou chuťou.",
-      "57": "Bio jahodový ovocný spread zo zrelých plodov — na toast alebo do jogurtu."
+      "57": "Kompletné suché krmivo pre dospelých psov — receptúra s kuracím mäsom a ryžou, balenie 1,81 kg.",
+      "58": "Prémiové mokré krmivo s hovädzou príchuťou — vysoký obsah bielkovín v praktickej konzerve."
     }
   }
 }

@@ -2,6 +2,17 @@
 
 import React, { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import {
+  Apple,
+  Coffee,
+  CupSoda,
+  LayoutGrid,
+  Leaf,
+  Milk,
+  Package,
+  PawPrint,
+  type LucideIcon,
+} from 'lucide-react';
 import ProductCard from './ProductCard';
 import type { Product } from '../types/product';
 import { fetchProducts } from '@/lib/fetch-products';
@@ -18,6 +29,17 @@ const TAB_IDS = [
 ] as const;
 
 type TabId = (typeof TAB_IDS)[number];
+
+const TAB_ICONS: Record<TabId, LucideIcon> = {
+  all: LayoutGrid,
+  fruits: Apple,
+  vegetables: Leaf,
+  'pet-foods': PawPrint,
+  'coffees-teas': Coffee,
+  drinks: CupSoda,
+  'jam-jelly': Package,
+  'milks-dairies': Milk,
+};
 
 /** Two rows at the xl breakpoint (5 columns). */
 const ROWS_PER_PAGE = 2;
@@ -60,26 +82,36 @@ const PopularProducts: React.FC = () => {
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredProducts.length;
+  const activeCount = filteredProducts.length;
 
   return (
     <section className="relative bg-white py-6 lg:py-8">
       <div className="container mx-auto max-w-7xl px-4">
-        <div className="mb-2 flex flex-col gap-5 sm:mb-6 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <h2 className="shrink-0 text-2xl font-bold tracking-tight text-[#253D4E] sm:text-3xl lg:text-[32px]">
+        <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-md shrink-0">
+            <h2 className="text-2xl font-bold tracking-tight text-[#253D4E] sm:text-3xl lg:text-[32px]">
               {t('title')}
             </h2>
-            <div className="mt-1 flex flex-col gap-2">
-              <p className="w-[400px] max-w-full text-sm text-gray-500">{t('subtitle')}</p>
-            </div>
+            <p className="mt-2 text-sm text-gray-500 sm:text-[15px]">{t('subtitle')}</p>
+            {loadState === 'ok' && (
+              <p className="mt-3 text-sm text-gray-500">
+                {t('showingPrefix')}{' '}
+                <span className="font-semibold text-[#253D4E]">{activeCount}</span>{' '}
+                {t('showingMiddle')}{' '}
+                <span className="font-semibold text-[#253D4E]">{t(`tabs.${activeTab}`)}</span>
+              </p>
+            )}
           </div>
+
           <div
-            className="flex flex-wrap gap-2"
+            className="flex flex-wrap gap-2 lg:max-w-3xl lg:justify-end"
             role="tablist"
             aria-label={t('title')}
           >
             {TAB_IDS.map((id) => {
               const isActive = activeTab === id;
+              const Icon = TAB_ICONS[id];
+
               return (
                 <button
                   key={id}
@@ -87,19 +119,22 @@ const PopularProducts: React.FC = () => {
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => setActiveTab(id)}
-                  className={`cursor-pointer rounded-full px-4 py-1.5 text-[13px]! font-medium transition-colors duration-200 sm:text-base ${
+                  className={`inline-flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
                     isActive
                       ? 'bg-[#17A34B] text-white shadow-sm'
-                      : 'border border-gray-200 bg-white text-gray-500 hover:border-[#3BB77E]/40 hover:text-[#3BB77E]'
+                      : 'border border-gray-200 bg-white text-gray-600 hover:border-[#17A34B]/30 hover:text-[#17A34B]'
                   }`}
                 >
-                  {t(`tabs.${id}`)}
+                  <Icon
+                    className={`h-4 w-4 shrink-0 ${isActive ? 'text-white' : 'text-gray-400'}`}
+                    aria-hidden
+                  />
+                  <span>{t(`tabs.${id}`)}</span>
                 </button>
               );
             })}
           </div>
         </div>
-        <hr className="mb-8 border-gray-100" />
 
         {loadState === 'loading' && (
           <p className="py-12 text-center text-gray-500">{t('loading')}</p>
@@ -130,7 +165,7 @@ const PopularProducts: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
-                  className="cursor-pointer rounded-full border border-gray-200 bg-white px-8 py-2.5 text-sm font-semibold text-[#253D4E] transition-colors hover:border-[#17A34B] hover:text-[#17A34B]"
+                  className="cursor-pointer rounded-full border border-[#17A34B] bg-[#17A34B] px-8 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#15803d]"
                 >
                   {t('loadMore')}
                 </button>

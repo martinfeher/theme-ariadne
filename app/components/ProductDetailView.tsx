@@ -10,14 +10,14 @@ import type { Product } from '@/app/types/product';
 import { useCart } from '@/app/context/CartContext';
 import { useWishlist } from '@/app/context/WishlistContext';
 import { useCompare, MAX_COMPARE_PRODUCTS } from '@/app/context/CompareContext';
-import { CATEGORY_SIDEBAR_ICONS } from '@/lib/category-shop';
-import { countProductsWithCategorySlug } from '@/lib/mock-products';
+import { isCategoryShopSlug } from '@/lib/category-shop';
 import { getDiscountPercent } from '@/lib/product-discount';
 import { useProductI18n } from '@/app/hooks/useProductI18n';
 import { vendorHref } from '@/lib/mock-vendors';
 import OrganicBadge from './OrganicBadge';
 import DiscountBadge from './DiscountBadge';
 import ProductReviews from './product/ProductReviews';
+import CategorySidebar, { type CategorySidebarSlug } from './category/CategorySidebar';
 
 const ACCENT = '#3BB77E';
 
@@ -122,6 +122,11 @@ export default function ProductDetailView({
   const productName = getProductName(product);
   const productDescription =
     getProductDescription(product) ?? t('shortPlaceholder');
+
+  const sidebarActiveSlug = useMemo((): CategorySidebarSlug => {
+    const slug = product.categories?.find((c) => c !== 'all');
+    return slug && isCategoryShopSlug(slug) ? slug : 'all';
+  }, [product.categories]);
 
   const handleCompare = useCallback(() => {
     if (compareDisabled) return;
@@ -481,42 +486,7 @@ export default function ProductDetailView({
           </div>
 
           <aside className="space-y-6 lg:col-span-3">
-            <div className="rounded-2xl bg-white p-5 shadow-sm">
-              <h2 className="mb-4 text-lg font-semibold text-gray-900">
-                {t('sidebarCategory')}
-              </h2>
-              <ul className="space-y-2">
-                {CATEGORY_SIDEBAR_ICONS.map(({ slug, icon }) => {
-                  const count = countProductsWithCategorySlug(slug);
-                  const label = tBar(slug);
-                  return (
-                    <li key={slug}>
-                      <Link
-                        href={`/category/${slug}`}
-                        className="flex items-center justify-between rounded-lg py-2 pr-1 hover:bg-gray-50"
-                      >
-                        <span className="flex items-center gap-3">
-                          <Image
-                            src={icon}
-                            alt=""
-                            width={28}
-                            height={28}
-                            className="opacity-80"
-                          />
-                          <span className="text-sm text-gray-700">{label}</span>
-                        </span>
-                        <span
-                          className="flex h-7 min-w-7 items-center justify-center rounded-full px-2 text-xs font-semibold text-white"
-                          style={{ backgroundColor: ACCENT }}
-                        >
-                          {count}
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <CategorySidebar embedded hideBrowseLink activeSlug={sidebarActiveSlug} />
 
             <div className="relative overflow-hidden rounded-2xl bg-white p-5 shadow-sm">
               <h2 className="mb-4 text-lg font-semibold text-gray-900">

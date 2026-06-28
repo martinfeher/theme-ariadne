@@ -16,7 +16,7 @@ function mockProductImage(file: string): { image: string; hoverImage: string } {
 const CATEGORY_MEDIA: Record<string, { image: string; hoverImage: string }> = {
   vegetables: mockProductImage('organic_quinoa.jpeg'),
   'coffees-teas': mockProductImage('roast_ground_cofee.jpeg'),
-  'pet-foods': mockProductImage('dry_dog_food.jpeg'),
+  'pet-foods': mockProductImage('adult-chicken-rice-dog-food.jpeg'),
   'jam-jelly': mockProductImage('strawberry_fruit.jpg'),
   'milks-dairies': {
     image: VANILLA_YOGURT_IMAGE,
@@ -341,6 +341,32 @@ export const MOCK_PRODUCTS: Product[] = [
       'Fragrant jasmine-scented green tea bags with a floral aroma and smooth, mellow cup.',
     organic: true,
     ...mockProductImage('p2-jasmine-tea.jpeg'),
+  },
+  {
+    id: 57,
+    name: 'Adult Chicken & Rice Dry Dog Food',
+    category: 'Pet Foods',
+    price: 18.99,
+    rating: 4.8,
+    ratingCount: 31,
+    vendor: 'Ariadne Pet',
+    categories: ['all', 'pet-foods', 'popular-products'],
+    description:
+      'Complete nutrition dry kibble for adult dogs—real chicken and rice formula in a 4 lb bag.',
+    ...mockProductImage('adult-chicken-rice-dog-food.jpeg'),
+  },
+  {
+    id: 58,
+    name: 'High Protein Beef Wet Dog Food',
+    category: 'Pet Foods',
+    price: 2.49,
+    rating: 4.7,
+    ratingCount: 22,
+    vendor: 'Ariadne Pet',
+    categories: ['all', 'pet-foods'],
+    description:
+      'Premium wet dog food with beef flavor—high-protein recipe in a convenient single-serving can.',
+    ...mockProductImage('high-protein-beef-dog-food.jpeg'),
   },
   {
     id: 13,

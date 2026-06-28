@@ -341,6 +341,12 @@
     "noProducts": "No products in this category yet.",
     "shopCategory": "View full category shop"
   },
+  "Home4": {
+    "metaTitle": "Home 4",
+    "metaDescription": "Fresh groceries with a hero banner — browse popular products, weekly deals, and featured vendors.",
+    "breadcrumbNav": "Breadcrumb",
+    "heroImageAlt": "Fresh groceries and daily essentials, all in one place"
+  },
   "PopularProducts": {
     "title": "Popular Products",
     "subtitle": "Fresh arrivals and local favorites delivered daily to your door.",
@@ -349,6 +355,8 @@
     "noProducts": "No products in this category yet.",
     "viewAll": "View All Products",
     "loadMore": "Load more",
+    "showingPrefix": "Showing",
+    "showingMiddle": "items in",
     "tabs": {
       "all": "All",
       "milks-dairies": "Milks & Dairies",
@@ -382,6 +390,11 @@
     "loading": "Loading products…",
     "error": "Could not load products. Please refresh the page.",
     "viewAll": "View all bestsellers"
+  },
+  "FeaturedVendors": {
+    "title": "Featured Vendors",
+    "subtitle": "Trusted sellers behind our catalog — from local producers to specialty brands.",
+    "viewAll": "All vendors"
   },
   "Search": {
     "breadcrumbHome": "Home",
@@ -1425,6 +1438,7 @@
   },
   "ProductCard": {
     "removeFromCart": "Remove from cart",
+    "addToCart": "Add to cart",
     "addWishlist": "Add to wishlist",
     "removeWishlist": "Remove from wishlist",
     "addCompare": "Add to compare",
@@ -1723,7 +1737,9 @@
       "53": "Organic Vanilla Yogurt",
       "54": "Fresh Navel Oranges",
       "55": "Organic Green Tea",
-      "56": "Organic Jasmine Green Tea"
+      "56": "Organic Jasmine Green Tea",
+      "57": "Adult Chicken & Rice Dry Dog Food",
+      "58": "High Protein Beef Wet Dog Food"
     },
     "descriptions": {
       "1": "Organic whole grains blend of quinoa, brown rice, and red rice—ready in minutes and perfect as a side or bowl base.",
@@ -1752,7 +1768,9 @@
       "53": "Creamy organic vanilla yogurt with real vanilla—great for breakfast, parfaits, and baking.",
       "54": "Juicy navel oranges with easy-to-peel skin and sweet segments—perfect for fresh juice or snacking.",
       "55": "Light organic green tea in convenient tea bags—clean, refreshing, and perfect hot or iced.",
-      "56": "Fragrant jasmine-scented green tea bags with a floral aroma and smooth, mellow cup."
+      "56": "Fragrant jasmine-scented green tea bags with a floral aroma and smooth, mellow cup.",
+      "57": "Complete nutrition dry kibble for adult dogs—real chicken and rice formula in a 4 lb bag.",
+      "58": "Premium wet dog food with beef flavor—high-protein recipe in a convenient single-serving can."
     }
   }
 }

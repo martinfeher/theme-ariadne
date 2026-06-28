@@ -14,7 +14,6 @@ const PAYMENT_ICONS = [
   { src: '/images/theme/icons/payment-visa.svg', label: 'Visa' },
   { src: '/images/theme/icons/payment-master.svg', label: 'Mastercard' },
   { src: '/images/theme/icons/payment-paypal.svg', label: 'PayPal' },
-  { src: '/images/theme/icons/payment-amex.svg', label: 'Amex' },
 ] as const;
 
 const SOCIAL_LINKS = [
@@ -70,7 +69,7 @@ function FooterLinkColumn({ column }: { column: LinkColumn }) {
       <h3 className="text-xs font-bold uppercase tracking-wider text-gray-900">
         {t(column.titleKey)}
       </h3>
-      <ul className="mt-4 space-y-2.5">
+      <ul className="mt-4 space-y-2">
         {column.links.map(({ href, labelKey }) => (
           <li key={`${href}-${labelKey}`}>
             <Link
@@ -116,7 +115,7 @@ function FooterNewsletter() {
   }
 
   return (
-    <form onSubmit={handleNewsletter} className="mt-3 flex flex-col gap-2 sm:flex-row w-[340px]">
+    <form onSubmit={handleNewsletter} className="mt-2 flex flex-col gap-2 sm:flex-row w-[340px]">
       <label htmlFor="footer-newsletter-email" className="sr-only">
         {t('newsletterEmailLabel')}
       </label>
@@ -149,16 +148,16 @@ export default function Footer() {
 
   return (
     <footer className="mt-auto border-t border-gray-200 bg-white" aria-label={t('ariaLabel')}>
-      <section className="container mx-auto px-4 py-10 lg:py-12">
+      <section className="container mx-auto px-4 py-8 lg:py-10">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
           <div>
             <Link href="/" className="text-lg font-bold text-gray-900">
               WebAriadne
             </Link>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-gray-600">
+            <p className="mt-3 max-w-xs text-sm leading-[23px] text-gray-600">
               {t('aboutBlurb')}
             </p>
-            <ul className="mt-5 space-y-2 text-sm text-gray-600">
+            <ul className="mt-5 space-y-1 text-sm text-gray-600">
               <li className="flex items-start gap-1">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gray-400" aria-hidden />
                 <span>
@@ -200,7 +199,7 @@ export default function Footer() {
             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-900">
               {t('followUs')}
             </h3>
-            <nav className="mt-4 flex items-center gap-2.5" aria-label={t('socialLabel')}>
+            <nav className="mt-2 flex items-center gap-2.5" aria-label={t('socialLabel')}>
               {SOCIAL_LINKS.map(({ href, icon, label }) => (
                 <a
                   key={label}
@@ -208,33 +207,35 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 transition-colors hover:bg-gray-200"
+                  className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-gray-100 transition-colors hover:bg-gray-200"
                 >
-                  <Image src={icon} alt="" width={16} height={16} aria-hidden />
+                  <Image src={icon} alt="" width={26} height={26} aria-hidden />
                 </a>
               ))}
             </nav>
 
-            <div className="mt-8">
+            <div className="mt-6">
               <div className="flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-gray-500" aria-hidden />
+                <ShieldCheck className="h-[17px] w-[17px] text-gray-500" aria-hidden />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-gray-900">
                   {t('securedPayments')}
                 </h3>
               </div>
               <ul
-                className="mt-3 flex flex-wrap items-center gap-2"
+                className="mt-3 flex items-center gap-3"
                 aria-label={t('securedPayments')}
               >
                 {PAYMENT_ICONS.map(({ src, label }) => (
                   <li key={label}>
-                    <Image
-                      src={src}
-                      alt={label}
-                      width={40}
-                      height={24}
-                      className="h-6 w-auto opacity-80"
-                    />
+                    <span className="relative block h-7 w-11 shrink-0">
+                      <Image
+                        src={src}
+                        alt={label}
+                        fill
+                        sizes="44px"
+                        className="object-contain object-center opacity-80"
+                      />
+                    </span>
                   </li>
                 ))}
               </ul>

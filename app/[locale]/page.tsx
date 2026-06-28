@@ -5,6 +5,7 @@ import PopularProducts from '../components/PopularProducts';
 import WeeklyDiscounts from '../components/WeeklyDiscounts';
 import TopSellingProducts from '../components/TopSellingProducts';
 import FreshInSeason from '../components/FreshInSeason';
+import FeaturedVendors from '../components/FeaturedVendors';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -48,9 +49,10 @@ export default async function HomePage({ params }: Props) {
         </section>
 
         <PopularProducts />
-        <WeeklyDiscounts />
         <FreshInSeason />
+        <WeeklyDiscounts />
         <TopSellingProducts />
+        <FeaturedVendors />
       </main>
     </PageShell>
   );

@@ -44,7 +44,6 @@ const TopSellingProducts: React.FC = () => {
         <div className="mb-2 flex flex-col gap-4 sm:mb-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <h2 className="flex shrink-0 items-center gap-2 text-2xl font-bold tracking-tight text-[#253D4E] sm:text-3xl lg:text-[32px]">
-              <TrendingUp className="h-6 w-6 text-[#17A34B]" aria-hidden />
               {t('title')}
             </h2>
             <p className="mt-1 max-w-md text-sm text-gray-500">{t('subtitle')}</p>

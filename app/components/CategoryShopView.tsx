@@ -4,16 +4,15 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
-import { AlertCircle, ChevronDown, Filter, Home, LayoutGrid, PackageOpen, RefreshCw, X } from 'lucide-react';
+import { AlertCircle, ChevronDown, Filter, Home, PackageOpen, RefreshCw, X } from 'lucide-react';
 import { useFormatCurrency } from '@/app/context/CurrencyContext';
 import { fetchProducts } from '@/lib/fetch-products';
 import {
-  CATEGORY_SIDEBAR_ICONS,
   type CategoryShopSlug,
 } from '@/lib/category-shop';
-import { countProductsWithCategorySlug } from '@/lib/mock-products';
 import type { Product } from '@/app/types/product';
 import ProductCard from './ProductCard';
+import CategorySidebar from './category/CategorySidebar';
 import { useProductI18n } from '@/app/hooks/useProductI18n';
 
 const BANNER_PATTERN =
@@ -429,60 +428,11 @@ export default function CategoryShopView({ slug }: { slug: CategoryShopSlug }) {
           </div>
 
           <aside className="w-full shrink-0 space-y-6 lg:w-[300px]">
-            <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-              <h2 className="mb-4 text-lg font-semibold text-slate-900">
-                {tDetail('sidebarCategory')}
-              </h2>
-              <ul className="space-y-1">
-                <li>
-                  <Link
-                    href="/category/all"
-                    className={`flex items-center justify-between rounded-xl py-2.5 pl-1 pr-1 transition-colors ${
-                      slug === 'all' ? 'bg-emerald-50 ring-1 ring-emerald-100' : 'hover:bg-slate-50'
-                    }`}
-                  >
-                    <span className="flex min-w-0 items-center gap-3">
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-[#3BB77E]">
-                        <LayoutGrid className="h-4 w-4" aria-hidden />
-                      </span>
-                      <span className="truncate text-sm text-slate-700">{t('allCategories')}</span>
-                    </span>
-                    <span className="flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full bg-[#3BB77E] px-2 text-xs font-semibold text-white">
-                      {status === 'ok' ? catalog.length : '—'}
-                    </span>
-                  </Link>
-                </li>
-                {CATEGORY_SIDEBAR_ICONS.map(({ slug: catSlug, icon }) => {
-                  const count = countProductsWithCategorySlug(catSlug);
-                  const label = tBar(catSlug);
-                  const active = slug === catSlug;
-                  return (
-                    <li key={catSlug}>
-                      <Link
-                        href={`/category/${catSlug}`}
-                        className={`flex items-center justify-between rounded-xl py-2.5 pl-1 pr-1 transition-colors ${
-                          active ? 'bg-emerald-50 ring-1 ring-emerald-100' : 'hover:bg-slate-50'
-                        }`}
-                      >
-                        <span className="flex min-w-0 items-center gap-3">
-                          <Image
-                            src={icon}
-                            alt=""
-                            width={28}
-                            height={28}
-                            className="shrink-0 opacity-80"
-                          />
-                          <span className="truncate text-sm text-slate-700">{label}</span>
-                        </span>
-                        <span className="flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full bg-[#3BB77E] px-2 text-xs font-semibold text-white">
-                          {count}
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <CategorySidebar
+              embedded
+              activeSlug={slug}
+              totalCountOverride={status === 'ok' ? catalog.length : null}
+            />
 
             <div className="relative overflow-hidden rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
               <h2 className="mb-4 text-lg font-semibold text-slate-900">
